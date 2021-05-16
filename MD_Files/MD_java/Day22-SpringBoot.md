@@ -69,7 +69,7 @@ springMVC,controller ===>提供接口
 
 ![image-20210318131818617](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318131818617.png)
 
-![image-20210318132644484](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210312163044232.png)
+![image-20210318132644484](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318132644484.png)
 
 # 3 第一个springboot程序
 
@@ -311,7 +311,7 @@ public class Springboot01HelloworldApplication {
 
 自动配置的核心文件： META-INF/spring.factories
 
-![image-20210312163044232](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210312205600396.png)
+![image-20210312163044232](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210312163044232.png)
 
 
 
@@ -516,7 +516,7 @@ Booelan检查
 除此以外，我们还可以自定义一些数据校验规则
 ```
 
-![image-20210312205600396](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210312213006481.png)
+![image-20210312205600396](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210312205600396.png)
 
 # 7、多环境切换
 
@@ -566,7 +566,7 @@ spring:
 
 官方外部配置文件说明参考文档: 从高到低
 
-![image-20210312213006481](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313030908391.png)
+![image-20210312213006481](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210312213006481.png)
 
 springboot 启动会扫描以下位置的application.properties或者application.yml文件作为Spring boot的默认配置文件：
 
@@ -826,7 +826,7 @@ WebMvcAutoConfiguration.java---->welcomePageHandlerMapping()
 
 模板殷勤的**思想**
 
-![image-20210313030908391](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313032008463.png)
+![image-20210313030908391](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313030908391.png)
 
 
 
@@ -985,7 +985,7 @@ Special tokens:
 
 属性值作用，和**优先级**如下图
 
-![image-20210313032008463](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210316185829324.png)
+![image-20210313032008463](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313032008463.png)
 
 
 
@@ -1354,9 +1354,9 @@ Github地址：https://github.com/alibaba/druid/
 
 **com.alibaba.druid.pool.DruidDataSource 基本配置参数如下：**
 
-![image-20210316122206626](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317113554415.png)
+![image-20210316122206626](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210316122206626.png)
 
-![image-20210316122229040](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/swagger.png)
+![image-20210316122229040](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210316122229040.png)
 
 ## 操作
 
@@ -1959,7 +1959,7 @@ http.formLogin().loginPage("/toLogin");
 
 在 loginPage()源码中的注释上有写明：
 
-![image-20210316185829324](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317142326878.png)
+![image-20210316185829324](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210316185829324.png)
 
 ```html
 <form th:action="@{/login}" method="post">
@@ -2177,7 +2177,7 @@ currentUser.logout();
 
 **文件目录**：
 
-![image-20210317113554415](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317155545106.png)
+![image-20210317113554415](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317113554415.png)
 
 ### maven配置文件 pom.xml
 
@@ -2741,7 +2741,7 @@ swagger 官网：https://swagger.io/
 
 5. 测试运行 http://localhost:8080/swagger-ui/index.html
 
-   ![](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317215541104.png)
+   ![](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/swagger.png)
 
 
 
@@ -2879,7 +2879,7 @@ public class SwaggerConfig {
     }
 ```
 
-![image-20210317142326878](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317220241865.png)
+![image-20210317142326878](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317142326878.png)
 
 
 
@@ -3125,7 +3125,7 @@ public class SpringbootTaskApplication {
 
 **cron表达式：**
 
-![image-20210317155545106](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317220035104.png)
+![image-20210317155545106](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317155545106.png)
 
 
 
@@ -3348,13 +3348,13 @@ Dubbo框架设计：https://dubbo.apache.org/zh/docs/v2.7/dev/design/#%E6%95%B4%
 
 在Dubbo的官网文档有这样一张图：
 
-​	![image-20210317215541104](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317220551496.png)
+​	![image-20210317215541104](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317215541104.png)
 
 #### 单一应用架构
 
 当网站流量很小时，只需一个应用，将所有功能都部署在一起，以减少部署节点和成本。此时，用于简化增删改查工作量的数据访问框架(ORM)是关键。
 
-![image-20210317220035104](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317220637131.png)
+![image-20210317220035104](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317220035104.png)
 
 适用于小型网站，小型管理系统，将所有功能都部署到一个部署节点里，简单易用。
 
@@ -3372,7 +3372,7 @@ Dubbo框架设计：https://dubbo.apache.org/zh/docs/v2.7/dev/design/#%E6%95%B4%
 
 当访问量逐渐增大，单一应用增加机器带来的**加速度**越来越小，提升效率的方法之一是将**应用拆成互不相干的几个应用**，以**提升效率**。此时，用于加速前端页面开发的Web框架(MVC)是关键。
 
-![image-20210317220241865](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317221441526.png)
+![image-20210317220241865](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317220241865.png)
 
 通过切分业务来实现各个模块独立部署，降低了维护和部署的难度，团队各司其职更易管理，性能扩展也更方便，更有针对性。
 
@@ -3384,7 +3384,7 @@ Dubbo框架设计：https://dubbo.apache.org/zh/docs/v2.7/dev/design/#%E6%95%B4%
 
 当垂直应用越来越多，应用之间**交互**不可避免，将**核心业务抽取出来**，作为独立的服务，逐渐形成稳定的服务中心，使前端应用能更快速的响应多变的市场需求。此时，用于提高**业务复用**及**整合的分布式服务框架(RPC)**是关键。
 
-![image-20210317220551496](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317221743210.png)
+![image-20210317220551496](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317220551496.png)
 
 
 
@@ -3392,7 +3392,7 @@ Dubbo框架设计：https://dubbo.apache.org/zh/docs/v2.7/dev/design/#%E6%95%B4%
 
 当服务越来越多，容量的评估，小服务资源的浪费等问题逐渐显现，此时需**增加一个调度中心基于访问压力实时管理集群容量**，提高集群利用率。此时，**用于提高机器利用率的资源调度和治理中心**(SOA)（Service Oriented Architecture）是关键。
 
-![image-20210317220637131](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317223148799.png)
+![image-20210317220637131](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317220637131.png)
 
 
 
@@ -3423,13 +3423,13 @@ RPC两个**核心模块**：**通讯，序列化**。
 
 **RPC基本原理**
 
-![image-20210317221441526](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317233019504.png)
+![image-20210317221441526](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317221441526.png)
 
 
 
 **步骤解析：** 对于上图的时序图
 
-![image-20210317221743210](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318022436139.png)
+![image-20210317221743210](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317221743210.png)
 
 ## 21.4 Dubbo
 
@@ -3443,7 +3443,7 @@ dubbo 快速开始：https://dubbo.apache.org/zh/docs/v2.7/user/quick-start/
 
 https://dubbo.apache.org/zh/docs/v2.7/user/preface/architecture/
 
-![image-20210317223148799](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318030108337.png)
+![image-20210317223148799](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317223148799.png)
 
 #### 节点角色说明
 
@@ -3519,7 +3519,7 @@ get /joker：获取/kuangshen节点的值
 
 我们再来查看一下节点
 
-![image-20210317233019504](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318023711044.png)
+![image-20210317233019504](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210317233019504.png)
 
 
 
@@ -3844,7 +3844,7 @@ class ConsumerServerApplicationTests {
 
 4. 消费者消费测试，结果：
 
-![image-20210318022436139](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318030605114.png)
+![image-20210318022436139](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318022436139.png)
 
 
 
@@ -3856,21 +3856,21 @@ ok , 这就是SpingBoot + dubbo + zookeeper实现分布式开发的应用，其�
 
 项目目录结构：
 
-<img src="https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318030402457.png" alt="image-20210318023711044" style="zoom:50%;" />
+<img src="https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318023711044.png" alt="image-20210318023711044" style="zoom:50%;" />
 
 
 
 # 22、springBoot总结和展望
 
-![image-20210318030108337](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318030455404.png)
+![image-20210318030108337](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318030108337.png)
 
-![image-20210318030402457](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318030710964.png)
+![image-20210318030402457](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318030402457.png)
 
-![image-20210318030455404](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318030735743.png)
+![image-20210318030455404](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318030455404.png)
 
-![image-20210318030605114](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318132644484.png)
+![image-20210318030605114](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318030605114.png)
 
-![image-20210318030710964](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210316122206626.png)
+![image-20210318030710964](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318030710964.png)
 
-![image-20210318030735743](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210316122229040.png)
+![image-20210318030735743](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318030735743.png)
 
