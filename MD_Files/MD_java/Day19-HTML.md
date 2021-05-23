@@ -288,6 +288,8 @@ autoplay 自动播放
 
 # 9、iframe 内联框架
 
+- 这个用的比较多，常就是，跳转到另一个页面，使用可以类似为弹窗
+
 ```html
 <!DOCTYPE html>
 <html>
@@ -455,3 +457,8 @@ label  -->
 </html>
 ```
 
+
+
+# OVER
+
+- 结尾跳转
