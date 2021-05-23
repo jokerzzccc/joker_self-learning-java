@@ -17,3 +17,18 @@ ssh-keygen -t rsa
 
 ```
 
+
+
+# 2、Git 修改 提交用户名
+
+```bash
+git config --global user.name "用户名"
+git config --global user.email "邮箱"
+```
+
+如果，出现了，报错，Git 不知道选择哪个用户名时，使用：
+
+```sh
+git config --global --replace-all user.name "用户名"
+```
+
