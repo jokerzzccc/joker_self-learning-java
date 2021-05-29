@@ -1,4 +1,4 @@
-# Day21-JavaScript-append
+# Day21-JavaScript-jQuery
 
 前端知识体系：
 

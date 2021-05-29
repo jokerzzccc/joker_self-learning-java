@@ -59,9 +59,9 @@ vue-UI : ICEworks
 
 ## **3.1 javaScript** 
 
-![image-20210313164529975](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313164814254.png)
+![image-20210313164529975](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313164529975.png)
 
-![image-20210313164814254](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313165618705.png)
+![image-20210313164814254](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313164814254.png)
 
 - 现在最多的是ES6
 - webpack 打包
@@ -70,7 +70,7 @@ vue-UI : ICEworks
 
 ## **3.2 javaScript 框架**
 
-![image-20210313164850773](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313164529975.png)
+![image-20210313164850773](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313164850773.png)
 
 - Angular : 最先提出 MVVM
 - React : 虚拟DOM，就是利用内存
@@ -83,14 +83,14 @@ vue-UI : ICEworks
 
 ## 4.1 UI 框架
 
-![image-20210313165618705](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313165826986.png)
+![image-20210313165618705](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313165618705.png)
 
 - AmazeUI用的也很多
 - Bootstrap ,最老资格的
 
 ## 4.2 javascript 构建工具
 
-​	![image-20210313165652463](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313170214293.png)
+​	![image-20210313165652463](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313165652463.png)
 
 - 都用webpack
 
@@ -98,7 +98,7 @@ vue-UI : ICEworks
 
 ## 5.1 三段统一
 
-![image-20210313165826986](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313165652463.png)
+![image-20210313165826986](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313165826986.png)
 
 ## 6.1 后端技术
 
@@ -108,7 +108,7 @@ vue-UI : ICEworks
 
 ## 6.2 主流前端框架
 
-![image-20210313170214293](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313171000988.png)
+![image-20210313170214293](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313170214293.png)
 
 - iview : https://www.iviewui.com/docs/introduce
 
@@ -117,17 +117,17 @@ vue-UI : ICEworks
 
 其他了解就好
 
-![image-20210313171000988](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313171035401.png)
+![image-20210313171000988](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313171000988.png)
 
 ## 7.1 前后端分离史
 
 - springmvc核心
 
-![image-20210313171035401](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313172305765.png)
+![image-20210313171035401](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313171035401.png)
 
 **mvc的缺点**
 
-![image-20210313171214844](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313172644421.png)
+![image-20210313171214844](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313171214844.png)
 
 
 
@@ -135,27 +135,27 @@ vue-UI : ICEworks
 
 ![image-20210313172214103](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313172214103.png)
 
-![image-20210313172305765](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313172526119.png)
+![image-20210313172305765](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313172305765.png)
 
-![image-20210313172334686](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313172659458.png)
+![image-20210313172334686](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313172334686.png)
 
 ## 9 mv* 时代-大前端时代
 
-![image-20210313172526119](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313172334686.png)
+![image-20210313172526119](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313172526119.png)
 
-![image-20210313172644421](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313173043012.png)
+![image-20210313172644421](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313172644421.png)
 
-![image-20210313172659458](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313172958030.png)
+![image-20210313172659458](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313172659458.png)
 
 - SEO ：搜索引擎优化
 
 ## 10 NodeJS 带来的全栈时代
 
-![image-20210313172958030](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313175358582.png)
+![image-20210313172958030](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313172958030.png)
 
-![image-20210313173043012](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313180148787.png)
+![image-20210313173043012](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313173043012.png)
 
-![image-20210313173155273](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313173409456.png)
+![image-20210313173155273](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313173155273.png)
 
 
 
@@ -167,35 +167,35 @@ mvvm:双向数据绑定：
 
 mvvm组成部分：
 
-![image-20210313173409456](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313173155273.png)
+![image-20210313173409456](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313173409456.png)
 
 - mvvm 可以即时运行，即时编译，就是虚拟dom
 
 **什么是MVVM**
 
-![image-20210313175358582](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313175639149.png)	**为社么使用MVVM**
+![image-20210313175358582](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313175358582.png)	**为社么使用MVVM**
 
-![image-20210313175639149](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313180250872.png)
+![image-20210313175639149](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313175639149.png)
 
 
 
 **三层的理解**
 
-![image-20210313180148787](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313180210516.png)
+![image-20210313180148787](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313180148787.png)
 
-![image-20210313180210516](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313173615058.png)
+![image-20210313180210516](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313180210516.png)
 
-![image-20210313180250872](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313173630684.png)
+![image-20210313180250872](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313180250872.png)
 
 
 
 ## 2.2 VUE
 
-![image-20210313173615058](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313180429030.png)
+![image-20210313173615058](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313173615058.png)
 
-![image-20210313173630684](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313173710233.png)
+![image-20210313173630684](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313173630684.png)
 
-![image-20210313173710233](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313183616507.png)
+![image-20210313173710233](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313173710233.png)
 
 
 
@@ -216,7 +216,7 @@ mvvm组成部分：
 
 min 是迷你版，用下一个就好	
 
-![image-20210313180429030](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313185001950.png)
+![image-20210313180429030](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313180429030.png)
 
 ## 2.4 vue 基本语法
 
@@ -250,17 +250,17 @@ v-on 后面加的事件 ，有 ：jquery 文档里查看事件哪些 https://www
 
 ### 3 vue 常用7 大属性
 
-![image-20210313183616507](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313185217089.png)
+![image-20210313183616507](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313183616507.png)
 
 ## 2.5 vue 双向数据绑定
 
-![image-20210313183753010](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313185123001.png)
+![image-20210313183753010](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313183753010.png)
 
 ### v-model
 
 注意 **下拉框**的实现 ：
 
-![image-20210313185001950](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313190201796.png)
+![image-20210313185001950](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313185001950.png)
 
 ## 2.6 vue 组件
 
@@ -268,7 +268,7 @@ v-on 后面加的事件 ，有 ：jquery 文档里查看事件哪些 https://www
 
 **注册组件**
 
-![image-20210313185123001](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313185341609.png)
+![image-20210313185123001](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313185123001.png)
 
 **什么是组件**
 
@@ -276,17 +276,17 @@ v-on 后面加的事件 ，有 ：jquery 文档里查看事件哪些 https://www
 - 我们可以在一个通过 `new Vue` 创建的 Vue 根实例中，把这个组件作为自定义元素来使用：
 - 因为组件是可复用的 Vue 实例，所以它们与 `new Vue` 接收相同的选项，例如 `data`、`computed`、`watch`、`methods` 以及生命周期钩子等。仅有的例外是像 `el` 这样根实例特有的选项。
 
-![image-20210313185217089](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313190214158.png)
+![image-20210313185217089](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313185217089.png)
 
-![image-20210313185341609](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313213844702.png)
+![image-20210313185341609](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313185341609.png)
 
 **组件代码示例**
 
 - 需要参数传递到组件，就必须用props 属性
 
-![image-20210313190214158](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/lifecycle.png)
+![image-20210313190214158](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313190214158.png)
 
-![image-20210313190201796](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313214354087.png)
+![image-20210313190201796](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313190201796.png)
 
 
 
@@ -300,27 +300,27 @@ v-on 后面加的事件 ，有 ：jquery 文档里查看事件哪些 https://www
 - Axios  官网 http://axios-js.com/
 - GitHub https://github.com/axios/axios/
 
-![image-20210313213844702](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313220418411.png)
+![image-20210313213844702](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313213844702.png)
 
 
 
 ### 为什么用Axios
 
-![image-20210313214354087](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313220504208.png)
+![image-20210313214354087](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313214354087.png)
 
 
 
 ### axios **生命周期**（Lifecycle）
 
-![Vue 实例生命周期](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313222632831.png)
+![Vue 实例生命周期](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/lifecycle.png)
 
 即：
 
-![image-20210313220418411](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313223335908.png)
+![image-20210313220418411](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313220418411.png)
 
-![image-20210313220504208](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313220625035.png)
+![image-20210313220504208](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313220504208.png)
 
-![image-20210313220625035](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313230241631.png)
+![image-20210313220625035](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313220625035.png)
 
 
 
@@ -338,9 +338,9 @@ monted()
 
 - 计算属性：计算出来的结果，保存在属性中。内存中运行虚拟dom
 - 是 vue 的一个特色
-- ![image-20210313222632831](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313225416915.png)
+- ![image-20210313222632831](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313222632831.png)
 
-![image-20210313223335908](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313230132563.png)
+![image-20210313223335908](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313223335908.png)
 
 # 4、内容分发 - 插槽-slot
 
@@ -354,7 +354,7 @@ slot 插槽 <slot>  **很重要**，难点
 
 **难点**，重要
 
-![image-20210313225416915](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313230708509.png)
+![image-20210313225416915](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313225416915.png)
 
 Vue.component
 
@@ -362,24 +362,30 @@ emit
 
 ## 代码总结
 
-![image-20210313230132563](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313230856387.png)
+![image-20210313230132563](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313230132563.png)
 
-![image-20210313230241631](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313230733031.png)
+![image-20210313230241631](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313230241631.png)
 
 
 
 # 6 vue 入门小结
 
-![image-20210313230708509](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313231509630.png)
+![image-20210313230708509](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313230708509.png)
 
-![image-20210313230733031](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313232001309.png)
+![image-20210313230733031](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313230733031.png)
 
-
-
-![image-20210313230856387](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313232927039.png)
+![image-20210313230856387](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313230856387.png)
 
 - NodeJS 
-- **实际开发**用  vue-cli 脚手架，vue-router 路由跳转，vuex 状态管理 ， vueUI, 界面一般使用 ElementUI，或者 ICE 来快速搭建前端项目
+
+
+
+## ==实际开发==用
+
+-  vue-cli 脚手架，
+- vue-router 路由跳转，
+- vuex 状态管理 ， 
+- vueUI, 界面一般使用 ElementUI，或者 ICE 来快速搭建前端项目
 
 
 
@@ -387,7 +393,7 @@ emit
 
 **什么是vue-cli**
 
-![image-20210313231509630](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314105033291.png)
+![image-20210313231509630](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313231509630.png)
 
 ## 安装**需要的环境**
 
@@ -407,9 +413,9 @@ emit
 
 以上安装路径，都是我测试成功的
 
-![image-20210313232001309](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314104826172.png)
+![image-20210313232001309](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313232001309.png)
 
-![image-20210313232927039](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314105010751.png)
+![image-20210313232927039](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313232927039.png)
 
 
 
@@ -446,7 +452,7 @@ vue-cli 官网： https://cli.vuejs.org/zh/
 
 ## 什么是webpack
 
-![image-20210314104550664](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314105352253.png)
+![image-20210314104550664](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314104550664.png)
 
 
 
@@ -454,37 +460,37 @@ vue-cli 官网： https://cli.vuejs.org/zh/
 
 ### script 标签
 
-![image-20210314104826172](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314105216659.png)
+![image-20210314104826172](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314104826172.png)
 
 
 
 ### CommonsJS
 
-![image-20210314105010751](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314105256366.png)
+![image-20210314105010751](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314105010751.png)
 
-![image-20210314105033291](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314105326803.png)
+![image-20210314105033291](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314105033291.png)
 
 
 
 ### AMD
 
-![image-20210314105216659](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314105931531.png)
+![image-20210314105216659](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314105216659.png)
 
-![image-20210314105256366](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314105443660.png)
+![image-20210314105256366](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314105256366.png)
 
 ### CMD
 
-![image-20210314105326803](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314111111834.png)
+![image-20210314105326803](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314105326803.png)
 
-![image-20210314105352253](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314110036900.png)
+![image-20210314105352253](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314105352253.png)
 
 
 
 ### ES6
 
-![image-20210314105443660](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314111827586.png)
+![image-20210314105443660](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314105443660.png)
 
-![image-20210314105931531](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314111845876.png)
+![image-20210314105931531](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314105931531.png)
 
 
 
@@ -503,19 +509,19 @@ vue-cli 官网： https://cli.vuejs.org/zh/
 
   
 
-![image-20210314110036900](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314121742799.png)
+![image-20210314110036900](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314110036900.png)
 
 
 
 **使用webpack**
 
-![image-20210314111111834](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314122609129.png)
+![image-20210314111111834](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314111111834.png)
 
 
 
-![image-20210314111827586](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314112502064.png)
+![image-20210314111827586](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314111827586.png)
 
-![image-20210314111845876](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314130452206.png)
+![image-20210314111845876](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314111845876.png)
 
 
 
@@ -535,7 +541,7 @@ vue-router 简介
 
 vue-router的安装
 
-![image-20210314112502064](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314130034313.png)
+![image-20210314112502064](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314112502064.png)
 
  
 
@@ -554,9 +560,9 @@ vue-router的安装
 
 # 10、第一个项目hello-vue
 
-![image-20210314121742799](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314130731102.png)
+![image-20210314121742799](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314121742799.png)
 
-![image-20210314122609129](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313164850773.png)
+![image-20210314122609129](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314122609129.png)
 
 1. 管理员命令行 进入到 项目放置的根目录
 2. vue init webpack hello-vue
@@ -588,7 +594,7 @@ vue-router的安装
 - 属于vue-router ,看官网
   - hash
   - history
-- ![image-20210314130034313](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313171214844.png)
+- ![image-20210314130034313](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314130034313.png)
 
 - 404 界面，直接添加一个组件
 - 放到路由器，path: '*'
@@ -602,11 +608,56 @@ vue-router的安装
 
 这两个钩子函数，可以与axios 结合，实现异步请求
 
-![image-20210314130452206](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210313183753010.png)
+![image-20210314130452206](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314130452206.png)
 
-![image-20210314130731102](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314104550664.png)
+![image-20210314130731102](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210314130731102.png)
 
 专业词汇,mock 文件夹用来放测试数据
 
 Axios : 官网 http://axios-js.com/zh-cn/docs/vue-axios.html
 
+
+
+# ==12、分割线----------------==
+
+- 以上是狂神视频的。
+- 
+
+# 13、升级vue3+Vite2 创建项目教程
+
+- 官网：https://v3.vuejs.org/guide/installation.html#for-server-side-rendering
+
+```sh
+npm uninstall -g @vue/cli
+
+npm install -g @vue/cli
+# 这条命令之后会选择 vue 的版本，选择对应的就好
+vue create <project-name>
+
+cd <project-name>
+# 升级到最新
+vue upgrade --next
+
+# 运行项目
+npm run dev
+# 建立 Vite 
+
+npm init @vitejs/app <project-name>
+cd <project-name>
+npm install
+npm run dev
+```
+
+
+
+
+
+
+
+
+
+
+
+# OVER
+
+- 结尾跳转

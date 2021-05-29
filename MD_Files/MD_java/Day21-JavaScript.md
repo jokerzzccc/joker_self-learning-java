@@ -1,3 +1,19 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Day21-JavaScript
 
 始于：2021-03-01
@@ -829,7 +845,7 @@ now.getTime(); // 1435146562875, 以number形式表示的时间戳
 - jQuery 是必学的，给 操作 JS 带来了很多方便。
 - 需要在 head 里引入 jQuery 的 js 文件和 CSS。
 
-
+jQuery 各种事件查询网站：https://jquery.cuishifeng.cn/
 
 基本使用格式就是
 
@@ -839,8 +855,41 @@ $("选择器").事件(){}
 
 
 
+## 1、jQuery 操作 select
+
+常用操作：
+
+- 类似的可以举一反三。
+
+```js
+//获得 seleclt 选中框的值
+$("#selectId").val();
+//操作 select 选项
+//获得 value 对应值的文本
+$("#selectId").find("option[value="value值"]").text();
+//设置 text='text值' 的 option 设置为选中
+$("#selectId").find("option[text='text值']").attr("selected",true);
+//获得选中项的文本
+$("#selectId").find("option:selected").text();
+//给 option 添加属性
+$("#selectId“).find("option[value="value值"]").prop('selected',true);
+$("#selectId“).find("option[value="value值"]").attr('selected',true);
+//移除 option 
+$("#selectId").find("option[value='value值']").remove();
+```
+
+
+
+
+
+# 7、ESlint
+
+- 语法检查规则，只检查 JS 文件的。
+
+
+
+
+
 
 
 # OVER
-
-- 结束跳转

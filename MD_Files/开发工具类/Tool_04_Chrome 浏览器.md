@@ -1,3 +1,11 @@
+# 目录
+
+[toc]
+
+
+
+
+
 # 1、Chrome 常用快捷键
 
 2021/05/09
@@ -35,7 +43,13 @@ windows 系统：
 
 # 2、Chrome 浏览器 Debug
 
-- 
+- 谷歌浏览器，就是 点击鼠标右键选择检查，或者按 F12  ，就打开 DevTools 界面了。
+- 参考博客：https://juejin.cn/post/6844903604839514125#heading-0
+
+- 谷歌官方教程：https://developers.google.com/web/tools/chrome-devtools/
+  - 中文版：https://www.css88.com/doc/chrome-devtools/
+
+
 
 
 

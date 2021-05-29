@@ -6,6 +6,11 @@
 
 Nginx 学习中文网：https://www.nginx.cn/nginx-how-to
 
+参考博客：
+
+- https://juejin.cn/post/6844903944267759624
+- https://juejin.cn/post/6844903701459501070#heading-6
+
 
 
 # 什么是 Nginx
@@ -288,3 +293,11 @@ location / {
 之后再重新加载启动 nginx
 
 访问
+
+
+
+# Nginx 配置文件
+
+配置文件地址：Nginx 安装目录/conf/nginx.conf
+
+参考博客：https://juejin.cn/post/6844903701459501070#heading-1
