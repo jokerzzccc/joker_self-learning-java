@@ -11,13 +11,18 @@
 - Axios 官网：http://axios-js.com/
 - Axios GitHub：https://github.com/axios/axios
 
-
+- Axios W3Cschool：https://www.w3cschool.cn/jquti/
 
 
 
 # 1、Axios 简介
 
-Axios 简单理解：就是 ajax 的封装
+认识 Axios ：
+
+- Axios 简单理解：就是 ajax 的封装
+- Axios
+
+
 
 > Axios 的作用
 

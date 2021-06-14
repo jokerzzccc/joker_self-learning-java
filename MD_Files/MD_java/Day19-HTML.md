@@ -1,6 +1,16 @@
+# 目录
+
+[toc]
+
 # HTML
 
 # 初识html
+
+学习资源：
+
+- MDN 的 HTML 教程：https://developer.mozilla.org/zh-CN/docs/Web/HTML
+
+介绍：
 
 - HTML: Hyper Text Markup Language
 - 超文本：文件，图片，音频，视频，动画 。。。等
@@ -12,6 +22,7 @@ html5的优势：
 
 常用IDE ：
 
+- VS Code
 - webStorm
 - idea
 - ...
@@ -288,7 +299,7 @@ autoplay 自动播放
 
 # 9、iframe 内联框架
 
-- 这个用的比较多，常就是，跳转到另一个页面，使用可以类似为弹窗
+- 这个用的比较多，常用就是，在本页面，打开另一个页面，使用可以类似为弹窗
 
 ```html
 <!DOCTYPE html>
@@ -459,6 +470,30 @@ label  -->
 
 
 
+# 11、常用事件
+
+## onlick
+
+
+
+## onkeyup
+
+input 去空格相关：
+
+```js
+# 去掉所有空格
+onkeyup="this.value=this.value.replace(/[, ]/g,'')"
+# 去掉首尾空格，不去掉中间的
+onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')"
+```
+
+
+
+
+
+
+
+
+
 # OVER
 
-- 结尾跳转

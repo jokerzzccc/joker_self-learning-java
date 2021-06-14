@@ -106,6 +106,7 @@ git config --global --replace-all user.name "用户名"
 ```sh
 git add .
 git commit -m "update"
+# 也可以直接 git push
 git push origin master
 
 ```
@@ -115,6 +116,71 @@ git push origin master
 ```sh
 git pull 
 ```
+
+
+
+# 5、git 查看本地所有用户
+
+```sh
+# 查看本地所有配置
+git config --list
+
+# 查看当前全局用户的配置
+git config --global  --list
+
+# 查看当前仓库的配置信息
+git config --local  --list
+```
+
+
+
+# 6 、合并远程仓库分支
+
+```sh
+# 新建一个与远程仓库分支同名的分支
+git branch <new_branch>
+# 或者直接，先本地新建一个 分支 ,并切换到该分支
+git branch -b <new_branch>
+# 在新分支下。拉取对应远程仓库代码，
+git pull origin <remote_branch>
+# 再切回 原分支，
+git checkout <old_branch>
+# 直接 将 new_branch 合并到 old_branch
+git merge <new_branch>
+# 如果 ，出现了冲突 conflict ，就去对应的文件修改，修改之后
+git add .
+git commit
+# 可以把新建的 分支删掉
+git branch -D <new_branch>
+```
+
+
+
+# 7、删除分支
+
+## 7.1 删除本地分支
+
+```sh
+# 
+git branch -d <branch_name>
+# 
+git branch -D <branch_name>
+
+```
+
+
+
+## 7.2 删除远程仓库分支
+
+
+
+
+
+## 7.3 删除追踪分支
+
+
+
+
 
 
 
