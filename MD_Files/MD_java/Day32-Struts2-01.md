@@ -11,7 +11,7 @@
 
 - struts2 解决的问题（添加一个过滤器）
 
-  ![01-struts2概述](D:\鼎信开发文档资料\鼎信_MD_File\Part01-Struts.assets\01-struts2概述.png)
+  ![01-struts2概述](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/01-struts2概述.png)
 
   - 注意：这里的aciton,就是html 里表单标签 form 的 action 属性
 
@@ -43,7 +43,7 @@
 
 ## Struts2 的执行流程
 
-![image-20210421202255337](D:\鼎信开发文档资料\鼎信_MD_File\Part01-Struts.assets\image-20210421202255337.png)
+![image-20210421202255337](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210421202255337.png)
 
 ## Struts2 主要内容分析
 
@@ -172,7 +172,7 @@ struts2 的标签引入jsp
 
 ## struts2 的标签分类
 
-![image-20210422144236902](D:\鼎信开发文档资料\鼎信_MD_File\Part01-Struts.assets\image-20210422144236902.png)
+![image-20210422144236902](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210422144236902.png)
 
 ### 普通标签（generic tags)
 
@@ -285,15 +285,15 @@ struts2 框架里配置常量值的地方有三个：
 
 
 
-![image-20210422110258322](D:\鼎信开发文档资料\鼎信_MD_File\Part01-Struts.assets\image-20210422110258322.png)
+![image-20210422110258322](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210422110258322.png)
 
-![image-20210422110402436](D:\鼎信开发文档资料\鼎信_MD_File\Part01-Struts.assets\image-20210422110402436.png)
+![image-20210422110402436](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210422110402436.png)
 
-![image-20210422110422076](D:\鼎信开发文档资料\鼎信_MD_File\Part01-Struts.assets\image-20210422110422076.png)
+![image-20210422110422076](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210422110422076.png)
 
-![image-20210422110445888](D:\鼎信开发文档资料\鼎信_MD_File\Part01-Struts.assets\image-20210422110445888.png)
+![image-20210422110445888](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210422110445888.png)
 
-![image-20210422110501465](D:\鼎信开发文档资料\鼎信_MD_File\Part01-Struts.assets\image-20210422110501465.png)
+![image-20210422110501465](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210422110501465.png)
 
 
 
