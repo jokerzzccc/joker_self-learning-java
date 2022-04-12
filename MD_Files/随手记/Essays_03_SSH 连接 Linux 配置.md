@@ -40,7 +40,7 @@ ssh root@<服务器_ip>
 
 #  公钥与私钥
 
-- 公钥于私钥总是成对出现
+- 公钥与私钥总是成对出现
 - 公钥加密，私钥解密
 
 
@@ -56,4 +56,33 @@ ssh root@<服务器_ip>
 
 ## XShell 导入私钥
 
-直接连接服务器，导入刚才下载的私钥，点击确定就好，不用输 ssh 下的密码。
+- 直接连接服务器，导入刚才下载的私钥，点击确定就好，不用输 ssh 下的密码。
+
+
+
+# Linux  安全配置
+
+参考博客：https://juejin.cn/post/6844903961678315528
+
+ssh 配置文件：`/etc/ssh/sshd_config`
+
+```sh
+# 登录相关
+PasswordAuthentication yes
+PermitRootLogin yes
+```
+
+
+
+# 新用户可以使用 sudo 权限
+
+进入 root 账户：
+
+```sh
+vim /etc/sudoers
+# 找到 root    ALL=(ALL)     ALL
+# 再后面添加 new_user_name    ALL=(ALL)    ALL
+# 这是一个只读文件，保存要用 :wq!
+# 就可以在新账户里用 sudo 命令了
+```
+
