@@ -180,9 +180,18 @@ git branch -D <branch_name>
 
 
 
+# 8、拉取远程仓库另一个分支
 
-
-
+```sh
+# 1.产看远程最新内容分支
+git fetch origin
+# 2 查看所有分支
+git branch -a
+# 3 检出远程分支到本地，并切换分支
+git checkout -b <branch_name> origin/<branch_name>
+# 4 再次查看本地分支,就能看到了
+git branch
+```
 
 
 
