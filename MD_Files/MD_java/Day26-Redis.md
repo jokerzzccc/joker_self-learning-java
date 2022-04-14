@@ -2142,8 +2142,8 @@ watch指令类似于乐观锁，在事务提交时，如果watch监控的多个K
    public class TestPing {
        public static void main(String[] args) {
            //new Jedis 对象即可
-           Jedis jedis = new Jedis("47.117.128.238",6379);
-           jedis.auth("123456");
+           Jedis jedis = new Jedis("47.xxx.xxx.xxx",6379);
+           jedis.auth("your_password");
            //Jedis 所有的函数，就是redis的所有指令，
            System.out.println(jedis.ping());
    
@@ -2168,7 +2168,7 @@ watch指令类似于乐观锁，在事务提交时，如果watch监控的多个K
 ```java
 public class TestPassword {
     public static void main(String[] args) {
-        Jedis jedis = new Jedis("47.117.128.238", 6379);
+        Jedis jedis = new Jedis("47.xxx.xxx.xxx", 6379);
         //验证reids配置文件的 requirepass 密码，如果没有设置密码这段代码省略
         jedis.auth("123456");
         jedis.connect();//连接
@@ -2192,7 +2192,7 @@ import java.util.Set;
  */
 public class TestKey {
     public static void main(String[] args) {
-        Jedis jedis = new Jedis("47.117.128.238", 6379);
+        Jedis jedis = new Jedis("47.xxx.xxx.xxx", 6379);
         jedis.auth("123456");
         jedis.connect();
         
@@ -2231,7 +2231,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TestString {
     public static void main(String[] args) {
-        Jedis jedis = new Jedis("47.117.128.238", 6379);
+        Jedis jedis = new Jedis("47.xxx.xxx.xxx", 6379);
         jedis.auth("123456");
 
         jedis.flushDB();
@@ -2290,7 +2290,7 @@ import redis.clients.jedis.Jedis;
  */
 public class TestList {
     public static void main(String[] args) {
-        Jedis jedis = new Jedis("47.117.128.238", 6379);
+        Jedis jedis = new Jedis("47.xxx.xxx.xxx", 6379);
         jedis.auth("123456");
 
         jedis.flushDB(); System.out.println("===========添加一个list===========");
@@ -2341,7 +2341,7 @@ import redis.clients.jedis.Jedis;
  */
 public class TestSet {
     public static void main(String[] args) {
-        Jedis jedis = new Jedis("47.117.128.238", 6379);
+        Jedis jedis = new Jedis("47.xxx.xxx.xxx", 6379);
         jedis.auth("123456");
 
         jedis.flushDB();
@@ -2395,7 +2395,7 @@ import java.util.Map;
  */
 public class TestHash {
     public static void main(String[] args) {
-        Jedis jedis = new Jedis("47.117.128.238", 6379);
+        Jedis jedis = new Jedis("47.xxx.xxx.xxx", 6379);
         jedis.auth("123456");
 
         jedis.flushDB();
@@ -2441,7 +2441,7 @@ import redis.clients.jedis.Transaction;
 public class TestMulti {
     public static void main(String[] args) {
         //创建客户端连接服务端，redis服务端需要被开启
-        Jedis jedis = new Jedis("47.117.128.238", 6379);
+        Jedis jedis = new Jedis("47.xxx.xxx.xxx", 6379);
         jedis.auth("123456");
         jedis.flushDB();
         JSONObject jsonObject = new JSONObject();
@@ -2543,7 +2543,7 @@ public class TestMulti {
 2. 配置连接 application.properties
 
    ```properties
-   spring.redis.host=47.117.128.238
+   spring.redis.host=47.xxx.xxx.xxx
    spring.redis.port=6379
    spring.redis.password=123456
    ```
