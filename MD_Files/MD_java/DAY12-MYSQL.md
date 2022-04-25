@@ -1795,3 +1795,15 @@ drop view temp_info;
   - GROUP BY分组后的结果
   - HAVING筛选过滤后的结果
   - UNION、UNION ALL联合后的结果
+
+
+
+
+
+
+
+# 11、SQL 的优化
+
+
+
+# THE END
