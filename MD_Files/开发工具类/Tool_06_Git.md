@@ -10,7 +10,10 @@
 
 ==学习路径：==
 
-- GIT 官方参考文档：https://git-scm.com/docs
+- GIT 详细参考文档
+  - （所有命令都有）：https://git-scm.com/docs
+- 中文 Git  书籍：https://git-scm.com/book/zh/v2
+- 常用命令讲解的博客：https://juejin.cn/post/6974184935804534815
 
 
 
@@ -185,7 +188,7 @@ git branch -D <branch_name>
 ```sh
 # 1.产看远程最新内容分支
 git fetch origin
-# 2 查看所有分支
+# 2 查看所有分支（包括本地和远程分支）
 git branch -a
 # 3 检出远程分支到本地，并切换分支
 git checkout -b <branch_name> origin/<branch_name>
@@ -195,6 +198,26 @@ git branch
 
 
 
-# OVER
+
+
+# Git 命令详解
+
+## 1、git rebase
+
+
+
+## 2、git stash
+
+
+
+## 3、git revert
+
+
+
+
+
+
+
+# THE END
 
 - 结尾跳转
