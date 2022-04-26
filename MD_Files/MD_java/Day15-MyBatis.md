@@ -1717,3 +1717,29 @@ select
 ## 13.4 自定义缓存 ehcache
 
 - 现在也不咋用 ehcache 了，主要用**redis** 做数据库缓存
+
+
+
+
+
+# 14、mybatis 的 sql 编写注意事项
+
+## 14.1 大于> 和小于 < 符号
+
+```sh
+第一种写法（1）：
+
+原符号       <        <=      >       >=       &        '        "
+替换符号    &lt;    &lt;=   &gt;    &gt;=   &amp;   &apos;  &quot;
+例如：sql如下：
+create_date_time &gt;= #{startTime} and  create_date_time &lt;= #{endTime}
+
+第二种写法（2）：
+大于等于
+<![CDATA[ >= ]]>
+小于等于
+<![CDATA[ <= ]]>
+例如：sql如下：
+create_date_time <![CDATA[ >= ]]> #{startTime} and  create_date_time <![CDATA[ <= ]]> #{endTime}
+```
+

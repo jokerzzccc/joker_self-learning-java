@@ -1,4 +1,13 @@
+# 目录
+
+[toc]
+
 # Java8 新特性
+
+
+
+- Java 8 新特性 官方文档：https://docs.oracle.com/javase/8/docs/technotes/guides/collections/changes8.html
+- 
 
 主要是：
 
@@ -8,7 +17,7 @@
 - 新的日期 API
 - 其它
 
-# Lambda 表达式
+# 1、Lambda 表达式
 
 - 特殊的匿名内部类，语法更简洁
 
@@ -35,13 +44,13 @@
   - 如果执行语句只有一句，且无返回值，{}可以省略，若有返回值，则若想省去{}，则必须同时省略return , 且执行语句也保证只有一句
   - Lambda 不会生成一个单独的内部类文件（即 .class 文件）
 
-## 函数式接口
+## 1.1 函数式接口
 
 - 定义：一个接口只有一个抽象方法，则该接口为函数式接口
 - 只有函数式接口可以使用Lambda 表达式，Lambda表达式会匹配到这个抽象方法上。
 - @FunctionalInterface 注解可以检测接口是否符合函数式接口
 
-### 常见函数式接口
+### 1.1.1 常见函数式接口
 
 | 函数式接口                   | 参数类型 | 返回类型 | 说明                                                         |
 | ---------------------------- | -------- | -------- | ------------------------------------------------------------ |
@@ -52,7 +61,7 @@
 | Runnable                     |          |          | void run();                                                  |
 | Comparator<T>                | T        |          | int compare(T o1, T o2);                                     |
 
-### 使用
+### 1.1.2 使用
 
 ```java
 /**
@@ -114,7 +123,7 @@ public class Demo02 {
 
 ```
 
-## 方法引用
+## 1.2 方法引用
 
 - 方法引用式 Lambda 表达式的一种简写形式。
 - 如果 Lambda 表达式方法体中只是调用一个特定的已经存在的方法，则可以使用方法引用
@@ -124,7 +133,7 @@ public class Demo02 {
   - 类::实例方法
   - 类::new
 
-### 方法引用的使用
+### 1.2.1 方法引用的使用
 
 ```java
 /**
@@ -165,21 +174,25 @@ public class Demo03 {
 }
 ```
 
-# Stream API
+# 2、Stream API
+
+- Java 8 Stream API 官方文档 ：
+  - https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
+- Stream 使用实例：https://mp.weixin.qq.com/s/tJh3yRR0CUxv6y8oVX8lng
 
 - 流（Stream）中**保存**对集合或数组数据的**操作**。和集合类似，但集合中保存的是数据
 
-  ![]()![Snipaste_2021-02-21_14-19-40](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/Snipaste_2021-02-21_14-19-40.png)
+  ![Snipaste_2021-02-21_14-19-40](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/Snipaste_2021-02-21_14-19-40.png)
 
 - lambda 表达式与 函数式接口 为的就是要在Stream API 中来使用
 
-## Stream 的特点
+## 2.1 Stream 的特点
 
 - Stream 自己不会存储元素。存储的是操作
 - Stream 不会改变源对象。相反，他们会返回一个持有结果的新Stream 
 - Stream 操作是延迟执行的。这意味着他们会等到需要结果的时候才执行
 
-## Stream的使用步骤
+## 2.2 Stream的使用步骤
 
 - 创建
   - 新建一个流
@@ -190,7 +203,7 @@ public class Demo03 {
 
 
 
-### 常见的中间操作
+### 2.2.1 常见的中间操作
 
 - filter,limit,skip,distinct（去重）, sorted
   - 这些中间操作都是和前面的函数式接口与lambda表达式结合使用
@@ -249,7 +262,7 @@ public class Demo04 {
 }
 ```
 
-### 终止操作
+### 2.2.2 终止操作
 
 - forEach, min, max , count
 - reduce , collect
@@ -305,7 +318,67 @@ public class Demo06 {
 }
 ```
 
-# 新时间API
+
+
+## 2.3 补充：Stream API 详解
+
+### 2.3.1 中间操作
+
+#### 1、filter
+
+
+
+#### 2、foreach
+
+
+
+#### 3、map
+
+
+
+#### 4、distinct
+
+
+
+#### 5、limit
+
+
+
+#### 6、skip
+
+
+
+7、
+
+
+
+
+
+
+
+### 2.3.2  终止操作
+
+
+
+#### 1、count
+
+
+
+#### 2、partitioningBy
+
+
+
+#### 3、groupingBy
+
+
+
+#### 4、joining
+
+
+
+5、
+
+# 3、新时间API
 
 - 之前的时间API 存在问题：线程安全问题，设计混乱
 
@@ -421,3 +494,6 @@ public class Demo09 {
 
 ```
 
+
+
+# THE END
