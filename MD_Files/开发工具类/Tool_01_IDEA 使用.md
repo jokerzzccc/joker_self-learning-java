@@ -8,7 +8,15 @@
 
 - 后谈
 
+### 一般就是三个破解方式：
 
+1. jetbrains-agent（已停止维护）
+2. **BetterIntelliJ**(据说后面被恶意植入病毒)
+3. eval reset (无限重置激活版)（====）
+
+### 1.2 IDEA 各个版本下载地址
+
+- IDEA 下载地址：https://www.jetbrains.com/zh-cn/idea/download/other.html
 
 # 2、IDEA 常用插件
 
