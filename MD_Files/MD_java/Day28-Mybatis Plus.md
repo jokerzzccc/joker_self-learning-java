@@ -10,7 +10,7 @@ typora-copy-images-to: md-imgs
 
 MybatisPlus 3.4.2
 
-# MybatisPlus 概述
+# 1、MybatisPlus 概述
 
 需要的基础：MyBatis、Spring、SpringMVC
 
@@ -20,15 +20,19 @@ MyBatisPlus可以节省我们大量工作时间，所有的CRUD代码它都可�
 
 三个最常用的偷懒的自动化代码工具：JPA 、 tk-mapper、MyBatisPlus
 
-## 简介
+## 1.1 简介
 
 是什么？ MyBatis 本来就是简化 JDBC 操作的！而 MybatisPlus  简化 MyBatis 。
 
 MybatisPlus  官网：https://baomidou.com/
 
+MybatisPlus 各类示例：https://github.com/baomidou/mybatis-plus-samples
+
+好的博客：https://janycode.github.io/2021/06/13/05_%E6%95%B0%E6%8D%AE%E5%BA%93/03_MyBatis-Plus/02-MyBatis-Plus%20%E9%AB%98%E7%BA%A7%E4%BD%BF%E7%94%A8/index.html
+
 一切都可以根据**官网指南**学习
 
-## 特性
+## 1.2 特性
 
 + **无侵入**：只做增强不做改变，引入它不会对现有工程产生影响，如丝般顺滑
 + **损耗小**：启动即会自动注入基本 CURD，性能基本无损耗，直接面向对象操作
@@ -45,7 +49,7 @@ MybatisPlus  官网：https://baomidou.com/
 
 
 
-# 快速入门
+# 2、快速入门
 
 快速入门 官网：https://baomidou.com/guide/quick-start.html#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%B7%A5%E7%A8%8B
 
@@ -61,7 +65,7 @@ MybatisPlus  官网：https://baomidou.com/
 
 
 
-## 步骤
+## 2.1 步骤
 
 - 对应官方文档就好
 
@@ -213,7 +217,7 @@ spring:
 
 ![image-20210406211414513](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/Day28-MybatisPlus.assets/image-20210406211414513.png)
 
-## 思考问题
+## 2.2 思考问题
 
 1、SQL谁帮我们写的 ? MyBatis-Plus 都写好了
 
@@ -221,7 +225,7 @@ spring:
 
 
 
-## 配置日志
+## 2.3 配置日志
 
 - 所有的SQL 现在是不可见的，希望知道它是怎么执行 的，所以必须看日志。
 
@@ -244,11 +248,11 @@ mybatis-plus:
 
 
 
-# CRUD 扩展
+# 3、CRUD 扩展
 
 - 
 
-## Insert 插入
+## 3.1 Insert 插入
 
 ```java
     @Test//测试插入
@@ -271,7 +275,7 @@ mybatis-plus:
 
 
 
-## 主键生成策略
+## 3.2 主键生成策略
 
 参考博客：https://www.cnblogs.com/haoxinyue/p/5208136.html
 
@@ -383,7 +387,7 @@ IdType.INPUT：
 
 
 
-## update 更新
+## 3.3 update 更新
 
 ```java
 @Test//测试更新
@@ -405,7 +409,7 @@ public void testUpdate(){
 
 
 
-## 自动填充
+## 3.4 自动填充
 
 创建时间、修改时间！这些个操作一遍都是自动化完成的，我们不希望手动更新！
 
@@ -491,7 +495,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
 
 
-## 乐观锁
+## 3.5 乐观锁
 
 - **面试重点**，我们经常会被问道乐观锁，悲观锁！这个其实非常简单！
 - 乐观锁 官网：https://baomidou.com/guide/interceptor-optimistic-locker.html#optimisticlockerinnerinterceptor
@@ -608,7 +612,7 @@ public void testOptimisticLocker2() {
 
 
 
-## select 查询
+## 3.6 select 查询
 
 ```java
 //测试查询 selectById
@@ -636,7 +640,7 @@ public void testSelect(){
 
 
 
-##  page 分页查询
+##  3.7 page 分页查询
 
 MP 分页插件 官网：https://baomidou.com/guide/page.html 
 
@@ -686,7 +690,7 @@ public void testPage(){
 
 
 
-## delete 删除
+## 3.8 delete 删除
 
 delete 的接口：
 
@@ -736,7 +740,7 @@ public void testDeleteByMap(){
 
 
 
-## 逻辑删除
+## 3.9 逻辑删除
 
 - 逻辑删除 官网：https://baomidou.com/guide/logic-delete.html#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95
 
@@ -802,7 +806,7 @@ JDBC Connection [HikariProxyConnection@132338135 wrapping com.mysql.cj.jdbc.Conn
 
 
 
-## 执行 SQL 分析打印插件
+## 3.10 执行 SQL 分析打印插件
 
 - 执行 SQL 分析打印插件 是MP 的  **性能分析插件**
 - 官网名 https://baomidou.com/guide/p6spy.html
@@ -821,19 +825,9 @@ MP也提供性能分析插件，如果超过这个时间就停止运行！
 
 
 
-## wrapper 条件构造器 （重要）
-
-条件构造器 官网：https://baomidou.com/guide/wrapper.html#abstractwrapper
-
-==十分重要==
-
-我们写一些**复杂的sql**就可以使用它来替代！根据官网学习。
 
 
-
-
-
-## AutoGenerator  代码自动生成器
+# 4、AutoGenerator  代码自动生成器
 
 代码自动生成器 官网：https://baomidou.com/guide/generator.html
 
@@ -937,3 +931,331 @@ public class AutoGeneratorCode {
     }
 }
 ```
+
+
+
+# 5、wrapper 条件构造器 （重要）
+
+条件构造器 官网：https://baomidou.com/pages/10c804/#abstractwrapper
+
+==十分重要==
+
+我们写一些**复杂的sql**就可以使用它来替代！根据官网学习。
+
+
+
+## 5.1 Wrapper 的基本信息
+
+- Wrapper 作用：就是用来**构造 sql 的 where  条件**。
+- 
+
+### 5.1.1 Wrapper 类图
+
+- （version 3.4.1）
+
+![image-20220502001228158](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220502001228158.png)
+
+
+
+主要的类就是: 
+
+- AbstractWrapper ：下面两个的父类：提供公共方法构建 sql  的where 条件。
+
+- UpdateWrapper：针对 update 语句，
+- QueryWrapper：主要 是 select 语句。
+- (另外就是分别有对应的 Lambda 形式的实现类，对应的接口的入参写法不同)。
+
+
+
+### 5.1.2 Wrapper 接口的注意事项
+
+#### condition 
+
+- 出现的第一个入参`boolean condition`表示该条件**是否**加入最后生成的sql中，例如：query.like(StringUtils.isNotBlank(name), Entity::getName, name) .eq(age!=null && age >= 0, Entity::getAge, age)
+
+## 5.2 Wrapper 的创建及使用方式
+
+### 5.2.1 普通接口类
+
+- UpdateWrapper， QueryWrapper
+- 使用示例详见后面，接口见官方文档。
+
+```java
+// new 一个就可以了
+```
+
+
+
+### 5.2.2 lambda 类 
+
+- LambdaUpdateWrapper，lambdaQueryWrapper
+- 使用示例详见后面
+
+### 5.2.3 工具类 Wrappers
+
+- 工具类 Wrappers ：可以使用静态方法构建上面两个，就不用 new 上面两个对象了。
+- Wrapper 的方法：
+
+![image-20220502005215191](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220502005215191.png)
+
+- 使用示例：
+
+  ```java
+  // 普通接口和 Wrappers 的使用对比
+  // 1、普通接口
+  // 查询name不为空的用户，并且邮箱不为空的用户，年龄大于等于12
+  QueryWrapper<User> wrapper = new QueryWrapper<>();
+  wrapper
+          .isNotNull("name")
+          .isNotNull("email")
+          .ge("age", 20);//大于等于 >= age>=20
+  userMapper.selectList(wrapper);//可以和map对比一下。
+  
+  // 2、Wrappers 工具类的使用示例
+  userMapper.selectList(Wrappers.lambdaQuery(User.class)
+          .isNotNull(User::getName)
+          .isNotNull(User::getEmail)
+          .ge(User::getAge, 20));
+  ```
+
+  
+
+## 5.3 Wrapper GitHub 使用示例
+
+### 5.3.1 WrapperTest
+
+```java 
+package com.baomidou.mybatisplus.samples.wrapper;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.samples.wrapper.entity.User;
+import com.baomidou.mybatisplus.samples.wrapper.mapper.RoleMapper;
+import com.baomidou.mybatisplus.samples.wrapper.mapper.UserMapper;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.CollectionUtils;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * @author miemie
+ * @since 2018-08-10
+ */
+@SpringBootTest
+public class WrapperTest {
+
+    @Resource
+    private UserMapper userMapper;
+    @Resource
+    private RoleMapper roleMapper;
+
+    @Test
+    public void tests() {
+        System.out.println("----- 普通查询 ------");
+        List<User> plainUsers = userMapper.selectList(new QueryWrapper<User>().eq("role_id", 2L));
+        List<User> lambdaUsers = userMapper.selectList(new QueryWrapper<User>().lambda().eq(User::getRoleId, 2L));
+        Assertions.assertEquals(plainUsers.size(), lambdaUsers.size());
+        print(plainUsers);
+
+        System.out.println("----- 带子查询(sql注入) ------");
+        List<User> plainUsers2 = userMapper.selectList(new QueryWrapper<User>()
+                .inSql("role_id", "select id from role where id = 2"));
+        List<User> lambdaUsers2 = userMapper.selectList(new QueryWrapper<User>().lambda()
+                .inSql(User::getRoleId, "select id from role where id = 2"));
+        Assertions.assertEquals(plainUsers2.size(), lambdaUsers2.size());
+        print(plainUsers2);
+
+        System.out.println("----- 带嵌套查询 ------");
+        List<User> plainUsers3 = userMapper.selectList(new QueryWrapper<User>()
+                .nested(i -> i.eq("role_id", 2L).or().eq("role_id", 3L))
+                .and(i -> i.ge("age", 20)));
+        List<User> lambdaUsers3 = userMapper.selectList(new QueryWrapper<User>().lambda()
+                .nested(i -> i.eq(User::getRoleId, 2L).or().eq(User::getRoleId, 3L))
+                .and(i -> i.ge(User::getAge, 20)));
+        Assertions.assertEquals(plainUsers3.size(), lambdaUsers3.size());
+        print(plainUsers3);
+
+        System.out.println("----- 自定义(sql注入) ------");
+        // 方式一
+        List<User> plainUsers4 = userMapper.selectList(new QueryWrapper<User>()
+                .apply("role_id = 2"));
+/*        List<User> lambdaUsers4 = userMapper.selectList(new QueryWrapper<User>().lambda()
+                .apply("role_id = 2"));*/
+        // 方式二
+        List<User> plainUsers5 = userMapper.selectList(new QueryWrapper<User>()
+                .apply("role_id = {0}",2));
+/*        List<User> lambdaUsers5 = userMapper.selectList(new QueryWrapper<User>().lambda()
+                .apply("role_id = {0}",2));*/
+        print(plainUsers4);
+        Assertions.assertEquals(plainUsers4.size(), plainUsers5.size());
+
+        UpdateWrapper<User> uw = new UpdateWrapper<>();
+        uw.set("email", null);
+        uw.eq("id", 4);
+        userMapper.update(new User(), uw);
+        User u4 = userMapper.selectById(4);
+        Assertions.assertNull(u4.getEmail());
+
+
+    }
+
+    @Test
+    public void lambdaQueryWrapper() {
+        System.out.println("----- 普通查询 ------");
+        List<User> plainUsers = userMapper.selectList(new LambdaQueryWrapper<User>().eq(User::getRoleId, 2L));
+        List<User> lambdaUsers = userMapper.selectList(new QueryWrapper<User>().lambda().eq(User::getRoleId, 2L));
+        Assertions.assertEquals(plainUsers.size(), lambdaUsers.size());
+        print(plainUsers);
+
+        System.out.println("----- 带子查询(sql注入) ------");
+        List<User> plainUsers2 = userMapper.selectList(new LambdaQueryWrapper<User>()
+                .inSql(User::getRoleId, "select id from role where id = 2"));
+        List<User> lambdaUsers2 = userMapper.selectList(new QueryWrapper<User>().lambda()
+                .inSql(User::getRoleId, "select id from role where id = 2"));
+        Assertions.assertEquals(plainUsers2.size(), lambdaUsers2.size());
+        print(plainUsers2);
+
+        System.out.println("----- 带嵌套查询 ------");
+        List<User> plainUsers3 = userMapper.selectList(new LambdaQueryWrapper<User>()
+                .nested(i -> i.eq(User::getRoleId, 2L).or().eq(User::getRoleId, 3L))
+                .and(i -> i.ge(User::getAge, 20)));
+        List<User> lambdaUsers3 = userMapper.selectList(new QueryWrapper<User>().lambda()
+                .nested(i -> i.eq(User::getRoleId, 2L).or().eq(User::getRoleId, 3L))
+                .and(i -> i.ge(User::getAge, 20)));
+        Assertions.assertEquals(plainUsers3.size(), lambdaUsers3.size());
+        print(plainUsers3);
+
+        System.out.println("----- 自定义(sql注入) ------");
+        List<User> plainUsers4 = userMapper.selectList(new QueryWrapper<User>()
+                .apply("role_id = 2"));
+        print(plainUsers4);
+
+        UpdateWrapper<User> uw = new UpdateWrapper<>();
+        uw.set("email", null);
+        uw.eq("id", 4);
+        userMapper.update(new User(), uw);
+        User u4 = userMapper.selectById(4);
+        Assertions.assertNull(u4.getEmail());
+    }
+
+    private <T> void print(List<T> list) {
+        if (!CollectionUtils.isEmpty(list)) {
+            list.forEach(System.out::println);
+        }
+    }
+
+    /**
+     * SELECT id,name,age,email,role_id FROM user
+     * WHERE ( 1 = 1 ) AND ( ( name = ? AND age = ? ) OR ( name = ? AND age = ? ) )
+     */
+    @Test
+    public void testSql() {
+        QueryWrapper<User> w = new QueryWrapper<>();
+        w.and(i -> i.eq("1", 1))
+                .nested(i ->
+                        i.and(j -> j.eq("name", "a").eq("age", 2))
+                                .or(j -> j.eq("name", "b").eq("age", 2)));
+        userMapper.selectList(w);
+    }
+
+    /**
+     * SELECT id,name FROM user
+     * WHERE (age BETWEEN ? AND ?) ORDER BY role_id ASC,id ASC
+     */
+    @Test
+    public void testSelect() {
+        QueryWrapper<User> qw = new QueryWrapper<>();
+        qw.select("id","name").between("age",20,25)
+                .orderByAsc("role_id","id");
+        List<User> plainUsers = userMapper.selectList(qw);
+
+        LambdaQueryWrapper<User> lwq = new LambdaQueryWrapper<>();
+        lwq.select(User::getId,User::getName).between(User::getAge,20,25)
+                .orderByAsc(User::getRoleId,User::getId);
+        List<User> lambdaUsers = userMapper.selectList(lwq);
+
+        print(plainUsers);
+        Assertions.assertEquals(plainUsers.size(), lambdaUsers.size());
+    }
+}
+
+```
+
+### 5.3.2 UpdateWrapperTest
+
+```java
+package com.baomidou.mybatisplus.samples.wrapper;
+
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.samples.wrapper.entity.User;
+import com.baomidou.mybatisplus.samples.wrapper.mapper.UserMapper;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+/**
+ * @author sundongkai
+ * @since 2021-02-04
+ */
+@SpringBootTest
+public class UpdateWrapperTest {
+
+    @Autowired
+    private UserMapper userMapper;
+
+    /**
+     * UPDATE user SET age=?, email=? WHERE (name = ?)
+     */
+    @Test
+    public void tests() {
+
+        //方式一：
+        User user = new User();
+        user.setAge(29);
+        user.setEmail("test3update@baomidou.com");
+
+        userMapper.update(user,new UpdateWrapper<User>().eq("name","Tom"));
+
+        //方式二：
+        //不创建User对象
+        userMapper.update(null,new UpdateWrapper<User>()
+                .set("age",29).set("email","test3update@baomidou.com").eq("name","Tom"));
+
+    }
+
+    /**
+     * 使用lambda条件构造器
+     * UPDATE user SET age=?, email=? WHERE (name = ?)
+     */
+    @Test
+    public void testLambda() {
+
+        //方式一：
+        User user = new User();
+        user.setAge(29);
+        user.setEmail("test3update@baomidou.com");
+
+        userMapper.update(user,new LambdaUpdateWrapper<User>().eq(User::getName,"Tom"));
+
+        //方式二：
+        //不创建User对象
+        userMapper.update(null,new LambdaUpdateWrapper<User>()
+                .set(User::getAge,29).set(User::getEmail,"test3update@baomidou.com").eq(User::getName,"Tom"));
+
+    }
+
+
+}
+```
+
+
+
+
+
+# THE END
+

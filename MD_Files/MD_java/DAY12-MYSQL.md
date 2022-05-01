@@ -1806,4 +1806,14 @@ drop view temp_info;
 
 
 
+# 12 Mysql 的补充
+
+## 12.1 straight join
+
+
+
+
+
+
+
 # THE END

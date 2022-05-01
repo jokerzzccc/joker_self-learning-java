@@ -1170,7 +1170,7 @@ public static SqlSession getSqlSession(){
 
 
 
-
+###  2、@EqualsAndHashcode
 
 
 
