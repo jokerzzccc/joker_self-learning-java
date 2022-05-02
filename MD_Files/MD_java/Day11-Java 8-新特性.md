@@ -61,6 +61,38 @@
 | Runnable                     |          |          | void run();                                                  |
 | Comparator<T>                | T        |          | int compare(T o1, T o2);                                     |
 
+- 另外还有 接口名带 Bi 的比如：BiFunction，Bipredicate，BiConsumer等用法与不带 Bi 的一样，只是区别在于：`Bi---`接受两个参数。
+
+
+
+>  最常见的使用：
+
+1. `consumer` :接口
+
+   ```java
+   // 1 输出
+   System.out::println
+   ```
+
+2. `supplier` 接口：
+
+   ```java
+   // 1、实体类的属性的getter 方法。
+   // 2、类的无参构造
+   ArrayList::new
+   ```
+
+3. `function`接口：就是一个功能转换型接口，把一个数据转换成另一组数据。
+
+   ```java
+   // 1、String 类的返回长度的方法：String -> Integer
+   String::length
+   ```
+
+   
+
+
+
 ### 1.1.2 使用
 
 ```java
@@ -177,6 +209,7 @@ public class Demo03 {
 # 2、Stream API
 
 - Java 8 Stream API 官方文档 ：
+  
   - https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
 - Stream 使用实例：https://mp.weixin.qq.com/s/tJh3yRR0CUxv6y8oVX8lng
 
@@ -201,9 +234,63 @@ public class Demo03 {
 - 终止操作
   - 使用一个终止操作来产生结果。该操作会强制它之前的延迟操作立即执行。在这之后，该Stream 就不能使用了。
 
+### 2.2.1 创建流的方式
 
+生成流的方式主要有五种：
 
-### 2.2.1 常见的中间操作
++ 通过**集合**生成，应用中最常用的一种
+
+  ```
+  List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+  Stream<Integer> stream = integerList.stream();
+  ```
+
+  通过集合的`stream`方法生成流
+
++ 通过**数组**生成
+
+  ```
+  int[] intArr = new int[]{1, 2, 3, 4, 5};
+  IntStream stream = Arrays.stream(intArr);
+  ```
+
+  通过`Arrays.stream`方法生成流，并且该方法生成的流是数值流【即`IntStream`】而不是`Stream<Integer>`。补充一点使用数值流可以避免计算过程中拆箱装箱，提高性能。`Stream API`提供了`mapToInt`、`mapToDouble`、`mapToLong`三种方式将对象流【即`Stream<T>`】转换成对应的数值流，同时提供了`boxed`方法将数值流转换为对象流
+
++ 通过**值**生成
+
+  ```
+  Stream<Integer> stream = Stream.of(1, 2, 3, 4, 5);
+  ```
+
+  通过`Stream`的`of`方法生成流，通过`Stream`的`empty`方法可以生成一个空流
+
++ 通过**文件**生成
+
+  ```
+  Stream<String> lines = Files.lines(Paths.get("data.txt"), Charset.defaultCharset())
+  ```
+
+  通过`Files.line`方法得到一个流，并且得到的每个流是给定文件中的一行
+
++ 通过**函数**生成 提供了`iterate`和`generate`两个静态方法从函数中生成流
+
++ + iterator
+
+    ```
+    Stream<Integer> stream = Stream.iterate(0, n -> n + 2).limit(5);
+    ```
+
+    `iterate`方法接受两个参数，第一个为初始化值，第二个为进行的函数操作，因为`iterator`生成的流为无限流，通过`limit`方法对流进行了截断，只生成5个偶数
+
+  + generator
+
+    ```
+    Stream<Double> stream = Stream.generate(Math::random).limit(5);
+    ```
+
+    `generate`方法接受一个参数，方法参数类型为`Supplier<T>`，由它为流提供值。`generate`生成的流也是无限流，因此通过`limit`对流进行了截断
+
+### 2.2.2 常见的中间操作
 
 - filter,limit,skip,distinct（去重）, sorted
   - 这些中间操作都是和前面的函数式接口与lambda表达式结合使用
@@ -262,7 +349,7 @@ public class Demo04 {
 }
 ```
 
-### 2.2.2 终止操作
+### 2.2.3 终止操作
 
 - forEach, min, max , count
 - reduce , collect
@@ -326,7 +413,33 @@ public class Demo06 {
 
 #### 1、filter
 
+- 通过使用`filter`方法进行条件筛选，`filter`的方法参数为一个条件
 
+- 方法：
+
+  ```java
+  Stream<T> filter(Predicate<? super T> predicate);
+  ```
+
+
+
+- 多个过滤器时，使用 and() （&&），or()  （||）, negate() （！=）连接。
+
+  ```java
+  ArrayList<String> list = new ArrayList<>();
+  list.add("a");
+  list.add("b");
+  
+  list.stream().filter(x -> x.contains("a") && x.contains("b")).forEach(System.out::println);
+  
+  // 等同于如下
+  Predicate<String> p1 = x -> x.contains("a");
+  Predicate<String> p2 = x -> x.contains("b");
+          
+  list.stream().filter(p1.and(p2)).forEach(System.out::println);
+  ```
+
+  
 
 #### 2、foreach
 
@@ -334,23 +447,46 @@ public class Demo06 {
 
 #### 3、map
 
+- 所谓流映射就是将接受的元素映射成另外一个元素
 
+- ```java
+  List<String> stringList = Arrays.asList("Java 8", "Lambdas",  "In", "Action");
+  Stream<Integer> stream = stringList.stream().map(String::length);
+  ```
+
+- 通过`map`方法可以完成映射，该例子完成中`String -> Integer`的映射，之前上面的例子通过`map`方法完成了`Dish->String`的映射
 
 #### 4、distinct
 
-
+- 通过`distinct`方法快速去除重复的元素
 
 #### 5、limit
 
-
+- 通过`limit`方法指定返回流的个数，`limit`的参数值必须`>=0`，否则将会抛出异常
 
 #### 6、skip
 
+- 通过`skip`方法跳过流中的元素，如下例子跳过前两个元素，所以打印结果为`2,3,4,5`，`skip`的参数值必须`>=0`，否则将会抛出异常
 
+- ```java
+  List<Integer> integerList = Arrays.asList(1, 1, 2, 3, 4, 5);
+  Stream<Integer> stream = integerList.stream().skip(2);
+  ```
 
-7、
+7、**flatMap**
 
+- 将一个流中的每个值都转换为另一个流
 
+  ```java
+  List<String> wordList = Arrays.asList("Hello", "World");
+  List<String> strList = wordList.stream()
+          .map(w -> w.split(" "))
+          .flatMap(Arrays::stream)
+          .distinct()
+          .collect(Collectors.toList());
+  ```
+
+- `map(w -> w.split(" "))`的返回值为`Stream<String[]>`，我们想获取`Stream<String>`，可以通过`flatMap`方法完成`Stream<String[]> ->Stream<String>`的转换
 
 
 
@@ -362,21 +498,287 @@ public class Demo06 {
 
 #### 1、count
 
+- 通过使用`count`方法统计出流中元素个数
 
+- ```java
+  List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+  Long result = integerList.stream().count();
+  ```
 
 #### 2、partitioningBy
 
+- **进阶通过partitioningBy进行分区**
 
+- 分区是特殊的分组，它分类依据是true和false，所以返回的结果最多可以分为两组
+
+- ```java
+  List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+  Map<Boolean, List<Integer>> result = integerList.stream().collect(partitioningBy(i -> i < 3));
+  ```
+
+- 返回值的键仍然是布尔类型，但是它的分类是根据范围进行分类的，分区比较适合处理根据范围进行分类
 
 #### 3、groupingBy
 
+- **进阶通过groupingBy进行分组**
 
+- 在`collect`方法中传入`groupingBy`进行分组，其中`groupingBy`的方法参数为分类函数。还可以通过嵌套使用`groupingBy`进行多级分类
+
+- ```java
+  Map<Type, List<Dish>> result = dishList.stream().collect(groupingBy(Dish::getType));
+  // 多级分类
+  Map<Type, List<Dish>> result = menu.stream().collect(groupingBy(Dish::getType,
+          groupingBy(dish -> {
+              if (dish.getCalories() <= 400) return CaloricLevel.DIET;
+                  else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;
+                  else return CaloricLevel.FAT;
+          })));
+  ```
+
+- 
 
 #### 4、joining
 
+- **通过joining拼接流中的元素**
+
+- 默认如果不通过`map`方法进行映射处理拼接的`toString`方法返回的字符串，joining的方法参数为元素的分界符，如果不指定生成的字符串将是一串的，可读性不强
+
+- ```java
+  String result = menu.stream().map(Dish::getName).collect(Collectors.joining(", "));
+  
+  ```
+
+- 
+
+#### 5、**reduce**
+
+- 接口：
+
+  ```java
+  T reduce(T identity, BinaryOperator<T> accumulator);
+  
+  Optional<T> reduce(BinaryOperator<T> accumulator);
+  
+  <U> U reduce(U identity,
+                   BiFunction<U, ? super T, U> accumulator,
+                   BinaryOperator<U> combiner);
+  ```
+
+  
+
+- **将流中的元素组合起来**
+
+- 假设我们对一个集合中的值进行求和
+
+  ```java
+  // 方式一
+  int sum = 0;
+  for (int i : integerList) {
+    sum += i;
+  }
+  // 方式二
+  int sum = integerList.stream().reduce(0, (a, b) -> (a + b));
+  
+  // 方式三
+  int sum = integerList.stream().reduce(0, Integer::sum);
+  
+  ```
+
+- `reduce`接受两个参数，一个初始值这里是`0`，一个`BinaryOperator<T> accumulator` 来将两个元素结合起来产生一个新值， 另外`reduce`方法还有一个没有初始化值的重载方法
 
 
-5、
+
+### 2.3.3 按功能分
+
+> **获取流中最小最大值**
+
++ 通过 **min/max** 获取最小最大值
+
+  ```java
+  Optional<Integer> min = menu.stream().map(Dish::getCalories).min(Integer::compareTo);
+  Optional<Integer> max = menu.stream().map(Dish::getCalories).max(Integer::compareTo);
+  ```
+
+  也可以写成：
+
+  ```java
+  OptionalInt min = menu.stream().mapToInt(Dish::getCalories).min();
+  OptionalInt max = menu.stream().mapToInt(Dish::getCalories).max();
+  ```
+
+  `min`获取流中最小值，`max`获取流中最大值，方法参数为`Comparator<? super T> comparator`
+
++ 通过 **minBy/maxBy** 获取最小最大值
+
+  ```java
+  Optional<Integer> min = menu.stream().map(Dish::getCalories).collect(minBy(Integer::compareTo));
+  Optional<Integer> max = menu.stream().map(Dish::getCalories).collect(maxBy(Integer::compareTo));
+  ```
+
+  `minBy`获取流中最小值，`maxBy`获取流中最大值，方法参数为`Comparator<? super T> comparator`
+
++ 通过 **reduce** 获取最小最大值
+
+  ```java
+  Optional<Integer> min = menu.stream().map(Dish::getCalories).reduce(Integer::min);
+  Optional<Integer> max = menu.stream().map(Dish::getCalories).reduce(Integer::max);
+  ```
+
+
+
+
+
+> **求和**
+
++ 通过 **summingInt**
+
+  ```
+  int sum = menu.stream().collect(summingInt(Dish::getCalories));
+  ```
+
+  如果数据类型为`double`、`long`，则通过`summingDouble`、`summingLong`方法进行求和
+
++ 通过 **reduce**
+
+  ```
+  int sum = menu.stream().map(Dish::getCalories).reduce(0, Integer::sum);
+  ```
+
++ 通过 **sum**
+
+  ```
+  int sum = menu.stream().mapToInt(Dish::getCalories).sum();
+  ```
+
+在上面求和、求最大值、最小值的时候，对于相同操作有不同的方法可以选择执行。可以选择`collect`、`reduce`、`min/max/sum`方法，推荐使用`min`、`max`、`sum`方法。因为它最简洁易读，同时通过`mapToInt`将对象流转换为数值流，避免了装箱和拆箱操作
+
+
+
+
+
+>  **通过averagingInt求平均值**
+
+```
+double average = menu.stream().collect(averagingInt(Dish::getCalories));
+```
+
+如果数据类型为`double`、`long`，则通过`averagingDouble`、`averagingLong`方法进行求平均
+
+
+
+> **通过 summarizingInt 同时求总和、平均值、最大值、最小值**
+
+```java
+IntSummaryStatistics intSummaryStatistics = menu.stream().collect(summarizingInt(Dish::getCalories));
+double average = intSummaryStatistics.getAverage();  //获取平均值
+int min = intSummaryStatistics.getMin();  //获取最小值
+int max = intSummaryStatistics.getMax();  //获取最大值
+long sum = intSummaryStatistics.getSum();  //获取总和
+```
+
+- 如果数据类型为`double`、`long`，则通过`summarizingDouble`、`summarizingLong`方法
+
+
+
+>  **返回集合**
+
+```java
+List<String> strings = menu.stream().map(Dish::getName).collect(toList());
+Set<String> sets = menu.stream().map(Dish::getName).collect(toSet());
+```
+
+
+
+
+
+> **通过foreach进行元素遍历**
+
+```java
+List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+integerList.stream().forEach(System.out::println);
+```
+
+
+
+
+
+>  **查找**
+
+提供了两种查找方式
+
++ **findFirst** 查找第一个
+
+  ```java
+  List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+  Optional<Integer> result = integerList.stream().filter(i -> i > 3).findFirst();
+  ```
+
+  - 通过`findFirst`方法查找到第一个大于三的元素并打印
+
++ **findAny** 随机查找一个
+
+  ```java
+  List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+  Optional<Integer> result = integerList.stream().filter(i -> i > 3).findAny();
+  ```
+
+  - 通过`findAny`方法查找到其中一个大于三的元素并打印，因为内部进行优化的原因，当找到第一个满足大于三的元素时就结束，该方法结果和`findFirst`方法结果一样。提供`findAny`方法是为了更好的利用并行流，`findFirst`方法在并行上限制更多.
+
+
+
+>  **元素匹配**
+
+提供了三种匹配方式
+
++ **allMatch** 匹配所有
+
+  ```java
+  List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+  if (integerList.stream().allMatch(i -> i > 3)) {
+      System.out.println("值都大于3");
+  }
+  ```
+
+  通过`allMatch`方法实现
+
++ **anyMatch** 匹配其中一个
+
+  ```java
+  List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+  if (integerList.stream().anyMatch(i -> i > 3)) {
+      System.out.println("存在大于3的值");
+  }
+  ```
+
+  等同于
+
+  ```java
+  for (Integer i : integerList) {
+      if (i > 3) {
+          System.out.println("存在大于3的值");
+          break;
+      }
+  }
+  ```
+
+  存在大于3的值则打印，`java8`中通过`anyMatch`方法实现这个功能
+
++ **noneMatch** 全部不匹配
+
+  ```java
+  List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+  if (integerList.stream().noneMatch(i -> i > 3)) {
+      System.out.println("值都小于3");
+  }
+  ```
+
+  通过`noneMatch`方法实现
+
+
+
+
+
+
 
 # 3、新时间API
 
