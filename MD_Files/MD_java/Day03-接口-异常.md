@@ -289,6 +289,8 @@ public void test(int a,int b) throws ArithmeticException {
 
 ## 经验总结
 
+- 异常的最佳实践博客：https://segmentfault.com/a/1190000015028573
+
 - 处理运行异常时，采用逻辑去合理规避同时辅助try-catch处理
 - 在多重 catch 块后面，可以加一个catch (Exception) 来处理可能会被遗漏的异常。
 - 对于不确定的代码，也可以加上 try-catch,处理潜在的异常
