@@ -1720,7 +1720,7 @@ public class TestTransaction01 {
 - 在springBoot的时候学习，很牛
 - 
 
-# 10 视图
+# 10、视图
 
 ## 10.1 概念
 
@@ -1803,6 +1803,20 @@ drop view temp_info;
 
 
 # 11、SQL 的优化
+
+- SQL 优化参考博客：
+  - https://developer.aliyun.com/article/779151
+  - https://juejin.cn/post/6844903750839058446#heading-0
+  - https://segmentfault.com/a/1190000012155267
+  - 具体的 SQL 语句优化：https://blog.csdn.net/qq_35642036/article/details/82820129
+
+
+
+
+
+
+
+
 
 
 
