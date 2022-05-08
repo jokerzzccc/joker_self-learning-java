@@ -3874,3 +3874,301 @@ ok , 这就是SpingBoot + dubbo + zookeeper实现分布式开发的应用，其�
 
 ![image-20210318030735743](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20210318030735743.png)
 
+
+
+# ---------补充-------
+
+
+
+# 23、SpringBoot  后台接受前端传参
+
+参考博客：
+
+- https://segmentfault.com/a/1190000021630804
+- https://juejin.cn/post/6844904198706839559#heading-1
+
+## 获取传参
+
+### @PathVariable
+
+@PathVariable注解主要用来获取URL参数。即这种风格的 URL：[http://localhost](https://link.segmentfault.com/?enc=m24foFqtc38LNikKmIdU7g%3D%3D.jLE6t0vbA9Hk75bsU92p102fSL3nGOOFI8ULw8d5%2Bxk%3D):8080/user/{id}
+
+```kotlin
+@GetMapping("/user/{id}") 
+public String testPathVariable(@PathVariable Integer id) { 
+   System.out.println("获取到的id为：" + id); 
+return  "success"; 
+}
+```
+
+对于多个参数的获取
+
+```kotlin
+@GetMapping("/user/{idd}/{name}") 
+public String testPathVariable(
+  @PathVariable(value = "idd") Integer id, 
+  @PathVariable String name) {   
+  System.out.println("获取到的id为：" + id);  
+  System.out.println("获取到的name为：" + name); 
+  return  "success"; 
+}
+```
+
+### @RequestParam
+
+@RequestParam：是从 Request 里获取参数值，即这种风格的 URL：[http://localhost](https://link.segmentfault.com/?enc=A8a9%2BYpbLtd%2FcaWS7NsfuQ%3D%3D.KSqCy4qKFwLvbl2gkJ45iCt%2BJZcrrZwafDSDMmXMvj4%3D):8080/user?id=1。除此之外，该注解还可以用于 POST 请求，接收前端表单提交的参数
+
+```typescript
+@RequestMapping("/user") 
+public String testRequestParam(
+  @RequestParam(value = "idd", required = false) Integer id) { 
+  System.out.println("获取到的id为：" + id); 
+  return  "success"; 
+}
+```
+
+当参数较多时，可以不用@RequestParam。而是通过封装实体类来接收参数。
+
+```haxe
+public  class  User { 
+  private String username;
+  private String password;
+  //添加setter和getter 
+}
+```
+
+使用实体接收的话，我们不必在前面加 @RequestParam 注解，直接使用即可。
+
+```pgsql
+@PostMapping("/form2") 
+public String testForm(User user) { 
+  System.out.println("获取到的username为：" + user.getUsername()); 
+  System.out.println("获取到的password为：" + user.getPassword()); 
+  return  "success"; 
+}
+```
+
+上面的是表单实体提交。当JSON格式提交时，需要用@RequestBody。
+
+### @RequestBody 
+
+@RequestBody 注解用于接收前端传来的实体。接收参数为JSON格式的传递。
+
+```pgsql
+public  class  User { 
+  private String username; 
+  private String password; 
+  //省略getter和setter
+} 
+
+@PostMapping("/user") 
+public String testRequestBody(@RequestBody User user) { 
+  System.out.println("获取到的username为：" + user.getUsername()); 
+  System.out.println("获取到的password为：" + user.getPassword()); 
+  return  "success"; 
+}
+```
+
+传输时需要传JSON格式的参数。
+
+
+
+## 参数校验
+
+参考博客：
+
+- https://segmentfault.com/a/1190000039418008
+- https://reflectoring.io/bean-validation-with-spring-boot/
+
+### @Valid
+
+- 所在 package
+  -  javax.validation
+
+**定义**
+
+> Marks a property, method parameter or method return type for validation cascading.
+> Constraints defined on the object and its properties are be validated when the property, method parameter or method return type is validated.
+> This behavior is applied recursively.
+
+它标记一个属性、方法参数或方法返回值需要**级联地**验证，这意味着每当使用它标记一个参数时，这个参数里面的**各个属性都被验证**。
+
+**例子**
+
+#### Controller(`@Valid`)
+
+```less
+@RestController
+public class MembershipController{
+    @PostMapping("/create-membership-remark")
+    public MembershipRemarkOutDto createMembershipRemark(
+        @RequestBody @Valid CreateMembershipRemarkInDto aCreateMembershipRemarkInDto) {
+        return membershipFacade.createMembershipRemark(aCreateMembershipRemarkInDto);
+    }
+}
+```
+
+CreateMembershipRemarkInDto(不检查 `CreateBarInDto bar`)
+
+```typescript
+public class CreateMembershipRemarkInDto {
+
+    @NotBlank
+    private String remark;
+
+    @NotBlank
+    private String fooStr;
+
+    @NotNull    // 此处不加 @Valid 则不会检查 CreateBarInDto
+    private CreateBarInDto bar;
+
+    public static class CreateBarInDto {
+        @NotBlank
+        private String barStr;
+    }
+}
+```
+
+**解释**
+
+在参数中使用 `@Valid`意味着 **参数中的各个属性都会被校验**(如 `remark`, `useless` 和 `bar`)
+
+但是 **`bar` 只会被校验它本身 @NotNull, 不会校验它的属性**是否满足要求
+
+#### CreateMembershipRemarkInDto(检查 `CreateBarInDto bar`)
+
+如果需要检查 `CreateBarInDto`，则需要改为如下的形式：
+
+```less
+public class CreateMembershipRemarkInDto {
+
+    @NotBlank
+    private String remark;
+
+    @NotBlank
+    private String fooStr;
+
+    @NotNull
+    @Valid  // 增加 @Valid 注解
+    private CreateBarInDto bar;
+
+    public static class CreateBarInDto {
+        @NotBlank
+        private String barStr;
+    }
+}
+```
+
+**解释**
+
+此时 `bar` 也**会被校验**它的属性(如 `barStr`)是否满足要求
+
+
+
+==常见的校验==：
+
+**Common Validation Annotations**
+
+Some of the most common validation annotations are:
+
++ **`@NotNull`:** to say that a field must not be null.
++ **`@NotEmpty`:** to say that a list field must not empty.
++ **`@NotBlank`:** to say that a string field must not be the empty string (i.e. it must have at least one character).
++ **`@Min` and `@Max`:** to say that a numerical field is only valid when it’s value is above or below a certain value.
++ **`@Pattern`:** to say that a string field is only valid when it matches a certain regular expression.
++ **`@Email`:** to say that a string field must be a valid email address.
+
+### @Validated
+
+- **所在 package**
+  -  org.springframework.validation.annotation
+
+**定义**
+
+`@Validated` 是 `@Valid` 的变体(variant)。
+通过声明 InDto 中属性的 `groups`，再搭配使用 `@Validated`，就能决定**哪些属性需要校验，哪些不需要校验**
+
+**例子**
+
+**Controller(`@Validated`)**
+
+```less
+@RestController
+public class MembershipController{
+    @PostMapping("/create-membership-remark")
+    public MembershipRemarkOutDto createMembershipRemark(
+        @RequestBody @Validated({Useful.class}) CreateMembershipRemarkInDto aCreateMembershipRemarkInDto) {
+        return membershipFacade.createMembershipRemark(aCreateMembershipRemarkInDto);
+    }
+}
+```
+
+**CreateMembershipRemark**
+
+```less
+public class CreateMembershipRemarkInDto {
+
+    @NotBlank(groups = Useful.class)
+    private String remark;
+
+    @NotBlank(groups = Useless.class)
+    private String fooStr;
+
+    @NotNull(groups = Useless.class)
+    @Valid
+    private CreateBarInDto bar;
+
+    @Getter
+    public static class CreateBarInDto {
+
+        @NotBlank
+        private String barStr;
+    }
+}
+```
+
+**Useful interface & Useless interface**
+
+```angelscript
+public interface Useful {
+}
+public interface Useless {
+}
+```
+
+声明两个空的interface：`Useful` 和 `Useless`，便于区分。
+此时就只有声明为 `Useful` 的会被校验，而 `Useless` 则不会被校验。
+
+
+
+### @Valid 与 @Validated 的区别
+
+- @Validated  拥有 groups 的功能。
+
+`@Validated` and `@Valid`
+
+In many cases, however, Spring does the validation for us. We don’t even need to create a validator object ourselves. Instead, we can let Spring know that we want to have a certain object validated. This works by using the the `@Validated` and `@Valid` annotations.
+
+The `@Validated` annotation is a **class-level annotation** that we can use to tell Spring to validate parameters that are passed into a method of the annotated class. We’ll learn more about how to use it in the section about [validating path variables and request parameters](https://reflectoring.io/#validating-path-variables-and-request-parameters).
+
+We can put the `@Valid` annotation on **method parameters and fields** to tell Spring that we want a method parameter or field to be validated. We’ll learn all about this annotation in the [section about validating a request body](https://reflectoring.io/#validating-a-request-body).
+
+
+
+# 24、SpringBoot locadateTime 的转换
+
+- 参考博客：
+  - https://blog.51cto.com/knifeedge/5188203?b=totalstatistic
+
+
+
+
+
+
+
+
+
+
+
+# THE END 
+

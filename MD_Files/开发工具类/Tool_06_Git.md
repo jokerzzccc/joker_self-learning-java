@@ -14,6 +14,7 @@
   - （所有命令都有）：https://git-scm.com/docs
 - 中文 Git  书籍：https://git-scm.com/book/zh/v2
 - 常用命令讲解的博客：https://juejin.cn/post/6974184935804534815
+- https://www.ruanyifeng.com/blog/2014/06/git_remote.html
 
 
 
@@ -204,15 +205,75 @@ git branch
 
 ## 1、git rebase
 
+rebase 翻译为**变基**，他的作用和 merge 很相似，用于把一个分支的修改合并到当前分支上。
+
+如下图所示，下图介绍了经过 rebase 后提交历史的变化情况。
+
+![image-20220509005446555](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220509005446555.png)
+
+现在我们来用一个例子来解释一下上面的过程。
+
+假设我们现在有2条分支，一个为 master，一个为 feature/1，他们都基于初始的一个提交 add readme 进行检出分支，之后，master 分支增加了 3.js 和 4.js 的文件，分别进行了2次提交，feature/1 也增加了 1.js 和 2.js 的文件，分别对应以下2条提交记录。
+
+此时，对应分支的提交记录如下。
+
+master 分支如下图：
+
+![image-20220509005510859](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220509005510859.png)
+
+feature/1 分支如下图
+
+![image-20220509005619175](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220509005619175.png)
+
+结合起来看是这样的
+
+![image-20220509005640947](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220509005640947.png)
+
+此时，切换到 feature/1 分支下，执行 `git rebase master`，成功之后，通过 `git log` 查看记录。
+
+如下图所示：可以看到先是逐个应用了 mater 分支的更改，然后以 master 分支最后的提交作为基点，再逐个应用 feature/1 的每个更改。
+
+![image-20220509005816540](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220509005816540.png)
+
+所以，我们的提交记录就会非常清晰，没有分叉，上面演示的是比较顺利的情况，但是大部分情况下，rebase 的过程中会产生冲突的，此时，就需要**手动解决冲突**，然后使用依次 `git add ` 、`git rebase --continue ` 的方式来处理冲突，完成 rebase 的过程，如果不想要某次 rebase 的结果，那么需要使用 `git rebase --skip ` 来跳过这次 rebase 操作。
+
+#### git merge 和 git rebase 的区别
+
+不同于 `git rebase` 的是，`git merge` 在不是 fast-forward（快速合并）的情况下，会产生一条额外的合并记录，类似  `Merge branch 'xxx' into 'xxx'` 的一条提交信息。
+
+![image-20220509010356661](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220509010356661.png)
+
+另外，在解决冲突的时候，用 merge 只需要解决一次冲突即可，简单粗暴，而用 rebase 的时候 ，需要依次解决每次的冲突，才可以提交。
+
+
 
 
 ## 2、git stash
+
+会有这么一个场景，现在你正在用你的 feature 分支上开发新功能。这时，生产环境上出现了一个 bug 需要紧急修复，但是你这部分代码还没开发完，不想提交，怎么办？
+
+这个时候可以用 `git stash` 命令先把工作区已经修改的文件**暂存**起来，然后切换到 hotfix 分支上进行 bug 的修复，修复完成后，切换回 feature 分支，从堆栈中恢复刚刚保存的内容。
+
+基本命令如下
+
+```bash
+git stash //把本地的改动暂存起来
+git stash save "message" 执行存储时，添加备注，方便查找。
+git stash pop // 应用最近一次暂存的修改，并删除暂存的记录
+git stash apply  // 应用某个存储,但不会把存储从存储列表中删除，默认使用第一个存储,即 stash@{0}，如果要使用其他个，git stash apply stash@{$num} 。
+git stash list // 查看 stash 有哪些存储
+git stash clear // 删除所有缓存的 stash
+```
+
+
+
+
 
 
 
 ## 3、git revert
 
-
+- `git revert` 撤销某次操作，此操作不会修改原本的提交记录，而是会新增一条提交记录来抵消某次操作。
 
 
 

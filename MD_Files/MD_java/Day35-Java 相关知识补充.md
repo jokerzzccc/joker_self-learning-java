@@ -60,6 +60,57 @@
 
 ## Springframework 的 copyProperties() 
 
+官方接口介绍：
+
++ #### copyProperties
+
+  ```java
+  public static void copyProperties(Object source,
+                                    Object target)
+                             throws BeansException
+  ```
+
+  Copy the property values of the given source bean into the target bean.
+
+  Note: The source and target classes do not have to match or even be derived from each other, as long as the properties match. Any bean properties that the source bean exposes but the target bean does not will silently be ignored.
+
+  This is just a convenience method. For more complex transfer needs, consider using a full [`BeanWrapper`](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/BeanWrapper.html).
+
+  As of Spring Framework 5.3, this method honors generic type information when matching properties in the source and target objects.
+
+  The following table provides a non-exhaustive set of examples of source and target property types that can be copied as well as source and target property types that cannot be copied.
+
+  | source property type | target property type     | copy supported |
+  | -------------------- | ------------------------ | -------------- |
+  | `Integer`            | `Integer`                | yes            |
+  | `Integer`            | `Number`                 | yes            |
+  | `List<Integer>`      | `List<Integer>`          | yes            |
+  | `List<?>`            | `List<?>`                | yes            |
+  | `List<Integer>`      | `List<?>`                | yes            |
+  | `List<Integer>`      | `List<? extends Number>` | yes            |
+  | `String`             | `Integer`                | no             |
+  | `Number`             | `Integer`                | no             |
+  | `List<Integer>`      | `List<Long>`             | no             |
+  | `List<Integer>`      | `List<Number>`           | no             |
+
+  + **Parameters:**
+
+    `source` - the source bean
+
+    `target` - the target bean
+
+  + **Throws:**
+
+    `BeansException` - if the copying failed
+
+  + **See Also:**
+
+    [`BeanWrapper`](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/BeanWrapper.html)
+
+
+
+总结大概如下：
+
 1、属性名相同，类型相同 可以被复制
 
 2、基本类型 与 其对应的封装类型 可以被复制
