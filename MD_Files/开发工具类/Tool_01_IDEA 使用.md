@@ -92,3 +92,23 @@ $params$
 
 - 如果安装了搜狗输入法，应该就是和搜狗的快捷键冲突了
 - 解决：把搜狗的那个快捷键取消掉。
+
+
+
+
+
+# 5、IDEA  布置热部署
+
+
+
+## 热部署生效范围
+
+
+
+
+
+
+
+> 注意 2022 版
+
+IDEA 2022版热部署，需要在setting |  advance setting | allow auto-make to start... 
