@@ -201,17 +201,21 @@ git branch
 
 
 
-# Git 命令详解
+# 9、Git 命令详解
 
 ## 1、git rebase
 
-rebase 翻译为**变基**，他的作用和 merge 很相似，用于把一个分支的修改合并到当前分支上。
+- rebase 翻译为**变基**，他的作用和 merge 很相似，用于把一个分支的修改合并到当前分支上。
+
+
 
 如下图所示，下图介绍了经过 rebase 后提交历史的变化情况。
 
 ![image-20220509005446555](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220509005446555.png)
 
-现在我们来用一个例子来解释一下上面的过程。
+
+
+- 现在我们来用一个例子来解释一下上面的过程。
 
 假设我们现在有2条分支，一个为 master，一个为 feature/1，他们都基于初始的一个提交 add readme 进行检出分支，之后，master 分支增加了 3.js 和 4.js 的文件，分别进行了2次提交，feature/1 也增加了 1.js 和 2.js 的文件，分别对应以下2条提交记录。
 
@@ -229,7 +233,9 @@ feature/1 分支如下图
 
 ![image-20220509005640947](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220509005640947.png)
 
-此时，切换到 feature/1 分支下，执行 `git rebase master`，成功之后，通过 `git log` 查看记录。
+
+
+- 此时，切换到 feature/1 分支下，执行 `git rebase master`，成功之后，通过 `git log` 查看记录。
 
 如下图所示：可以看到先是逐个应用了 mater 分支的更改，然后以 master 分支最后的提交作为基点，再逐个应用 feature/1 的每个更改。
 
@@ -274,6 +280,144 @@ git stash clear // 删除所有缓存的 stash
 ## 3、git revert
 
 - `git revert` 撤销某次操作，此操作不会修改原本的提交记录，而是会新增一条提交记录来抵消某次操作。
+
+
+
+
+
+
+
+## 4、git fetch
+
+常用命令：
+
+```sh
+# 获取远程仓库特定分支的更新
+git fetch <远程主机名> <分支名>
+# 获取远程仓库所有分支的更新
+git fetch --all
+```
+
+
+
+- 一旦远程主机的版本库有了更新（Git术语叫做commit），需要将这些更新取回本地，这时就要用到`git fetch`命令。
+
+```sh
+# 命令将某个远程主机的更新，全部取回本地。
+git fetch <远程主机名>
+```
+
+
+
+`git fetch`命令通常用来查看其他人的进程，因为它取回的代码对你本地的开发代码没有影响。
+
+- 默认情况下，`git fetch`取回所有分支（branch）的更新。
+
+- 如果只想取回特定分支的更新，可以指定分支名。
+
+```sh
+git fetch <远程主机名> <分支名>
+# 比如，取回`origin`主机的`master`分支。
+git fetch origin master
+```
+
+所取回的更新，在本地主机上要用"远程主机名/分支名"的形式读取。比如`origin`主机的`master`，就要用`origin/master`读取。
+
+
+
+`git branch`命令的
+
+- `-r`选项，可以用来查看远程分支，
+
+- `-a`选项查看所有分支。
+
+- ```sh
+  $ git branch -r
+  origin/master
+  
+  $ git branch -a
+  * master
+    remotes/origin/master
+  ```
+
+上面命令表示，本地主机的当前分支是`master`，远程分支是`origin/master`。
+
+
+
+
+
+取回远程主机的更新以后，可以在它的基础上，使用`git checkout`命令创建一个新的分支。
+
+```sh
+# 命令表示，在`origin/master`的基础上，创建一个新分支。
+$ git checkout -b <newBrach> origin/master
+```
+
+
+
+
+
+此外，也可以使用`git merge`命令或者`git rebase`命令，在本地分支上合并远程分支。
+
+```sh
+# 命令表示在当前分支上，合并`origin/master`。
+$ git merge origin/master
+# 或者
+$ git rebase origin/master
+```
+
+
+
+- 与 `git pull` 不同的是 `git fetch` 操作仅仅只会拉取远程的更改，不会自动进行 merge 操作。对你当前的代码没有影响
+
+
+
+## 5、git pull
+
+- git pull : 远程仓库拉取代码并合并到本地
+
+```sh
+# 从远程仓库拉取代码并合并到本地，可简写为 git pull 等同于 git fetch && git merge 
+git pull <远程主机名> <远程分支名>:<本地分支名>
+# 使用rebase的模式进行合并
+git pull --rebase <远程主机名> <远程分支名>:<本地分支名>
+
+```
+
+
+
+# 10、Git 基础信息
+
+- git 的仓库结构：
+
+![image-20220510224816458](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220510224816458.png)
+
+
+
+- **Workspace**：**工作区**
+  - 就是平时进行开发改动的地方，是当前看到最新的内容，在开发的过程也就是对工作区的操作
+
+- **Index**：**暂存区**
+  - 当执行 `git add` 的命令后，工作区的文件就会被移入暂存区，暂存区标记了当前工作区中那些内容是被 Git 管理的，当完成某个需求或者功能后需要提交代码，第一步就是通过 `git add` 先提交到暂存区。
+
+- **Repository**：**本地仓库**
+  - 位于自己的电脑上，通过 `git commit` 提交暂存区的内容，会进入本地仓库。
+
+- **Remote**：**远程仓库**
+  - 用来托管代码的服务器，远程仓库的内容能够被分布在多个地点的处于协作关系的本地仓库修改，本地仓库修改完代码后通过 `git push` 命令同步代码到远程仓库。
+
+
+
+一般来说，Git 的工作流程分为以下几步
+
+```tex
+1.在工作区开发，添加，修改文件。
+2.将修改后的文件放入暂存区。
+3.将暂存区域的文件提交到本地仓库。
+4.将本地仓库的修改推送到远程仓库。
+```
+
+
 
 
 
