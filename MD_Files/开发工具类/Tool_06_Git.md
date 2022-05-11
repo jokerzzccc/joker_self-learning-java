@@ -428,6 +428,7 @@ git pull --rebase <远程主机名> <远程分支名>:<本地分支名>
 
 - 参考博客
   - https://www.jianshu.com/p/c2ec5f06cf1a
+  - 菜鸟：https://www.runoob.com/git/git-reset.html
 
 
 
