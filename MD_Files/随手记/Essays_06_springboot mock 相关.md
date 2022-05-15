@@ -1,3 +1,7 @@
+# 目录
+
+[toc]
+
 # Essays_06_springboot mock 相关
 
 时间：2022年5月8日
@@ -403,4 +407,457 @@ public class JMockDataTest {
 
 }
 ```
+
+
+
+# 2、springboot 测试 ：mockito + JUnit 视频
+
+
+
+# 2、Mockito
+
+- Mockito API :https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html
+- 位置在这：
+- ![image-20220515130552437](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220515130552437.png)
+
+## 2.1 为什么使用 mockito
+
+Mock 可以理解为创建一个虚假的对象，或者说模拟出一个对象（因为测试往往不需要对真实的数据库数据进行操作），在测试环境中用来替换真实的对象。以达到一下目的：
+
+- 验证该对象的某些方法的调用情况：调用了多少次，参数是多少。
+- 给这个对象的行为做一些定义，来指定返回结果，或者指定特定的动作。
+
+
+
+基本介绍：
+
+![image-20220515170129250](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220515170129250.png)
+
+## 2.2 Mock 方法
+
+测试类可以静态导入 Mockito ，就不用一直使用类名调用了
+
+```java
+import static org.mockito.Mockito.*;
+```
+
+
+
+mock 相关方法：
+
+![image-20220515130934300](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220515130934300.png)
+
+
+
+```java
+ public static <T> T mock(Class<T> classToMock)
+```
+
+- classToMock : 待 mock 方法的 class 类
+- 返回值：返回 mock 出来的类。
+
+```java
+Random mock = Mockito.mock(Random.class);
+```
+
+> 当使用 mock 对象时，如果不对其行为进行定义，则 mock 对象方法的返回值，为返回类型的默认值。
+
+
+
+## 2.3 验证（verify）和断言（Assert)
+
+### Verify 验证
+
+**验证**：是校验待验证对象是否发生过某些行为，
+
+- 方法：`public static <T> T verify(T mock, VerificationMode mode)`
+
+
+
+使用 `verify()` 方法验证：
+
+- 结合 `time()` 方法， 可以校验某些操作发生的次数。
+
+```java
+@Test
+void add() {
+    Random mock = Mockito.mock(Random.class);
+    System.out.println(mock.nextInt());
+    verify(mock, Mockito.times(2)).nextInt();
+}
+
+// 返回结果
+0
+
+org.mockito.exceptions.verification.TooFewActualInvocations: 
+random.nextInt();
+Wanted 2 times: // 期望的次数
+-> at com.joker.demo.demo01Test.add(demo01Test.java:19)
+But was 1 time: // 实际的次数
+-> at com.joker.demo.demo01Test.add(demo01Test.java:18)
+
+```
+
+
+
+### 断言 Assert 
+
+- 使用的类是：`Assertions`
+
+
+
+```java
+@Test
+void add() {
+    Random mock = Mockito.mock(Random.class);
+    System.out.println(mock.nextInt());
+    Assertions.assertEquals(1,mock.nextInt());
+}
+
+// 返回结果
+org.opentest4j.AssertionFailedError: 
+Expected :1
+Actual   :0
+
+```
+
+## 2.4 给 mock 对象打桩（Stub)
+
+- **打桩的定义**：给 mock 对象规定一行的**行为**，使其安装我们的要求来执行具体的操作。
+
+```java
+// 这个就是打桩
+Mockito.when(mock.nextInt()).thenReturn(100);
+```
+
+
+
+常见的打桩方法：
+
+- when().thenReturn()
+  - 设定返回值
+- when().thenThrow()
+  - 抛出异常
+  - 应用场景，就是，当编写测试的时候，进入异常情况
+- when().thenCallRealMethod()
+  - 调用真实的方法
+
+![image-20220515170416867](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220515170416867.png)
+
+
+
+
+
+
+
+
+
+## 2.5 @Mock 注解
+
+### @Mock 官方 文档：
+
+
+
++ Minimizes repetitive mock creation code.
++ Makes the test class more readable.
++ Makes the verification error easier to read because the **field name** is used to identify the mock.
+
+```java
+   public class ArticleManagerTest {
+
+       @Mock 
+       private ArticleCalculator calculator;
+       @Mock 
+       private ArticleDatabase database;
+       @Mock 
+       private UserProvider userProvider;
+
+       private ArticleManager manager;
+
+       @org.junit.jupiter.api.Test
+       void testSomethingInJunit5(@Mock ArticleDatabase database) {
+ 
+```
+
+**Important!** This needs to be somewhere in the base class or a test runner:
+
+```Java
+ MockitoAnnotations.openMocks(testClass);
+ 
+```
+
+You can use built-in runner: [`MockitoJUnitRunner`](https://javadoc.io/static/org.mockito/mockito-core/4.5.1/org/mockito/junit/MockitoJUnitRunner.html) or a rule: [`MockitoRule`](https://javadoc.io/static/org.mockito/mockito-core/4.5.1/org/mockito/junit/MockitoRule.html). For JUnit5 tests, refer to the JUnit5 extension described in [section 45](https://javadoc.io/static/org.mockito/mockito-core/4.5.1/org/mockito/Mockito.html#45).
+
+Read more here: [`MockitoAnnotations`](https://javadoc.io/static/org.mockito/mockito-core/4.5.1/org/mockito/MockitoAnnotations.html)
+
+
+
+### @Mock 使用示例
+
+注意：**@Mock 注解需要搭配 MockitoAnnotations.openMocks(testClass) 一起使用**
+
+
+
+新建一个 java 对象：
+
+```java
+public class Demo01 {
+    public int add(int a, int b){
+        return  a + b;
+    }
+}
+```
+
+```java
+class demo01Test {
+    @Mock
+    private Random mock;
+
+    @Test
+    void add() {
+        MockitoAnnotations.openMocks(this);
+        System.out.println(mock.nextInt());
+        verify(mock, Mockito.times(2)).nextInt();
+        Mockito.when(mock.nextInt()).thenReturn(100);
+        Assertions.assertEquals(1,mock.nextInt());
+    }
+}
+```
+
+
+
+## 2.6 @BeforeEach 与 @BeforeAfter 
+
+- 看名字就知道这两个方法干嘛的
+- Junit 5 是这两个，而 Junit 4 是对应的 @Before 与 @After
+
+```java
+class demo01Test {
+    @Mock
+    private Random mock;
+
+    @BeforeEach
+    void before(){
+        System.out.println("测试方法执行前的执行操作======");
+    }
+
+    @Test
+    void add() {
+        MockitoAnnotations.openMocks(this);
+        System.out.println(mock.nextInt());
+        verify(mock, Mockito.times(2)).nextInt();
+        Mockito.when(mock.nextInt()).thenReturn(100);
+
+//        System.out.println(mock.nextInt());
+//        Assertions.assertEquals(1,mock.nextInt());
+    }
+
+    @AfterEach
+    void after(){
+        System.out.println("测试方法执行前的执行操作=======");
+    }
+}
+
+
+// 返回结果
+测试方法执行前的执行操作======
+0
+测试方法执行前的执行操作=======
+```
+
+
+
+## 2.7 Spy 方法与 @Spy
+
+`spy()` 与 `mock()` 不同的是：
+
+- 被 spy 的对象会走真实的方法，而 mock 对象不会。
+- spy() 方法的参数是对象实例，mock 的参数是 class 。
+- spy 的对象，如果不打桩，就会走真实的对象实例的方法操作。
+
+
+
+`spy()` 打桩的使用示例：
+
+```java
+// 打桩的
+	@Spy
+    private Demo01 demo01;
+
+    @BeforeEach
+    void before(){
+        MockitoAnnotations.openMocks(this);
+        System.out.println("测试方法执行前的执行操作======");
+    }
+
+    @Test
+    void add() {
+        when(demo01.add(1, 2)).thenReturn(0);
+        System.out.println(demo01.add(1, 2));
+        Assertions.assertEquals(3, demo01.add(1, 2));
+    }
+
+    @AfterEach
+    void after(){
+        System.out.println("测试方法执行前的执行操作=======");
+    }
+
+```
+
+返回结果：
+
+```sh
+测试方法执行前的执行操作======
+0
+测试方法执行前的执行操作=======
+
+org.opentest4j.AssertionFailedError: 
+Expected :3
+Actual   :0
+
+```
+
+
+
+**没有打桩的**的示例：
+
+- 就会走**真实**的方法
+
+```java
+@Spy
+    private Demo01 demo01;
+
+    @BeforeEach
+    void before(){
+        MockitoAnnotations.openMocks(this);
+        System.out.println("测试方法执行前的执行操作======");
+    }
+
+    @Test
+    void add() {
+        System.out.println(demo01.add(1, 2));
+        Assertions.assertEquals(3, demo01.add(1, 2));
+    }
+
+    @AfterEach
+    void after(){
+        System.out.println("测试方法执行前的执行操作=======");
+    }
+```
+
+返回结果：
+
+```sh
+测试方法执行前的执行操作======
+3
+测试方法执行前的执行操作=======
+```
+
+
+
+## 2.8 mock 静态方法 mockStatic 的使用
+
+- 静态方法的使用只是使用方式不同，和非静态方法的功能一样的。
+- 官方 API 的位置
+- ![image-20220515171223967](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220515171223967.png)
+
+
+
+注意，这里 依赖需要变成：
+
+```xml
+<!-- https://mvnrepository.com/artifact/org.mockito/mockito-inline -->
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-inline</artifactId>
+    <version>4.5.1</version>
+    <scope>test</scope>
+</dependency>
+
+// 不可以再使用	mockito-core 这里依赖，不然会报错。
+```
+
+
+
+新建一个java 对象：
+
+```java
+public class StaticUtils {
+    private StaticUtils() {}
+
+    // 返回指定区间的 Integer List
+    public static List<Integer> range(int start, int end){
+        return IntStream.range(start, end).boxed().collect(Collectors.toList());
+    }
+
+    // 返回 Echo 字符串
+    public static String name(){
+        return "Echo";
+    }
+}
+```
+
+使用示例：
+
+```java
+class StaticUtilsTest {
+
+    @Test
+    void range() {
+        MockedStatic<StaticUtils> demo = Mockito.mockStatic(StaticUtils.class);
+        demo.when(() -> StaticUtils.range(2, 6)).thenReturn(Arrays.asList(10, 11, 12));
+        Assertions.assertTrue(StaticUtils.range(2, 6).contains(10));
+    }
+
+    @Test
+    void name() {
+        MockedStatic<StaticUtils> demo = Mockito.mockStatic(StaticUtils.class);
+        demo.when(StaticUtils::name).thenReturn("joker");
+        Assertions.assertSame("joker", StaticUtils.name());
+    }
+}
+```
+
+
+
+## 2.9 总结 实战示例
+
+步骤：
+
+- @Spy 注入一个当前类
+- 其它的相关涉及到的，这里类里使用的 java bean ，都使用 @Mock 注入
+- 再@Spy 那个对象上加 @InjectMocks
+- 编写测试
+
+
+
+示例：
+
+需要测试的类：
+
+![image-20220515180700842](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220515180700842.png)
+
+![image-20220515180723469](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220515180723469.png)
+
+
+
+测试类：
+
+![image-20220515180356962](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220515180356962.png)
+
+![image-20220515180514155](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220515180514155.png)
+
+
+
+### @InjectMocks
+
+- 这个注解就是：把其他的  @Mock 的对象，注入到当前对象。
+
+
+
+
+
+
+
+# THE END 
 
