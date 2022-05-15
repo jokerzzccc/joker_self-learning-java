@@ -17,6 +17,7 @@
   - API :https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html
   - mockito 使用详解https://juejin.cn/post/6844903631137800206
 - springboot 单元测试实践==最佳==：https://juejin.cn/post/6918758473131884558#heading-0
+- Squaretest IDEA 插件，自动生成单元测试，的使用：https://mp.weixin.qq.com/s/o1Q0jCnwE5dCOaSVG37WeA
 
 
 
@@ -416,8 +417,13 @@ public class JMockDataTest {
 
 # 2、Mockito
 
-- Mockito API :https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html
-- 位置在这：
+- mockito 官网：https://site.mockito.org/
+- mockito GitHub :https://github.com/mockito/mockito
+- mockito 相关：
+  - 使用参考：https://blog.51cto.com/u_15239532/2835627
+  - mockito 使用详解https://juejin.cn/post/6844903631137800206
+- Mockito Java API :https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html 
+- API 位置在官方文档的这：
 - ![image-20220515130552437](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220515130552437.png)
 
 ## 2.1 为什么使用 mockito
@@ -854,6 +860,52 @@ class StaticUtilsTest {
 - 这个注解就是：把其他的  @Mock 的对象，注入到当前对象。
 
 
+
+## 2.10 Matchers
+
+- matchers：参数匹配器
+
+- Matchers Java API :https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/ArgumentMatchers.html
+
+- **用处**：有时，在编写行为模拟时，您希望将任何类型作为函数的参数类型。这种情况下，您可以使用参数匹配器。Mockito 参数方法被 `org.mockito.ArgumentMatchers`定义为类中的**静态方法**。
+
+- 注意：
+
+  - 当我们使用参数匹配器时，所有参数都应使用匹配器。 如果要为参数使用**特定值**，则可以使用`eq()`方法。
+
+  - 如果要使用**数组**，可以使用如下所示的 any() 方法。
+
+    ```java
+    any(byte[].class)
+    any(Object[].class)
+    ```
+
+- Mockito 参数匹配器只能与 when() 和 verify() 方法一起使用。
+
+- **AdditionalMatchers**： 都是不常用的 matchers
+
+
+
+
+
+
+
+# 3、JUnit 
+
+- 单元测试用的
+- 参考链接：
+  - JUnit 5 官网：https://junit.org/junit5/
+  - JUnit 5.8.2 API ：https://junit.org/junit5/docs/current/api/
+
+
+
+# 4、AssertJ
+
+- 流式断言，有更多的接口
+- 参考博客：
+  - AssertJ 使用博客：https://cloud.tencent.com/developer/article/1465401
+  - AssertJ 官方文档：https://assertj.github.io/doc/
+  - AssertJ 官方Java API ：https://www.javadoc.io/doc/org.assertj/assertj-core/latest/index.html
 
 
 
