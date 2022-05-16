@@ -901,8 +901,64 @@ class StaticUtilsTest {
 - 参考链接：
   - JUnit 5 官网：https://junit.org/junit5/
   - JUnit 5.8.2 API ：https://junit.org/junit5/docs/current/api/
+  - Junit 5 学习笔记博客：https://vitzhou.gitbooks.io/junit5/content/
+  - springboot + Junit 实践博客：https://zhuanlan.zhihu.com/p/32584548
+
+## 3.1 JUnit 5 基本信息
 
 
+
+### JUnit 5 常用注解
+
+| 注解               | 描述                                                         |
+| ------------------ | ------------------------------------------------------------ |
+| @Test              | 表示该方法是一个测试方法。修饰符可以是public/protected/private。  但是修饰为private时编译器会通过，测试也不会报错，但不会跑测试，相当于将这个Test关闭。所以不建议使用private |
+| @ParameterizedTest | 表示该方法是一个参数化测试                                   |
+| @RepeatedTest      | 表示该方法是一个重复测试的测试模板                           |
+| @TestFactory       | 表示该方法是一个动态测试的测试工厂                           |
+| @TestInstance      | 用于配置所标注的测试类的 测试实例生命周期                    |
+| @TestTemplate      | 表示该方法是一个测试模板，它会依据注册的 提供者所返回的调用上下文的数量被多次调用。 |
+| @DisplayName       | 为测试类或测试方法声明一个自定义的显示名称。该注解不能被继承 |
+| @BeforeEach        | 表示使用了该注解的方法应该在当前类中每一个使用了`@Test`、`@RepeatedTest`、`@ParameterizedTest`或者`@TestFactory`注解的方法之前 执行；类似于JUnit 4的 @Before。这样的方法会被继承，除非它们被覆盖。 |
+| @AfterEach         | 表示使用了该注解的方法应该在当前类中每一个使用了`@Test`、`@RepeatedTest`、`@ParameterizedTest`或者`@TestFactory`注解的方法之后 执行；类似于JUnit 4的`@After`。这样的方法会被继承，除非它们被覆盖。 |
+| @BeforeAll         | 表示使用了该注解的方法应该在当前类中**所有**使用了`@Test`、`@RepeatedTest`、`@ParameterizedTest`或者`@TestFactory`注解的方法*之前* 执行；类似于JUnit 4的 `@BeforeClass`。这样的方法会被*继承*（除非它们被*隐藏* 或*覆盖*），并且它必须是 `static`方法（除非`"per-class"` 测试实例生命周期） |
+| @AfterAll          | 表示使用了该注解的方法应该在当前类中所有使用了`@Test`、`@RepeatedTest`、`@ParameterizedTest`或者`@TestFactory`注解的方法之后执行；类似于JUnit 4的 `@AfterClass`。这样的方法会被*继承*（除非它们被*隐藏* 或*覆盖*），并且它必须是 `static`方法（除非`"per-class"` 测试实例生命周期 被使用） |
+|                    |                                                              |
+| @Nested            | 表示使用了该注解的类是一个内嵌、非静态的测试类。`@BeforeAll`和`@AfterAll`方法不能直接在`@Nested`测试类中使用，（除非`"per-class"` 测试实例生命周期 被使用）。该注解不能被继承 |
+| @Tag               | 用于声明过滤测试的tags，该注解可以用在方法或类上；类似于TesgNG的测试组或JUnit 4的分类。该注解能被继承，但仅限于类级别，而非方法级别 |
+| @Disable           | 用于禁用一个测试类或测试方法；类似于JUnit 4的@Ignore。该注解不能被继承 |
+| @ExtendWith        | 用于注册自定义 扩展该注解不能被*继承*。                      |
+
+
+
+## 相关注解
+
+
+
+### @ExtendWith
+
+参考博客：
+
+- https://vitzhou.gitbooks.io/junit5/content/junit/extension_model.html
+
+- 属于 Junit 5 的注解，属于 Jupiter 模块。
+- 定义：通过@ExtendWith 注解可以声明在测试方法和类的执行中启用相应的扩展。 扩展的启用是继承的，这既包括测试类本身的层次结构，也包括测试类中的测试方法。也就是说，测试类会继承其父类中的扩展，测试方法会继承其所在类中的扩展。除此之外，在一个测试上下文中，每一个扩展只能出现一次。
+
+
+
+**应用场景：**
+
+**当涉及Spring时：**
+
+如果您想在测试中使用**Spring测试框架功能**（例如）`@MockBean`，则必须使用`@ExtendWith(SpringExtension.class)`。它取代了不推荐使用的JUnit4`@RunWith(SpringJUnit4ClassRunner.class)`
+
+**当不涉及Spring时：**
+
+例如，如果您只想涉及Mockito而不必涉及Spring，那么当您只想使用`@Mock`/ `@InjectMocks`批注时，您就想使用`@ExtendWith(MockitoExtension.class)`，因为它不会加载到很多不需要的Spring东西中。它替换了不推荐使用的JUnit4 `@RunWith(MockitoJUnitRunner.class)`。
+
+
+
+可以只使用`@ExtendWith(SpringExtension.class)`，但是如果测试中没有涉及Spring测试框架功能，那么可以只使用`@ExtendWith(MockitoExtension.class)`。
 
 # 4、AssertJ
 
@@ -913,6 +969,14 @@ class StaticUtilsTest {
   - AssertJ 官方Java API ：https://www.javadoc.io/doc/org.assertj/assertj-core/latest/index.html
 
 
+
+
+
+
+
+# ==问题：==
+
+# @ExtendWith
 
 
 

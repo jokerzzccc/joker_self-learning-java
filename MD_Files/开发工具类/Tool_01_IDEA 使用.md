@@ -4,6 +4,8 @@
 
 # IDEA 使用
 
+- IDEA 2022.1 版本，官方使用教程：https://www.jetbrains.com/help/idea/getting-started.html
+
 # 1、破解
 
 - 后谈
