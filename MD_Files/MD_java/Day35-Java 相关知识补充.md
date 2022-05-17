@@ -294,9 +294,64 @@ publicfinalbooleancompareAndSet(intexpect,intupdate){
 
 
 
+# 3、后端接收以及发送 LocalDateTime
+
+- 参考博客：https://www.liaoxuefeng.com/wiki/1252599548343744/1303985694703650
+
+**后端接收**：需要使用注解：`@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")`
+
+示例：
+
+```java 
+@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+ private LocalDateTime birthday;
+
+```
 
 
 
+**传给前端**，一般使用注解：`@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")`
+
+
+
+# 4、在数据库中存储日期和时间
+
+除了旧式的`java.util.Date`，我们还可以找到另一个`java.sql.Date`，它继承自`java.util.Date`，但会自动忽略所有时间相关信息。这个奇葩的设计原因要追溯到数据库的日期与时间类型。
+
+在数据库中，也存在几种日期和时间类型：
+
++ `DATETIME`：表示日期和时间；
++ `DATE`：仅表示日期；
++ `TIME`：仅表示时间；
++ `TIMESTAMP`：和`DATETIME`类似，但是数据库会在创建或者更新记录的时候同时修改`TIMESTAMP`。
+
+在使用Java程序操作数据库时，我们需要把数据库类型与Java类型映射起来。下表是数据库类型与Java新旧API的映射关系：
+
+| 数据库    | 对应Java类（旧）   | 对应Java类（新） |
+| :-------- | :----------------- | :--------------- |
+| DATETIME  | java.util.Date     | LocalDateTime    |
+| DATE      | java.sql.Date      | LocalDate        |
+| TIME      | java.sql.Time      | LocalTime        |
+| TIMESTAMP | java.sql.Timestamp | LocalDateTime    |
+
+实际上，在数据库中，我们需要存储的最常用的是时刻（`Instant`），因为有了时刻信息，就可以根据用户自己选择的时区，显示出正确的本地时间。所以，最好的方法是直接用长整数`long`表示，在数据库中存储为`BIGINT`类型。
+
+通过存储一个`long`型时间戳，我们可以编写一个`timestampToString()`的方法，非常简单地为不同用户以不同的偏好来显示不同的本地时间：
+
+`import java.time.*; import java.time.format.*; import java.util.Locale; ` Run
+
+对上述方法进行调用，结果如下：
+
+```
+2019年11月20日 上午8:15
+Nov 19, 2019, 7:15 PM
+```
+
+### 小结
+
+- 处理日期和时间时，尽量使用新的`java.time`包；
+
+- 在数据库中存储时间戳时，尽量使用`long`型时间戳，它具有省空间，效率高，不依赖数据库的优点。
 
 
 
