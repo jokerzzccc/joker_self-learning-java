@@ -893,7 +893,19 @@ class StaticUtilsTest {
 
 
 
+## 相关注解
 
+### @InjectMocks
+
+**@InjectMocks：创建一个实例，简单的说是这个Mock可以调用真实代码的方法，其余用@Mock（或@Spy）注解创建的mock将被注入到用该实例中。**
+
+
+
+## Mockito 使用问题
+
+问题一：结合 MybatisPlus 的 LambdaQuery 时，如果，Wrappers ，有加了 select 语句，就会报错（can not find lambda cache 。。。）的错，
+
+解决：把原先正确 LambdaQuery 的注释掉，重写一个，把 select 语句去掉，就可以了。（然后再用返回的对象，使用 getter 就可以了）
 
 # 3、JUnit 
 
@@ -959,6 +971,8 @@ class StaticUtilsTest {
 
 
 可以只使用`@ExtendWith(SpringExtension.class)`，但是如果测试中没有涉及Spring测试框架功能，那么可以只使用`@ExtendWith(MockitoExtension.class)`。
+
+
 
 # 4、AssertJ
 
