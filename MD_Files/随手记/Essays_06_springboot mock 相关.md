@@ -885,7 +885,7 @@ class StaticUtilsTest {
     any(Object[].class)
     ```
 
-- Mockito 参数匹配器只能与 when() 和 verify() 方法一起使用。
+- Mockito 参数匹配器**只能与 when() 和 verify() 方法一起使用。**
 
 - **AdditionalMatchers**： 都是不常用的 matchers
 
@@ -903,7 +903,9 @@ class StaticUtilsTest {
 
 ## Mockito 使用问题
 
-问题一：结合 MybatisPlus 的 LambdaQuery 时，如果，Wrappers ，有加了 select 语句，就会报错（can not find lambda cache 。。。）的错，
+### 问题一：MybatisPlusException:can not find lambda cache
+
+问题：结合 MybatisPlus 的 LambdaQuery 时，如果，Wrappers ，有加了 select 语句，就会报错（can not find lambda cache 。。。）的错，
 
 解决：把原先正确 LambdaQuery 的注释掉，重写一个，把 select 语句去掉，就可以了。（然后再用返回的对象，使用 getter 就可以了）
 
