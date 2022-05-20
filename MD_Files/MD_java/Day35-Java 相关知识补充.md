@@ -357,4 +357,442 @@ Nov 19, 2019, 7:15 PM
 
 
 
+# 5、Optional 的用法
+
+- 参考博客：
+  - Optional java 8 API:https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html
+  - Optional 使用博客：
+    - https://juejin.cn/post/6844903945714794503
+    - https://juejin.cn/post/6844903960050925581
+
+
+
+## 5.1 Optional 的基本信息
+
+### 5.1.1 为什么引入 Optional
+
+- 来源：始于 java 8
+- 作用：优雅的解决 NPE （`NullPointerException`），空指针异常
+
+## 5.2 Optional 接口
+
+Optional 的全部方法：
+
+![image-20220520220624127](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220520220624127.png)
+
+| Modifier and Type        | Method and Description                                       |
+| :----------------------- | :----------------------------------------------------------- |
+| `static <T> Optional<T>` | `empty()`Returns an empty `Optional` instance.               |
+| `boolean`                | `equals(Object obj)`Indicates whether some other object is "equal to" this Optional. |
+| `Optional<T>`            | `filter(Predicate<? super T> predicate)`If a value is present, and the value matches the given predicate, return an `Optional` describing the value, otherwise return an empty `Optional`. |
+| `<U> Optional<U>`        | `flatMap(Function<? super T,Optional<U>> mapper)`If a value is present, apply the provided `Optional`-bearing mapping function to it, return that result, otherwise return an empty `Optional`. |
+| `T`                      | `get()`If a value is present in this `Optional`, returns the value, otherwise throws `NoSuchElementException`. |
+| `int`                    | `hashCode()`Returns the hash code value of the present value, if any, or 0 (zero) if no value is present. |
+| `void`                   | `ifPresent(Consumer<? super T> consumer)`If a value is present, invoke the specified consumer with the value, otherwise do nothing. |
+| `boolean`                | `isPresent()`Return `true` if there is a value present, otherwise `false`. |
+| `<U> Optional<U>`        | `map(Function<? super T,? extends U> mapper)`If a value is present, apply the provided mapping function to it, and if the result is non-null, return an `Optional` describing the result. |
+| `static <T> Optional<T>` | `of(T value)`Returns an `Optional` with the specified present non-null value. |
+| `static <T> Optional<T>` | `ofNullable(T value)`Returns an `Optional` describing the specified value, if non-null, otherwise returns an empty `Optional`. |
+| `T`                      | `orElse(T other)`Return the value if present, otherwise return `other`. |
+| `T`                      | `orElseGet(Supplier<? extends T> other)`Return the value if present, otherwise invoke `other` and return the result of that invocation. |
+| `<X extends Throwable>T` | `orElseThrow(Supplier<? extends X> exceptionSupplier)`Return the contained value, if present, otherwise throw an exception to be created by the provided supplier. |
+| `String`                 | `toString()`Returns a non-empty string representation of this Optional suitable for debugging. |
+
+### 5.2.1 三种静态方法构建 Optional 对象
+
+#### 1、Optional.of(T value)
+
+```java
+public static <T> Optional<T> of(T value) {
+    return new Optional<>(value);
+}
+```
+
+- 该方法通过一个**非 `null`** 的 *value* 来构造一个 `Optional`，返回的 `Optional` 包含了 *value* 这个值。
+
+- 对于该方法，传入的参数一定不能为 `null`，否则便会抛出 `NullPointerException`。
+
+  
+
+#### 2、Optional.ofNullble(T value)
+
+```java
+public static <T> Optional<T> ofNullable(T value) {
+    return value == null ? empty() : of(value);
+}
+```
+
+- 该方法和 `of` 方法的区别在于，传入的参数**可以为 `null`**
+- 该方法会判断传入的参数是否为 `null`，如果为 `null` 的话，返回的就是 `Optional.empty()`。
+
+#### 3、Optional.empty()
+
+```java
+public static<T> Optional<T> empty() {
+    @SuppressWarnings("unchecked")
+    Optional<T> t = (Optional<T>) EMPTY;
+    return t;
+}
+```
+
+- 该方法用来构造一个空的 `Optional`，即该 `Optional` 中不包含值 
+
+-  其实底层实现还是 **如果 Optional 中的 value 为 null 则该 Optional 为不包含值的状态**，然后在 API 层面将 `Optional` 表现的不能包含 `null`值，使得 `Optional` 只存在 **包含值** 和 **不包含值** 两种状态。
+
+
+
+**注意：**
+
+- javadoc 也有提到，`Optional` 的 `isPresent()` 方法用来判断是否包含值，`get()` 用来获取 `Optional` 包含的值 —— **值得注意的是，如果值不存在，即在一个Optional.empty 上调用 get() 方法的话，将会抛出 NoSuchElementException异常**。
+
+
+
+### 5.2.2 Optional 的使用方法
+
+#### 1、isPresent
+
+```java
+public boolean isPresent() {
+    return value != null;
+}
+```
+
+- 如果存在值，则返回true；反之，返回false。
+
+- 如果所包含的对象不为null，则返回true，反之返回false。
+- 通常在对对象执行任何其他操作之前，先在Optional上调用此方法。
+
+**使用示例：**
+
+```java
+Optional optional1 = Optional.of("javaone");
+if (optional1.isPresent()){
+//Do something, normally a get
+}
+```
+
+
+
+#### 2、get
+
+```java
+public T get() {
+        if (value == null) {
+            throw new NoSuchElementException("No value present");
+        }
+        return value;
+    }
+```
+
+- 如果此Optional中存在值，则返回该值，否则抛出 NoSuchElementException。
+
+- 在这之后，我们想要的是存储在Optional中的值，我们可以通过get()来获取它。
+
+- 但是，当该值为null时，此方法将引发异常。这就需要 orElse() 方法来紧急救援。
+
+**使用示例：**
+
+```java
+Optional<String> optional1 = Optional.of("javaone");
+if (optional1.isPresent()){ 
+  String value = optional1.get();
+}
+```
+
+
+
+#### 3、ifPresent
+
+```java
+public void ifPresent(Consumer<? super T> consumer) {
+    if (value != null)
+        consumer.accept(value);
+}
+```
+
+- 如果存在值，则使用该值调用指定的使用者；
+- 否则，什么都不做。
+
+**使用示例：**
+
+```java
+//ifpresent
+Optional<User> user = Optional.ofNullable(getUserById(id));
+user.ifPresent(u -> System.out.println("Username is: " + u.getUsername()));
+```
+
+
+
+#### 4、orElse
+
+```java
+public T orElse(T other) {
+    return value != null ? value : other;
+}
+```
+
+- 如果 `Optional` 中有值则将其返回，否则返回 `orElse` 方法传入的参数。
+
+**使用示例：**
+
+```java
+User user = Optional
+        .ofNullable(getUserById(id))
+        .orElse(new User(0, "Unknown"));
+System.out.println("Username is: " + user.getUsername());
+```
+
+
+
+#### 5、orElseGet
+
+```java
+public T orElseGet(Supplier<? extends T> other) {
+    return value != null ? value : other.get();
+}
+```
+
+- `orElseGet` 与 `orElse` 方法的区别在于:
+  - `orElseGet` 方法传入的参数为一个 `Supplier`接口的实现,
+    - 当 `Optional` 中有值的时候，返回值；
+    - 当 `Optional` 中没有值的时候，返回从该 `Supplier` 获得的值。
+
+**使用示例：**
+
+```java
+User user = Optional
+        .ofNullable(getUserById(id))
+        .orElseGet(() -> new User(0, "Unknown")); 
+System.out.println("Username is: " + user.getUsername());
+```
+
+#### 6、orElseThrow
+
+```java
+public <X extends Throwable> T orElseThrow(Supplier<? extends X> exceptionSupplier) throws X {
+    if (value != null) {
+        return value;
+    } else {
+        throw exceptionSupplier.get();
+    }
+}
+```
+
+- `orElseThrow` 与 `orElse` 方法的区别在于:
+  - `orElseThrow` 方法当 `Optional` 中有值的时候，返回值；
+  - 没有值的时候会抛出异常，抛出的异常由传入的 *exceptionSupplier* 提供。
+
+**使用示例：**
+
+- 在 SpringMVC 的控制器中，我们可以配置统一处理各种异常。
+- 查询某个实体时，如果数据库中有对应的记录便返回该记录，否则就可以抛出 `EntityNotFoundException` ，处理 `EntityNotFoundException` 的方法中我们就给客户端返回Http 状态码 404 和异常对应的信息 —— `orElseThrow` 完美的适用于这种场景。
+
+```java
+@RequestMapping("/{id}")
+public User getUser(@PathVariable Integer id) {
+    Optional<User> user = userService.getUserById(id);
+    return user.orElseThrow(() -> new EntityNotFoundException("id 为 " + id + " 的用户不存在"));
+}
+
+@ExceptionHandler(EntityNotFoundException.class)
+public ResponseEntity<String> handleException(EntityNotFoundException ex) {
+    return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+}
+```
+
+#### 6、map
+
+```java
+public<U> Optional<U> map(Function<? super T, ? extends U> mapper) {
+    Objects.requireNonNull(mapper);
+    if (!isPresent())
+        return empty();
+    else {
+        return Optional.ofNullable(mapper.apply(value));
+    }
+}
+```
+
+- 如果当前 `Optional` 为 `Optional.empty`，则依旧返回 `Optional.empty`；
+  - 否则返回一个新的 `Optional`，该 `Optional` 包含的是：函数 *mapper* 在以 *value* 作为输入时的输出值。
+
+**使用示例：**
+
+```java
+String username = Optional.ofNullable(getUserById(id))
+                        .map(user -> user.getUsername())
+                        .orElse("Unknown")
+                        .ifPresent(name -> System.out.println("Username is: " + name));
+
+```
+
+而且我们可以多次使用 `map` 操作（即 `map` 可以**无限级联**）：
+
+```java
+Optional<String> username = Optional.ofNullable(getUserById(id))
+                                .map(user -> user.getUsername())
+                                .map(name -> name.toLowerCase())
+                                .map(name -> name.replace('_', ' '))
+                                .orElse("Unknown")
+                                .ifPresent(name -> System.out.println("Username is: " + name));
+```
+
+
+
+#### 7、flatMap
+
+```java
+public<U> Optional<U> flatMap(Function<? super T, Optional<U>> mapper) {
+    Objects.requireNonNull(mapper);
+    if (!isPresent())
+        return empty();
+    else {
+        return Objects.requireNonNull(mapper.apply(value));
+    }
+}
+```
+
+- `flatMap` 方法与 `map` 方法的区别在于：
+  - `map` 方法参数中的函数 `mapper` 输出的是值，然后 `map` 方法会使用 `Optional.ofNullable` 将其包装为 `Optional`；
+  - 而 `flatMap` 要求参数中的函数 `mapper` 输出的就是 `Optional`。
+
+**使用示例：**
+
+```java
+Optional<String> username = Optional.ofNullable(getUserById(id))
+                                .flatMap(user -> Optional.of(user.getUsername()))
+                                .flatMap(name -> Optional.of(name.toLowerCase()))
+                                .orElse("Unknown")
+                                .ifPresent(name -> System.out.println("Username is: " + name));
+```
+
+
+
+#### 8、filter
+
+```java
+public Optional<T> filter(Predicate<? super T> predicate) {
+    Objects.requireNonNull(predicate);
+    if (!isPresent())
+        return this;
+    else
+        return predicate.test(value) ? this : empty();
+}
+```
+
+- `filter` 方法接受一个 `Predicate` 来对 `Optional` 中包含的值进行过滤，
+  - 如果包含的值满足条件，那么还是返回这个 `Optional`；
+  - 否则返回 `Optional.empty()`。
+
+**使用示例：**
+
+```java
+Optional<String> username = Optional.ofNullable(getUserById(id))
+                                .filter(user -> user.getId() < 10)
+                                .map(user -> user.getUsername());
+                                .orElse("Unknown")
+                                .ifPresent(name -> System.out.println("Username is: " + name));
+```
+
+
+
+
+
+#### 使用小结
+
+Optional 使用步骤：
+
+1. 先使用三种静态构建方法，**构建**一个 Optional 对象；
+2. 再根据业务需求，使用方法**操作** Optional 对象。
+
+```java
+public class OptionalTest {
+ 2     public static void main(String[] arg) {
+ 3         //创建Optional对象，如果参数为空直接抛出异常
+ 4         Optional<String> str=Optional.of("a");
+ 5 
+ 6         //获取Optional中的数据,如果不存在，则抛出异常
+ 7         System.out.println(str.get());
+ 8 
+ 9         //optional中是否存在数据
+10         System.out.println(str.isPresent());
+11 
+12         //获取Optional中的值，如果值不存在，返回参数指定的值
+13         System.out.println(str.orElse("b"));
+14 
+15         //获取Optional中的值，如果值不存在，返回lambda表达式的结果
+16         System.out.println(str.orElseGet(()->new Date().toString()));
+17 
+18         //获取Optional中的值，如果值不存在，抛出指定的异常
+19         System.out.println(str.orElseThrow(()->new RuntimeException()));
+20 
+21 
+22 
+23         Optional<String> str2=Optional.ofNullable(null);
+24 
+25         //optional中是否存在数据
+26         System.out.println(str2.isPresent());
+27 
+28         //获取Optional中的值，如果值不存在，返回参数指定的值
+29         System.out.println(str2.orElse("b"));
+30 
+31         //获取Optional中的值，如果值不存在，返回lambda表达式的结果
+32         System.out.println(str2.orElseGet(()->new Date().toString()));
+33 
+34         //获取Optional中的值，如果值不存在，抛出指定的异常
+35         System.out.println(str2.orElseThrow(()->new RuntimeException()));
+36     }
+37 }
+```
+
+
+
+## 5.3 Optional 实践注意事项
+
+### 5.3.1 何时使用
+
+- **Optional**的预期用途**主要是作为返回类型**。获取此类型的实例后，可以提取该值（如果存在）或提供其他行为（如果不存在）。
+
+- Optional类的一个非常有用的用例是将其与流或返回Optional值以构建流畅的API的其他方法结合。请参见下面的代码段
+
+```java
+User user = users.stream().findFirst().orElse(new User("default", "1234"));
+```
+
+### 5.3.2 什么时候不使用
+
+a）不要将其用作类中的字段，因为它不可序列化
+
+如果确实需要序列化包含Optional值的对象，则Jackson库提供了将Optionals视为普通对象的支持。这意味着Jackson将空对象视为空，将具有值的对象视为包含该值的字段。可以在jackson-modules-java8项目中找到此功能。
+
+b）不要将其用作构造函数和方法的参数，因为这会导致不必要的复杂代码。
+
+```
+User user = new User("john@gmail.com", "1234", Optional.empty());
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # THE END
