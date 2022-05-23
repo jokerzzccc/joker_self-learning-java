@@ -197,11 +197,29 @@ git checkout -b <branch_name> origin/<branch_name>
 git branch
 ```
 
+# 9、git取消文件跟踪
+
+- 如果是对**所有文件**都取消跟踪的话，就是
+
+```sh
+# 不删除本地文件
+git rm -r --cached . 　
+# 删除本地文件
+git rm -r --f . 
+```
+
+- 对**某个文件**取消跟踪
+
+```sh
+# 删除readme1.txt的跟踪，并保留在本地。
+git rm --cached readme1.txt  
+# 删除readme1.txt的跟踪，并且删除本地文件。
+git rm --f readme1.txt  
+```
 
 
 
-
-# 9、Git 命令详解
+# Git 命令详解
 
 ## 1、git rebase
 
@@ -470,13 +488,299 @@ git reset --hard branch2
 
 
 
+## 7、git merge
+
+- 参考博客：https://juejin.cn/post/6844903603694469134#heading-2
+
+### 准备工作
+
+为了更好地观察执行 `git merge` 和 `git rebase` 之后发生的现象，我们首先来做一些准备工作，即创建一个项目仓库，然后在其中构建两条分支，再增加几次提交。
+
+具体如下：
+
+1. 创建一个目录 `gitTest`
+2. 在目录 `myTest` 中新建一个文件 `readme.md`，随便添加一个标题，和第一个列表项 `add master1` 并提交到本地仓库
+3. 在当前分支的基础上新建一条分支，名为 `feature`，将列表项 `add master1` 修改为 `add feature1` 并提交到本地仓库
+4. 随后切换到分枝 `master` 上添加一个新的列表项 `add master2` 并提交到本地仓库
+5. 随后切换到分枝 `feature` 上添加一个新的列表项 `add feature2` 并提交到本地仓库
+6. 重复上面的步骤 4 和 5，直至在 `master` 和 `feature` 上各添加了 4 条列表项
+
+此时你的仓库分支提交的记录看起来应该是这样的：
+
+![image-20220523221430424](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220523221430424.png)
+
+
+
+初始 `master` 分支内容应该是这样的：
+
+
+
+![image-20220523221438920](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220523221438920.png)
+
+
+
+初始 `feature` 分支内容应该是这样的：
+
+![image-20220523221456120](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220523221456120.png)
+
+
+
+
+### 操作
+
+从目录 `gitTest` 拷贝出一份来，命名为 `gitMerge` 来进行我们的合并操作。
+
+`git merge` 的使用方法很简单，假如你想将分支 `feature` 合并到分支 `master`，那么只需执行如下两步即可：
+
++ 将分支切换到 `master` 上去：`git checkout master`
++ **将分支 `feature` 合并到当前分支（即 `master` 分支）**上：`git merge feature`
+
+![image-20220523221530439](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220523221530439.png)
+
+
+
+如上图所示，`git merge` 有如下**特点**：
+
++ 只处理一次冲突
++ 引入了一次合并的历史记录，合并后的所有 `commit` 会按照提交时间从旧到新排列
++ 所有的过程信息更多，可能会提高之后查找问题的难度
+
+为什么讲 `git merge` 提交的信息过多可能会影响查找问题的难度呢？因为在一个大型项目中，单纯依靠 `git merge` 方法进行合并，会保存所有的提交过程的信息：引出分支，合并分支，在分支上再引出新的分支等等，类似这样的操作一多，提交历史信息就会显得杂乱，这时如果有问题需要查找就会比较困难了。
+
+使用 `git merge` 之后的分支提交记录如下：
+
+![image-20220523221607935](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220523221607935.png)
 
 
 
 
 
 
-# 10、Git 基础信息
+## 8、git 压缩（squash)
+
+- 参考博客：https://www.delftstack.com/zh/howto/git/git-squash-commits/
+- Git 压缩：基本思想是将多个连续提交合并为一个。
+- 主要目的： 是将许多提交压缩为几个相关的提交。因此，这样做会使 git 历史看起来简洁明了。
+- 应用场景：
+  - 另一种看待它的方式是我们对某个任务进行多次提交。过了一会儿，当我们达到一个令人满意的状态时，许多提交消息会打乱 git 历史记录。
+  - 此时，我们可能希望将不同的提交合并为一个，以便 git 历史记录看起来清晰并最好地反映已完成的任务。
+  - 另一个用例是在进行分支合并时进行压缩。通常，我们从主分支创建一个功能分支，用于某些功能开发
+  - 功能完成后，我们将功能分支合并到主分支中。在这里，我们也可能希望在合并到主分支时将功能分支中完成的各种提交消息压缩为一个。
+
+**请注意，没有 `git squash` 命令。**
+
+有两种方法可以实现 Git 压缩：
+
++ `git rebase -i` 作为用于压缩提交的交互式工具
++ `git merge -squash` 在合并时使用 `-squash` 选项
+
+
+
+### 使用交互式 `git rebase` 工具压缩 Git 提交
+
+考虑以下 git log 摘录，它显示了我们对压缩感兴趣的 `HEAD` 的最后四个提交。
+
+```git
+25c38c4 remove .class files
+da66e6a Delete version.ini
+f4e3f09 Delete .log
+b0e6655 Delete .lock
+da66e6a github git notes
+```
+
+我们可以在日志中看到前四个提交消息，表示删除不同的不相关文件的操作。现在，我们将把这四个提交合并为一个。
+
+以下是使用交互式变基工具压缩最后 X 次提交的命令的语法。
+
+```bash
+git rebase -i HEAD~[X]
+```
+
+因此，要压缩四个提交，我们将执行以下操作。
+
+```git
+$ git rebase -i HEAD~4
+```
+
+发出此命令后，Git 将调用默认编辑器，其中包含提交到壁球的详细信息，如下所示。
+
+```log
+pick b0e6655 Delete .lock
+pick f4e3f09 Delete .log 
+pick da66e6a Delete version.ini
+pick 25c38c4 remove .class files
+
+# Rebase 652d2fe..25c38c4 onto 652d2fe (4 command(s))
+#
+# Commands:
+# p, pick = use commit
+# r, reword = use commit, but edit the commit message
+# e, edit = use commit, but stop for amending
+# s, squash = use commit, but meld into previous commit
+# f, fixup = like "squash", but discard this commit's log message
+# x, exec = run command (the rest of the line) using shell
+# d, drop = remove commit
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+# Note that empty commits are commented out
+```
+
+编辑器使用 `pick` 命令显示各种提交。它还显示有关可用命令的信息。我们将使用 `squash`（或 `s`）命令。
+
+
+
+如下所示，我们将使用 `pick` 命令保留第一个提交，并将其余三个提交从 `pick` 更改为 `s`（用于壁球）命令。
+
+```log
+pick b0e6655 Delete .lock
+s f4e3f09 Delete .log 
+s da66e6a Delete version.ini
+s 25c38c4 remove .class files
+
+# Rebase 652d2fe..25c38c4 onto 652d2fe (4 command(s))
+#
+...
+```
+
+标有 `squash`（或 `s`）的提交将合并到主提交即。标有 `pick` 的那个。
+
+
+
+现在，我们将在编辑器中保存更改并退出。在此之后，`rebase -i` 工具将打开另一个编辑器以输入提交消息，如下所示：
+
+```log
+# This is a combination of 4 commits. The first commit's message is:
+
+Delete .lock
+
+# This is the 2nd commit message:
+
+Delete .log 
+
+# This is the 3rd commit message:
+
+Delete version.ini
+
+# This is the 4th commit message:
+
+remove .class files
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Sun Jan 3 16:39:23 2021 +0530
+#
+# interactive rebase in progress; onto 652d2fe
+# Last commands done (4 commands done):
+#    pick b0e6655 Delete .lock
+#    s f4e3f09 Delete .log 
+#    s da66e6a Delete version.ini
+#    s 25c38c4 remove .class files
+# No commands remaining.
+# You are currently editing a commit while rebasing branch 'master' on '652d2fe'.
+#
+# Changes to be committed:
+#       new file:   github-git-notes.txt
+#
+```
+
+现在，我们将在第一条提交消息的顶部添加新的提交消息。
+
+```log
+Deleted irrelevant files
+
+# This is a combination of 4 commits. The first commit's message is:
+
+Delete .lock
+
+# This is the 2nd commit message:
+
+Delete .log
+...
+```
+
+保存并退出编辑器后，`rebase -i` 工具将打印以下消息。
+
+```log
+HEAD~2
+Rebasing (2/2)
+
+
+[detached HEAD caab6e8] Deleted irrelevant files
+ Date: Sun Jan 3 16:39:23 2021 +0530
+ 1 file changed, 54 insertions(+)
+ create mode 100644 github-git-notes.txt
+Successfully rebased and updated refs/heads/master.
+```
+
+现在，我们将检查 `git log` 并查看 `squashed` 提交（即）单个提交消息而不是四个提交消息。
+
+```log
+$ git log --oneline
+25c38c4 Deleted irrelevant files
+da66e6a github git notes
+...
+```
+
+### 使用 `git merge -squash` 压缩 Git 提交
+
+以下是将分支与当前分支（通常是 `main`）合并并压缩源分支的提交的命令语法。
+
+```log
+git merge --squash <source_branch_name_to_squash>
+```
+
+我们现在将**合并功能分支**即。`feature1` 与 `main` 分支一起压缩。
+
+- 首先，我们将切换到 `master` 分支。
+
+```log
+$ git checkout main
+Switched to branch 'main'
+```
+
+- 然后，我们将使用 `squash` 选项执行 `git merge`，如下所示。
+
+```log
+$ git merge --squash feature1
+Squash commit -- not updating HEAD
+Automatic merge went well; stopped before committing as requested
+```
+
+- 当我们使用 `--squash` 选项执行 `merge` 时，Git 不会像在正常合并中那样在目标分支中创建合并提交。相反，Git 接受源分支中的所有更改。`feature1` 并将其作为本地更改放入目标分支即 `master` 的工作副本中。
+
+
+
+请参阅下文。
+
+```log
+$ git status
+On branch main
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   config.ini
+```
+
+在这里，文件 `config.ini` 在 `feature1` 分支中进行了更改。
+
+现在，剩下的就是将更改提交到 `main` 分支，如下所示。
+
+```log
+$ git commit -am 'Merged and squashed the feature1 branch changes'
+[main 573b923] Squashed and merged the feature1 branch
+ 1 file changed, 4 insertions(+)
+```
+
+因此，我们现在已将 `feature1` 分支中的更改合并到 `main` 分支，同时压缩了 `feature1` 分支的提交消息。我们现在在 `main` 分支中只有一条提交消息。
+
+
+
+# Git 基础信息
 
 - git 的仓库结构：
 

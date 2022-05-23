@@ -111,6 +111,19 @@ $params$
 
 # 5、IDEA  布置热部署
 
+## 5.1 热部署配置
+
+步骤：
+
+1. 使用 devtool 插件
+2. 设置
+
+
+
+**使用**：更改之后，重新 build 一下，就可以了
+
+
+
 
 
 ## 热部署生效范围
@@ -126,6 +139,8 @@ $params$
 IDEA 2022版热部署，需要在setting |  advance setting | allow auto-make to start... 
 
 ## 问题
+
+### 问题一
 
 - 问题：发送服务，经常postman 界面显示 `can not send request`。
 
