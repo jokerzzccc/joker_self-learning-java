@@ -14,6 +14,7 @@
 - spring 事务使用博客：
   - https://www.cnblogs.com/yepei/p/4716112.html
   - https://zhuanlan.zhihu.com/p/114461128
+  - 原理讲解：https://zhengw-tech.com/2020/03/29/spring-transaction/
 
 
 
