@@ -19,6 +19,9 @@
 
 # @Transactional
 
+- 参考博客：
+  - https://www.cnblogs.com/myitnews/p/12363980.html
+
 ## @Transactional 属性
 
 | 属性                   | 类型                               | 描述                                   |
@@ -76,7 +79,13 @@ noRollbackFor：抛出指定的异常类型，不回滚事务，也可以指定�
 - @Transactional 可以作用于接口、接口方法、类以及类方法上。当作用于类上时，该类的所有 public 方法将都具有该类型的事务属性，同时，我们也可以在方法级别使用该标注来覆盖类级别的定义。
 
 - 虽然 @Transactional 注解可以作用于接口、接口方法、类以及类方法上，但是 **Spring 建议不要在接口或者接口方法上使用该注解**，因为这只有在使用**基于接口的代理时它才会生效**。
+
 - 另外， @Transactional 注解应该只被应用到 public 方法上，这是由 Spring AOP 的本质决定的。如果你在 protected、private 或者默认可见性的方法上使用 @Transactional 注解，这将被忽略，也不会抛出任何异常。
+
+- 注意：@Transactional注解只能在抛出RuntimeException或者Error时才会触发事务的回滚，常见的非RuntimeException是不会触发事务的回滚的。但是我们平时做业务处理时，需要捕获异常，所以可以手动抛出RuntimeException异常或者添加rollbackFor = Exception.class(也可以指定相应异常)
+
+
+  
 
 
 
@@ -244,6 +253,63 @@ spring的事务是在调用业务方法之前开始的，业务方法执行完�
 这种情况出现的概率并不高，事务能否生效数据库引擎是否支持事务是关键。常用的MySQL数据库默认使用支持事务的innodb引擎。一旦数据库引擎切换成不支持事务的myisam，那事务就从根本上失效了。
 
 
+
+# 编程式事务
+
+## 手动提交事务
+
+- springboot 开启事务以及手动提交事务
+- 首先在 service 实现类注入两个 bean 
+
+```java
+@Autowired
+DataSourceTransactionManager dataSourceTransactionManager;
+@Autowired
+TransactionDefinition transactionDefinition;
+```
+
+- 方法里在合适位置开始事务。
+
+```java
+手动开启事务
+TransactionStatus transactionStatus = dataSourceTransactionManager.getTransaction(transactionDefinition);
+手动提交事务
+dataSourceTransactionManager.commit(transactionStatus);//提交
+手动回滚事务
+dataSourceTransactionManager.rollback(transactionStatus);//最好是放在catch 里面,防止程序异常而事务一直卡
+```
+
+
+
+
+
+## 回滚点 savePoint
+
+- 使用Object savePoint = TransactionAspectSupport.currentTransactionStatus().createSavepoint(); 设置回滚点。
+- 使用TransactionAspectSupport.currentTransactionStatus().rollbackToSavepoint(savePoint); 回滚到savePoint。
+
+
+
+- 这就是回滚部分异常：
+
+```java
+@Transactional(rollbackFor = Exception.class)
+@Override
+public void saveEntity() throws Exception{
+    Object savePoint = null;
+    try {
+        userDao.saveUser();
+        //设置回滚点
+        savePoint = 				     TransactionAspectSupport.currentTransactionStatus().createSavepoint();
+        studentDao.saveStudent(); //执行成功
+        int a = 10/0; //这里因为除数0会报异常,进入catch块
+    }catch (Exception e){
+        System.out.println("异常了=====" + e);
+        //手工回滚异常
+  TransactionAspectSupport.currentTransactionStatus().rollbackToSavepoint(savePoint);
+    }
+}
+```
 
 
 

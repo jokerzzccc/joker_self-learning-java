@@ -1481,7 +1481,7 @@ public class UpdateWrapperTest {
         //不创建User对象
         userMapper.update(null,new UpdateWrapper<User>()
                 .set("age",29).set("email","test3update@baomidou.com").eq("name","Tom"));
-
+ 
     }
 
     /**
