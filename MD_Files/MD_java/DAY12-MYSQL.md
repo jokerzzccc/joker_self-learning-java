@@ -1,4 +1,19 @@
+# 目录
+
+[toc]
+
+
+
 # MySQL
+
+- 参考网址：
+  - 教程类：https://www.yiibai.com/mysql
+
+
+
+
+
+
 
 # 1 初始 mySql
 
@@ -783,7 +798,7 @@ into_option: {
 
 # 4 mysql常用函数
 
-### 1、常用函数
+## 4.1、常用函数
 
 - 常用函数并不怎么常用 
 - 一般会在程序里面实现
@@ -833,7 +848,7 @@ select version()
 
 
 
-### 2、聚合函数（常用）
+## 4.2、聚合函数（常用）
 
 ```sql
 -- 聚合函数
@@ -848,7 +863,7 @@ SELECT MAX(studentresult) AS 最高分 FROM student;-- 最大
 SELECT MIN(studentresult) AS 最小分 FROM student;-- 最小
 ```
 
-### 3、数据库级别的MD5加密（扩展）
+## 4.3、数据库级别的MD5加密（扩展）
 
 什么是md5 ：主要是增强算法强度和不可逆性
 
@@ -877,6 +892,199 @@ INSERT INTO testmd5 VALUES (4,'hhh',MD5('19902929'))
 
 SELECT * FROM testmd5 WHERE `name`='hhh' AND pwd=MD5('19902929')
 ```
+
+## 4.4、mysql 控制流函数
+
+总和：
+
+- [case()函数](http://www.yiibai.com/mysql/case-function.html) - 如果满足`WHEN`分支中的条件，则返回`THEN`分支中的相应结果，否则返回`ELSE`分支中的结果。
+- [if语句](http://www.yiibai.com/mysql/if-statement.html) - 根据给定的条件返回一个值。
+- [ifnull()函数](http://www.yiibai.com/mysql/ifnull.html) - 如果第一个参数不为`NULL`，则返回第一个参数，否则返回第二个参数。
+- [nullif()函数](http://www.yiibai.com/mysql/nullif.html) - 如果第一个参数等于第二个参数，则返回`NULL`，否则返回第一个参数。
+
+
+
+### case 函数
+
+- 参考博客：
+  - https://www.yiibai.com/mysql/case-function.html
+
+#### 简介
+
+- MySQL `CASE`表达式是一个流控制结构，允许您在查询中构造条件，例如：[SELECT](http://www.yiibai.com/mysql/select-statement-query-data.html)或[WHERE子句](http://www.yiibai.com/mysql/where/)。 MySQL为您提供了两种形式的`CASE`表达式。
+
+
+
+- 以下说明了`CASE`表达式的**第一种形式**。
+
+```sql
+CASE value
+WHEN compare_value_1 THEN result_1
+WHEN compare_value_2 THEN result_2
+…
+ELSE result END
+SQL
+```
+
+如果`value`等于`compare_value`，例如`compare_value_1`，`compare_value_2`等，则`CASE`表达式返回相应的结果，即`result_1`，`result_2`。 如果值不与任何`compare_value`匹配，则`CASE`表达式将返回`ELSE`子句中指定的结果。
+
+- `CASE`表达式的**第二种形式**如下：
+
+```sql
+CASE
+WHEN condition_1 THEN result_1
+WHEN condition_2 THEN result_2
+…
+ELSE result END
+SQL
+```
+
+- 在第二种形式中，如果条件为`True`，则`CASE`表达式返回结果，如`result_1`，`result_2`等。 如果所有条件都为`false`，则返回`ELSE`部分中的结果。如果省略`ELSE`部分，`CASE`表达式将返回`NULL`。
+
+- `CASE`表达式返回的[数据类型](http://www.yiibai.com/mysql/data-types.html)取决于使用它的上下文的结果。 例如，如果在字符串上下文中使用`CASE`表达式，则会以字符串形式返回结果。 如果在数值上下文中使用`CASE`表达式，则会以整数，小数或实数值的形式返回结果。
+
+
+
+#### MySQL CASE函数示例
+
+让我们来看看[示例数据库(yiibaidb)](http://www.yiibai.com/mysql/sample-database.html)中的`customers`表，其结构如下所示 - 
+
+```sql
+mysql> desc customers;
++------------------------+---------------+------+-----+---------+-------+
+| Field                  | Type          | Null | Key | Default | Extra |
++------------------------+---------------+------+-----+---------+-------+
+| customerNumber         | int(11)       | NO   | PRI | NULL    |       |
+| customerName           | varchar(50)   | NO   |     | NULL    |       |
+| contactLastName        | varchar(50)   | NO   |     | NULL    |       |
+| contactFirstName       | varchar(50)   | NO   |     | NULL    |       |
+| phone                  | varchar(50)   | NO   |     | NULL    |       |
+| addressLine1           | varchar(50)   | NO   |     | NULL    |       |
+| addressLine2           | varchar(50)   | YES  |     | NULL    |       |
+| city                   | varchar(50)   | NO   |     | NULL    |       |
+| state                  | varchar(50)   | YES  |     | NULL    |       |
+| postalCode             | varchar(15)   | YES  |     | NULL    |       |
+| country                | varchar(50)   | NO   |     | NULL    |       |
+| salesRepEmployeeNumber | int(11)       | YES  | MUL | NULL    |       |
+| creditLimit            | decimal(10,2) | YES  |     | NULL    |       |
++------------------------+---------------+------+-----+---------+-------+
+13 rows in set
+SQL
+```
+
+
+
+>  where 子句中与 order by 结合
+
+假设您要按状态对客户进行排序，如果状态为`NULL`，则要使用国家作为排序标准。要实现这一点，您可以使用第一种形式的`CASE`表达式如下：
+
+```sql
+SELECT 
+    customerName, state, country
+FROM
+    customers
+ORDER BY (CASE
+    WHEN state IS NULL THEN country
+    ELSE state
+END);
+SQL
+```
+
+执行上面查询语句，得到以下结果 - 
+
+```sql
++------------------------------------+---------------+--------------+
+| customerName                       | state         | country      |
++------------------------------------+---------------+--------------+
+| Salzburg Collectables              | NULL          | Austria      |
+| Mini Auto Werke                    | NULL          | Austria      |
+| Canadian Gift Exchange Network     | BC            | Canada       |
+| Royal Canadian Collectables, Ltd.  | BC            | Canada       |
+| Petit Auto                         | NULL          | Belgium      |
+| Royale Belge                       | NULL          | Belgium      |
+| Mini Gifts Distributors Ltd.       | CA            | USA          |
+| Mini Wheels Co.                    | CA            | USA          |
+************ 此处省略了一大波数据 *************************************
+| AV Stores, Co.                     | NULL          | UK           |
+| UK Collectables, Ltd.              | NULL          | UK           |
+| Stylish Desk Decors, Co.           | NULL          | UK           |
+| Double Decker Gift Stores, Ltd     | NULL          | UK           |
+| Australian Collectors, Co.         | Victoria      | Australia    |
+| Australian Collectables, Ltd       | Victoria      | Australia    |
++------------------------------------+---------------+--------------+
+122 rows in set
+SQL
+```
+
+在本示例中，我们使用[ORDER BY](http://www.yiibai.com/mysql/order-by.html)子句中的`CASE`表达式来确定要排序的字段为： `state` 或 `country` 。
+
+
+
+> select 语句中结合
+
+在接下来的一个示例中，我们将使用[示例数据库(yiibaidb)](http://www.yiibai.com/mysql/sample-database.html)中的`orders`表来演示`CASE`表达式的第二种形式。
+
+如果您希望通过按状态查看销售订单数量，例如发货订单数量，待发货订单等，则可以使用`CASE`表达式的第二种形式，如下所示：
+
+```sql
+SELECT 
+    SUM(CASE
+        WHEN status = 'Shipped' THEN 1
+        ELSE 0
+    END) AS 'Shipped',
+    SUM(CASE
+        WHEN status = 'On Hold' THEN 1
+        ELSE 0
+    END) AS 'On Hold',
+    SUM(CASE
+        WHEN status = 'In Process' THEN 1
+        ELSE 0
+    END) AS 'In Process',
+    SUM(CASE
+        WHEN status = 'Resolved' THEN 1
+        ELSE 0
+    END) AS 'Resolved',
+    SUM(CASE
+        WHEN status = 'Cancelled' THEN 1
+        ELSE 0
+    END) AS 'Cancelled',
+    SUM(CASE
+        WHEN status = 'Disputed' THEN 1
+        ELSE 0
+    END) AS 'Disputed',
+    COUNT(*) AS Total
+FROM
+    orders;
+SQL
+```
+
+执行上面查询语句，得到以下结果 - 
+
+```shell
++---------+---------+------------+----------+-----------+----------+-------+
+| Shipped | On Hold | In Process | Resolved | Cancelled | Disputed | Total |
++---------+---------+------------+----------+-----------+----------+-------+
+| 303     | 4       | 7          | 4        | 6         | 3        |   327 |
++---------+---------+------------+----------+-----------+----------+-------+
+1 row in set
+Shell
+```
+
+在[SELECT语句](http://www.yiibai.com/mysql/select-statement-query-data.html)中，如果状态等于`Shipped`，`On Hold`等，则`CASE`表达式返回`1`，否则返回`0`，我们使用`SUM`函数计算每种状态的订单的销售总数。
+
+
+
+### if 语句
+
+
+
+### ifnull 函数
+
+
+
+### nullif 函数
+
+
 
 # 5 事务（transaction）
 
@@ -1823,6 +2031,182 @@ drop view temp_info;
 # 12 Mysql 的补充
 
 ## 12.1 straight join
+
+- 参考博客：https://cloud.tencent.com/developer/article/1537345
+
+
+
+
+
+引用[mysql官方手册](https://dev.mysql.com/doc/refman/8.0/en/join.html)的说法：
+
+>  STRAIGHT_JOIN is similar to JOIN, except that the left table is always read before the right table. This can be used for those (few) cases for which the join optimizer processes the tables in a suboptimal order. 
+
+翻译过来就是：STRAIGHT_JOIN与 JOIN 类似，只不过左表始终在右表之前读取。这可用于联接优化器以次优顺序处理表的那些（少数）情况。
+
+**注意：总的来说STRAIGHT_JOIN只适用于内连接，因为left join、right join已经知道了哪个表作为驱动表，哪个表作为被驱动表，比如left join就是以左表为驱动表，right join反之，而STRAIGHT_JOIN就是在内连接中使用，而强制使用左表来当驱动表，所以这个特性可以用于一些调优，强制改变mysql的优化器选择的执行计划**
+
+
+
+## 12.2 mysql 的 布尔值
+
+- 参考博客：https://www.yiibai.com/mysql/boolean.html
+- MySQL没有内置的布尔类型。 但是它使用[TINYINT(1)](http://www.yiibai.com/mysql/int.html)。 为了更方便，MySQL提供`BOOLEAN`或`BOOL`作为`TINYINT(1)`的同义词。
+- 注意：0 是 false , 大于 0 的值都是 true，但是，
+  - 如果使用 `=` 号来判断 `true` ，只会显示 为 1 的值，
+  - 如果需要查出所有大于 0 的值，需要使用 `IS TRUE` ：所有大于 0 的值，都会查出来。
+
+例子 ：
+
+要在`tasts`表中获取所有完成的任务，可以执行以下查询：
+
+```sql
+SELECT 
+    id, title, completed
+FROM
+    tasks
+WHERE
+    completed = TRUE;
+SQL
+```
+
+执行上面查询语句，得到结果如下所示 - 
+
+```sql
++----+---------------------------+-----------+
+| id | title                     | completed |
++----+---------------------------+-----------+
+|  1 | Master MySQL Boolean type |         1 |
++----+---------------------------+-----------+
+1 row in set
+SQL
+```
+
+如您所见，它只返回`completed`列的值为`1`的任务。要解决它，必须使用`IS`运算符：
+
+```sql
+SELECT 
+    id, title, completed
+FROM
+    tasks
+WHERE
+    completed IS TRUE;
+SQL
+```
+
+执行上面查询语句，得到结果如下所示 - 
+
+```sql
++----+----------------------------+-----------+
+| id | title                      | completed |
++----+----------------------------+-----------+
+|  1 | Master MySQL Boolean type  |         1 |
+|  3 | Test Boolean with a number |         2 |
++----+----------------------------+-----------+
+2 rows in set
+SQL
+```
+
+在这个例子中，我们使用`IS`运算符来测试一个与布尔值的值。
+
+要获得待处理(未完成)的任务，请使用`IS FALSE`或`IS NOT TRUE`，如下所示：
+
+```sql
+SELECT 
+    id, title, completed
+FROM
+    tasks
+WHERE
+    completed IS NOT TRUE;
+SQL
+```
+
+执行上面查询语句，得到结果如下所示 - 
+
+```sql
++----+-----------------------+-----------+
+| id | title                 | completed |
++----+-----------------------+-----------+
+|  2 | Design database table |         0 |
++----+-----------------------+-----------+
+1 row in set
+```
+
+
+
+## 12.3 union 的使用
+
+- 参考博客：https://www.cnblogs.com/zhangminghui/p/4408546.html
+
+### 描述
+
+MySQL UNION 操作符用于连接两个以上的 SELECT 语句的结果组合到一个结果集合中。多个 SELECT 语句会删除重复的数据。
+
+### 语法
+
+MySQL UNION 操作符语法格式：
+
+```
+SELECT expression1, expression2, ... expression_n
+FROM tables
+[WHERE conditions]
+UNION [ALL | DISTINCT]
+SELECT expression1, expression2, ... expression_n
+FROM tables
+[WHERE conditions];
+```
+
+### 参数
+
++ **expression1, expression2, ... expression_n**: 要检索的列。
++ **tables:** 要检索的数据表。
++ **WHERE conditions:** 可选， 检索条件。
++ **DISTINCT:** 可选，删除结果集中重复的数据。默认情况下 UNION 操作符已经删除了重复数据，所以 DISTINCT 修饰符对结果没啥影响。
++ **ALL:** 可选，返回所有结果集，包含**重复数据**。
+
+
+
+### 注意
+
+- 在多个 SELECT 语句中，**字段名称可以不同**，但**对应的列**应该具有**相同的字段属性**，且第一个 SELECT 语句中被使用的字段名称也被用于结果的字段名称。
+- 当使用 UNION 时，MySQL 会把结果集中重复的记录删掉，而使用 UNION ALL ，MySQL 会把所有的记录返回，且效率高于 UNION。
+- 重复记录是指查询中各个字段完全重复的记录。
+- 如果 SELECT 中使用到了字段别名，则 OEDER BY 必须引用别名
+
+
+
+### 结合 orderBy
+
+#### UNION 子句中使用 ORDER BY
+
+- 子句中使用 ORDER BY，即将 [SELECT](http://www.5idev.com/p-php_mysql_select_from.shtml) 子句的结果先排序，然后再把这些子句查询的结果进行集合。
+
+- 在子句中使用 ORDER BY，由于优先级问题，需要将整个子句加圆括号()，且必须与 LIMIT 结合使用：
+
+```mysql
+(SELECT aid,title FROM article ORDER BY aid DESC LIMIT 10) 
+UNION ALL
+(SELECT bid,title FROM blog ORDER BY bid DESC LIMIT 10)
+```
+
+
+
+#### UNION 整句中使用 ORDER BY
+
+- 如果想使用 ORDER BY 或 LIMIT 来对全部 UNION 结果进行分类或限制，则应对单个 SELECT 语句加圆括号，并把 ORDER BY 或 LIMIT 放到最后一个的后面。
+
+```mysql
+(SELECT aid,title FROM article) 
+UNION ALL
+(SELECT bid,title FROM blog)
+ORDER BY aid DESC
+```
+
+- 整句中使用 ORDER BY，去掉 SELECT 子句中的圆括号虽然结果是一样的，但为了语句清晰，建议不要省略圆括号。
+
+
+
+
 
 
 
