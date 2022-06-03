@@ -777,9 +777,33 @@ User user = new User("john@gmail.com", "1234", Optional.empty());
 
 
 
+# 6、method.invoke()
+
+- 参考博客：https://blog.csdn.net/qq_34562093/article/details/84889499
+
+- 作用，method.invoke(Object obj,Object args[])的作用就是调用method类代表的方法，
+  - 其中obj是对象名，（这个方法所在的对象）
+  - args是传入method方法的参数
+
+举个例子：如果接口中没有close方法，但是实现类中提供了close，那么就可以用反射来处理，调用实现类的close方法
+
+注意：
+
+- invoke()方法接收的参数必须为**对象**,如果参数为基本类型数据,必须转换为相应的包装类型的对象。
+
+- invoke()方法的返回值总是对象,如果实际被调用的方法的返回类型是基本类型数据,那么invoke()方法会把它转换为相应的包装类型的对象,再将其返回.
 
 
 
+有四种**获得method对象的方法**，返回结果是method对象，或者说是 方法的全限定名：
+　一共有4种方法,全部都在Class类中:
+
+   - getMethods(): 获得类的public类型的方法
+   - getMethod(String name, Class[] params): 获得类的特定方法,
+           - name参数：指定方法的名字,
+           - params参数：指定方法的参数类型
+   - getDeclaredMethods(): 获取类中所有的方法(public、protected、default、private)
+   - getDeclaredMethod(String name, Class[] params): 获得类的特定方法,name参数指定方法的名字,params参数指定方法的参数。
 
 
 
