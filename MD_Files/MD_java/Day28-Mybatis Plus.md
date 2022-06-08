@@ -1511,7 +1511,39 @@ public class UpdateWrapperTest {
 
 
 
+# 6、MybatisPlus 补充
 
+## 6.1 使用 MybatisPlus 内置分页
+
+- 参考博客：
+  - 官网：https://baomidou.com/pages/97710a/#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84-mapper-method-%E4%BD%BF%E7%94%A8%E5%88%86%E9%A1%B5
+
+### 自定义的 mapper#method 使用分页
+
+```java
+IPage<UserVo> selectPageVo(IPage<?> page, Integer state);
+// or (class MyPage extends Ipage<UserVo>{ private Integer state; })
+MyPage selectPageVo(MyPage page);
+// or
+List<UserVo> selectPageVo(IPage<UserVo> page, Integer state);
+```
+
+
+
+```xml
+<select id="selectPageVo" resultType="xxx.xxx.xxx.UserVo">
+    SELECT id,name FROM user WHERE state=#{state}
+</select>
+```
+
+> 如果返回类型是 IPage 则入参的 IPage 不能为null,因为 返回的IPage == 入参的IPage
+> 如果返回类型是 List 则入参的 IPage 可以为 null(为 null 则不分页),但需要你手动 入参的IPage.setRecords(返回的 List);
+> 如果 xml 需要从 page 里取值,需要 `page.属性` 获取
+
+### [#](https://baomidou.com/pages/97710a/#其他)其他:
+
+> 生成 countSql 会在 `left join` 的表不参与 `where` 条件的情况下,把 `left join` 优化掉
+> 所以建议任何带有 `left join` 的sql,都写标准sql,即给于表一个别名,字段也要 `别名.字段`
 
 # THE END
 
