@@ -38,7 +38,7 @@
 
 # 3、IDEA 配置 JavaDoc
 
-## 3.1 类注释
+## 3.1 类注释-自动生成
 
 - IDEA 配置路径: File|setting|Editor|File And Code Template|File Header
   - 这个是生成类的时候，类注释就自动生成了。
@@ -47,7 +47,7 @@
 # JavaDoc-类注释模板
 /**
 * <p>
-* TODO
+* ${description}
 * </p>
 * 
 * @author ${USER}
@@ -55,7 +55,23 @@
 */
 ```
 
+操作如下图：
 
+![image-20220612160150303](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220612160150303.png)
+
+==使用：==每新建一个 java 文件，就有了。
+
+## 3.2 类注释-live 
+
+```sh
+**
+ * <p>
+ * $description$
+ * </p>
+ * @author: $user$
+ * @date:  $date$
+ **/
+```
 
 ## 3.2 方法注释
 
@@ -67,15 +83,27 @@
 
   - 输入模板后，点击 edit variables , 填写对应值：
 
-    - params -default value: 
+    - params -expression: 
 
       - ```sh
-        groovyScript("def result=''; def params=\"${_1}\".replaceAll('[\\\\[|\\\\]|\\\\s]', '').split(',').toList(); for(i = 0; i < params.size(); i++) {result+='* @param: ' + params[i] + ((i < params.size() - 1) ? '\\n ' : '')};return result", methodParameters())
+        groovyScript("def result=''; def params=\"${_1}\".replaceAll('[\\\\[|\\\\]|\\\\s]', '').split(',').toList(); for(i = 0; i < params.size(); i++) {result+=' * @param ' + params[i] + ((i < params.size() - 1) ? '\\n' : '')}; return result.substring(1,result.length())", methodParameters()) 
         ```
 
-    - returns-default value:
+    - returns-expression:
+
+      - ```sh
+        groovyScript("def params=\"${_1}\"; if(params=='void'){return '';} else {return '* @return ' + params}", methodReturnType()) 
+        ```
 
       - 
+
+    - user-expression:
+
+      - user()
+
+    - date-expression:
+
+      - date(yyyy/MM/dd)
 
 ```sh
 # JavaDoc-方法注释模板
@@ -86,13 +114,15 @@
 * </P>
 * 
 $params$
-* @retrun $returns$
+$returns$
 * @author $user$
 * @date $date$
 */
 ```
 
+操作如图：
 
+![image-20220612164042889](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220612164042889.png)
 
 ==使用==：配置好内容后，在方法上方输入`/*m`，按下`Enter`即可添加方法注释
 
@@ -154,3 +184,34 @@ IDEA 2022版热部署，需要在setting |  advance setting | allow auto-make to
    mybatis:
    	mapper-location: classpath*:
    ```
+
+
+
+
+
+# 6、IDEA java 开发格式规范
+
+## 1、换行
+
+![image-20220612170021362](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220612170021362.png)
+
+
+
+## 2、常用 tab , 对齐
+
+![image-20220612170159044](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220612170159044.png)
+
+![image-20220612170243552](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220612170243552.png)
+
+![image-20220612170315217](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220612170315217.png)
+
+
+
+## 3、空行设置
+
+![image-20220612170408834](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220612170408834.png)
+
+![image-20220612170449897](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220612170449897.png)
+
+# THE END 
+
