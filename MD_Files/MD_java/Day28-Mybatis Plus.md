@@ -1545,5 +1545,104 @@ List<UserVo> selectPageVo(IPage<UserVo> page, Integer state);
 > 生成 countSql 会在 `left join` 的表不参与 `where` 条件的情况下,把 `left join` 优化掉
 > 所以建议任何带有 `left join` 的sql,都写标准sql,即给于表一个别名,字段也要 `别名.字段`
 
+
+
+
+
+## 6.2 @TableLogic
+
+### 介绍
+
+- 作用：在 MyBatis Plus 中，@TableLogic 注解用于实现数据库数据逻辑删除。注意，该注解只对自动注入的 sql 起效：
+
+- 用法：在**实体属性字段**上加`@TableLogic`注解，使用`MyBatis-Plus`**自带方法**删除（`在执行BaseMapper的删除方法时，删除方法会变成修改`）和查找都会附带逻辑删除功能 (自己写的xml不会)。
+
+- ```java
+  @TableLogic
+  private Integer deleted;
+  ```
+
+- value 默认为 0 ， delval 默认为 1
+
+
+
+==注意==
+
+**@TableLogic 字段类型支持说明：**
+
++ 支持所有数据类型（推荐使用 Integer、Boolean、LocalDateTime）
++ 如果数据库字段使用 datetime，逻辑未删除值和已删除值支持配置为字符串 null，另一个值支持配置为函数来获取值如now()
+
+> 附录：
+>
+> （1）逻辑删除是为了方便数据恢复和保护数据本身价值等等的一种方案，但实际就是删除。
+>
+> （2）如果你需要频繁查出来看就不应使用逻辑删除，而是以一个状态去表示。
+
+
+
+### @TableLogic 属性
+
+该注解提供了两个属性，分别如下：
+
+- value
+  - 用来指定逻辑未删除值，默认为空字符串。
+
+- delval
+  - 用来指定逻辑删除值，默认为空字符串。
+
+当然，你也可以不在 @TableLogic 注解中指定 value 和 delval 属性的值。使用全局逻辑删除配置信息，配置如下：
+
+```yml
+# application.yml
+mybatis-plus:
+  global-config:
+    db-config:
+      # 全局逻辑删除的实体字段名 (since 3.3.0, 配置后可以忽略 @TableLogic 中的配置)
+      logic-delete-field: flag
+      # 逻辑已删除值(默认为 1)
+      logic-delete-value: 1
+      # 逻辑未删除值(默认为 0)
+      logic-not-delete-value: 0
+```
+
+### 使用：
+
+#### 插入（insert）
+
+不作限制
+
+#### 查找（select）
+
+@TableLogic 注解将会在 select 语句的 where 条件添加条件，过滤掉已删除数据，且使用 wrapper.entity 生成的 where 条件会忽略该字段。例如：
+
+```
+SELECT` `user_id,``name``,sex,age,deleted ``FROM` `user` `WHERE` `user_id=1 ``AND` `deleted=``'0'
+```
+
+#### 更新（update）
+
+@TableLogic 注解将会在 update 语句的 where 条件后追加条件，防止更新到已删除数据，且使用 wrapper.entity 生成的 where条件会忽略该字段。例如：
+
+```
+UPDATE` `user` `SET` `deleted=``'1'` `WHERE` `user_id=1 ``AND` `deleted=``'0'
+```
+
+#### 删除（delete）
+
+@TableLogic 注解会将 delete 语句转变为 update 语句，例如：
+
+```
+update` `user` `set` `deleted=1 ``where` `id = 1 ``and` `deleted=0
+```
+
+
+
+
+
+
+
+
+
 # THE END
 
