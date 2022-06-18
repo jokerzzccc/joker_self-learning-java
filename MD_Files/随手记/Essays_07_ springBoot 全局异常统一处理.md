@@ -1,3 +1,7 @@
+# 目录
+
+[toc]
+
 # Essays_07_ springBoot 全局异常统一处理
 
 
@@ -227,3 +231,56 @@ public User selectById(String id)
 }
 前端即可根据返回信息对用户进行友好的提示。
 ```
+
+
+
+
+
+# springboot 全局异常处理实战
+
+项目结构：
+
+1. 创建自定义异常 `BusinessException`
+2. 创建消息返回的包装实体 `CodeMsgDTO`
+3. 创建全局统一异常处理类 `GlobalExceptionHandlerController`
+4. 定义一系列的枚举返回信息 `CommonCode`
+5. 定义消息返回工具类 `BaseResponse`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# THE END
+
