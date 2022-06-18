@@ -1518,7 +1518,7 @@ public class UpdateWrapperTest {
 - 参考博客：
   - 官网：https://baomidou.com/pages/97710a/#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84-mapper-method-%E4%BD%BF%E7%94%A8%E5%88%86%E9%A1%B5
 
-### 自定义的 mapper#method 使用分页
+### 6.1.1 自定义的 mapper#method 使用分页
 
 ```java
 IPage<UserVo> selectPageVo(IPage<?> page, Integer state);
@@ -1540,10 +1540,71 @@ List<UserVo> selectPageVo(IPage<UserVo> page, Integer state);
 > 如果返回类型是 List 则入参的 IPage 可以为 null(为 null 则不分页),但需要你手动 入参的IPage.setRecords(返回的 List);
 > 如果 xml 需要从 page 里取值,需要 `page.属性` 获取
 
-### [#](https://baomidou.com/pages/97710a/#其他)其他:
+### 6.1.2 其他:
 
 > 生成 countSql 会在 `left join` 的表不参与 `where` 条件的情况下,把 `left join` 优化掉
 > 所以建议任何带有 `left join` 的sql,都写标准sql,即给于表一个别名,字段也要 `别名.字段`
+
+### 6.1.3 mybatis 分页的坑一（Collection 子查询）
+
+- mybatis 的分页查询，不可以用与，一个实体类的属性和实体本身是一对多的关系。这时候就可以用mybatis 的子查询映射。
+
+例子：
+
+```xml
+ <!--子查询map，解决分页问题-->
+    <resultMap id="resultMapId" type="com.xx.POJO1">
+        <id column="id" property="id"/>
+        // ...
+        <collection property="roleDOList" column="id" select="listPOJO2"/>
+    </resultMap>
+
+<select id="listPOJO1" resultMap="resultMapId">
+        SELECT 
+    	...
+    	pa_ram
+    	FROM ...
+    </select>
+
+<select id="listPOJO2" resultType="com.xx.POJO2">
+        select
+    	...
+    where id = #{id}
+    </select>
+
+```
+
+
+
+**其中 collection 可以传参**
+
+例子：
+
+```xml
+ <!--子查询map，解决分页问题-->
+    <resultMap id="resultMapId" type="com.xx.POJO1">
+        <id column="id" property="id"/>
+        // ...
+        <result column="pa_ram" property="param"/>
+        <collection property="roleDOList" column="{id = id, param : pa_ram}" select="listPOJO2"/>
+    </resultMap>
+
+<select id="listPOJO1" resultMap="resultMapId">
+        SELECT 
+    	...
+   		pa_ram
+    	FROM ...
+    </select>
+
+<select id="listPOJO2" resultType="com.xx.POJO2">
+        SELECT
+    	...
+    where id = #{id} and pa_ram = #{param}
+    </select>
+
+```
+
+
 
 
 
