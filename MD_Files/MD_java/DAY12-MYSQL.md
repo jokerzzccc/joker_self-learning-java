@@ -2208,9 +2208,120 @@ ORDER BY aid DESC
 
 
 
+## 12.4 contact 函数
+
+参考博客：https://www.yiibai.com/mysql/sql-concat-in-mysql.html
 
 
 
+- 作用：`CONCAT`和`CONCAT_WS`函数将两个或多个字符串连接在一起。
+
+`CONCAT()`函数需要一个或多个字符串参数，并将它们连接成一个字符串。`CONCAT()`函数需要至少一个参数，否则会引起错误。
+
+下面说明了`CONCAT()`函数的语法。
+
+```sql
+CONCAT(string1,string2, ... );
+SQL
+```
+
+- 注意：`CONCAT()`函数在连接之前将所有参数转换为字符串类型。如果任何参数为`NULL`，则`CONCAT()`函数返回`NULL`值。
+
+
+
+以下语句连接两个引用的字符串：`MySQL`和`CONCAT`。
+
+```sql
+SELECT CONCAT('MySQL','CONCAT');
+```
+
+执行上面查询语句，得到以下结果 - 
+
+```sql
+mysql> SELECT CONCAT('MySQL','CONCAT');
++--------------------------+
+| CONCAT('MySQL','CONCAT') |
++--------------------------+
+| MySQLCONCAT              |
++--------------------------+
+1 row in set
+SQL
+```
+
+如果添加`NULL`值，则`CONCAT`函数将返回一个`NULL`值，如下所示：
+
+```sql
+mysql> SELECT CONCAT('MySQL',NULL,'CONCAT');
++-------------------------------+
+| CONCAT('MySQL',NULL,'CONCAT') |
++-------------------------------+
+| NULL                          |
++-------------------------------+
+1 row in set
+```
+
+## 12.5 CONCAT_WS函数
+
+- 作用：`CONCAT_WS` 函数使用**分隔符**连接字符串
+
+MySQL提供了一种特殊形式的`CONCAT()`函数：`CONCAT_WS()`函数。`CONCAT_WS()`函数将两个或多个字符串值与预定义的分隔符相连接。
+
+下面说明了`CONCAT_WS()`函数的语法：
+
+```sql
+CONCAT_WS(seperator,string1,string2, ... );
+```
+
+第一个参数是其他参数：`string1`，`string2`，`...`的分隔符。
+
+`CONCAT_WS`函数在字符串参数之间添加分隔符，并返回单个字符串，并在字符串参数之间插入分隔符。
+
+以下语句连接两个字符串值：`Max`和`Su`，并用逗号分隔这两个字符串：
+
+```sql
+SELECT CONCAT_WS(',','Max','Su');
+SQL
+```
+
+执行上面查询语句，得到以下结果 - 
+
+```shell
+mysql> SELECT CONCAT_WS(',','Max','Su');
++---------------------------+
+| CONCAT_WS(',','Max','Su') |
++---------------------------+
+| Max,Su                    |
++---------------------------+
+1 row in set
+Shell
+```
+
+
+
+当且仅当作为分隔符的第一个参数为`NULL`时，`CONCAT_WS`函数才返回`NULL`。请参阅以下示例：
+
+```sql
+mysql> SELECT CONCAT_WS(NULL ,'Jonathan', 'Minsu');
++--------------------------------------+
+| CONCAT_WS(NULL ,'Jonathan', 'Minsu') |
++--------------------------------------+
+| NULL                                 |
++--------------------------------------+
+1 row in set
+SQL
+```
+
+与`CONCAT`函数不同，`CONCAT_WS`函数在分隔符参数之后跳过`NULL`值。 换句话说，它忽略`NULL`值。
+
+```sql
+mysql> SELECT CONCAT_WS(',','Jonathan', 'Minsu',NULL);
++-----------------------------------------+
+| CONCAT_WS(',','Jonathan', 'Minsu',NULL) |
++-----------------------------------------+
+| Jonathan,Minsu                          |
++-----------------------------------------+
+1 row in set
+```
 
 
 
