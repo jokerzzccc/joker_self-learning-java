@@ -1,3 +1,11 @@
+# 目录
+
+[toc]
+
+
+
+
+
  	 Spring
 
 导入jar包
@@ -2070,3 +2078,93 @@ Spring 默认的事务传播行为是 PROPAGATION_REQUIRED，它适合于绝大�
 
 + 如果不配置，就需要我们手动提交控制事务；
 + 事务在项目开发过程非常重要，涉及到数据的一致性的问题，不容马虎！
+
+
+
+
+
+# 14、Spring 相关补充
+
+## 14.1 @Primary
+
+参考博客：https://www.jianshu.com/p/a42f3c835b20
+
+
+
+- 作用：当你一个接口的实现类有**多个**的时候，你通过`@Component`来注册你的实现类有多个，但是在注入的时候使用`@Autowired`，对应实现类 加上 `@Primary` 注解，表示，优先使用这个实现类的 bean
+- 通常雨 `@Component` 或 `@Bean` 结合使用。
+- 相同类型被`@Primary`声明的Bean最多只能有一个。
+
+使用示例：
+
+```java
+public interface Worker {
+    public String work();
+}
+
+@Component
+public class Singer implements Worker {
+    @Override
+    public String work() {
+        return "歌手的工作是唱歌";
+    }
+}
+
+@Component
+public class Doctor implements Worker {
+    @Override
+    public String work() {
+        return "医生工作是治病";
+    }
+}
+
+// 启动，调用接口
+@SpringBootApplication
+@RestController
+public class SimpleWebTestApplication {
+
+    @Autowired
+    private Worker worker;
+
+    @RequestMapping("/info")
+    public String getInfo(){
+        return worker.work();
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(SimpleWebTestApplication.class, args);
+    }
+
+}
+```
+
+当一个接口有多个实现，且通过@Autowired注入属性，由于@Autowired是通过byType形式，用来给指定的字段或方法注入所需的外部资源。
+
+Spring无法确定具体注入的类（有多个实现，不知道选哪个），启动会报错并提示：
+ Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed。
+
+当给指定的组件添加@Primary是，默认会注入@Primary配置的组件。
+
+```java
+@Component
+@Primary
+public class Doctor implements Worker {
+    @Override
+    public String work() {
+        return "医生工作是治病";
+    }
+}
+```
+
+
+
+### @Primary 对比 @Qualifier
+
+当一个接口有多个实现类时，注入这个接口的 bean 时，Spring就不知道你注入哪个，那现在就可以通过下面两个办法解决：
+
++ `@Primary` 优先考虑，优先考虑被注解的对象注入
++ `@Qualifier` 名字声明，声明后对名字（bean 名，一般就是类名小写首字母）进行使用
+
+
+
+# THE END
