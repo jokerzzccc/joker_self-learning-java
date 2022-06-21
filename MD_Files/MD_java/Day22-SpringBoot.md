@@ -4162,7 +4162,124 @@ We can put the `@Valid` annotation on **method parameters and fields** to tell S
 
 
 
+# 25、相关注解补充
 
+## @DependsOn
+
+- 参考博客：https://mp.weixin.qq.com/s/yxnswt4ve-juhRzMXQ2XDQ
+
+- 作用：`@DependsOn`注解可以配置Spring IoC容器在初始化一个Bean之前，先初始化其他的Bean对象。下面是此注解使用示例代码：
+
+
+
+## @PostConstruct与@PreDestroy
+
+值得注意的是，这两个注解不属于Spring,它们是源于JSR-250中的两个注解，位于`common-annotations.jar`中。都放在方法上
+
+- @PostConstruct注解用于标注在Bean被Spring初始化之前需要执行的方法。
+
+- @PreDestroy注解用于标注Bean被销毁前需要执行的方法。下面是具体的示例代码：
+
+- 这两个注解被用来修饰一个**非静态的void（）方法**。写法有如下两种方式：
+
+- ```java
+  @PostConstruct
+  
+  public void someMethod(){}
+  
+  或者
+  
+  public @PostConstruct void someMethod(){}
+  ```
+
+
+
+
+
+另外，spring中Constructor、@Autowired、@PostConstruct的顺序：
+
+- 其实从依赖注入的字面意思就可以知道，要将对象p注入到对象a，那么首先就必须得生成对象a和对象p，才能执行注入。所以，如果一个类A中有个成员变量p被@Autowried注解，那么@Autowired注入是发生在A的构造方法执行完之后的。
+
+  如果想在生成对象时完成某些初始化操作，而偏偏这些初始化操作又依赖于依赖注入，那么就无法在构造函数中实现。为此，可以使用@PostConstruct注解一个方法来完成初始化，@PostConstruct注解的方法将会在依赖注入完成后被自动调用。
+
+  Constructor >> @Autowired >> @PostConstruct
+
+  
+
+- 举个栗子：
+
+  ```java
+  public Class AAA {
+  
+    @Autowired
+    private BBB b;
+  
+    public AAA() {
+  ​    System.out.println("此时b还未被注入: b = " + b);
+    }
+  
+    @PostConstruct
+    private void init() {
+  ​    System.out.println("@PostConstruct将在依赖注入完成后被自动调用: b = " + b);
+    }
+  
+  }
+  ```
+
+  
+
+> 注意点：
+
+- 该注解的方法在整个Bean初始化中的执行顺序：
+- Constructor(构造方法) -> @Autowired(依赖注入) -> @PostConstruct(注释的初始化方法)
+- 官方文档：https://docs.oracle.com/javase/8/docs/api/javax/annotation/PostConstruct.html
+
+ 
+
+该注解的**功能**：当依赖注入完成后用于执行初始化的方法，并且只会被执行一次
+
+###  使用注意
+
+该注解的使用需要**满足以下条件**:
+
+1. 该注解用于注释方法
+
+2. 如果注释的方法在拦截器(interceptor)类中必须满足以下两种格式之一：
+
+    void <METHOD>(InvocationContext)
+
+Object <METHOD>(InvocationContext) throws Exception
+
+3. 如果注释的方法不是拦截器类，则必须格式为:
+
+void <METHOD>()   //不能有参数，返回值不为void， <METHOD>为方法名
+
+4. 注解的方法的访问修饰符可以是public, protected, package private or private
+
+5. 注释的方法可以用final修饰
+
+6. 注释的方法除了应用程序的客户端(application client)之外,不能是静态方法
+
+7. 如果该方法抛出未经检查的异常，则该类不得投入使用，除非 EJB 可以处理异常甚至从异常中恢复。
+
+ 
+
+示例：
+
+```java
+import javax.annotation.PostConstruct;
+
+@Component
+public class Utils {
+@Autowired
+private UserService userService;
+ 
+@PostConstruct
+void init() {
+    userService.doSomething();  //userService注入后执行一些初始化操作
+}
+}
+```
 
 
 
