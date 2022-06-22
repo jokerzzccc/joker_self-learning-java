@@ -1699,7 +1699,178 @@ update` `user` `set` `deleted=1 ``where` `id = 1 ``and` `deleted=0
 
 
 
+## 6.3 FieldStrategy
 
+参考博客：
+
+- FieldStrategy 官网：https://baomidou.com/pages/223848/#fieldstrategy
+
+- https://www.cnblogs.com/aibilim/p/f83eda1a60d17b176f30343fa4c11b6d.html
+- https://www.yisu.com/zixun/374610.html
+
+
+
+- 作用：这个字段主要会影响`sql`拼接。我们知道，就是使用 MP  的自动注入 sql 时，当通过`Entity`对表进行更新时，只会更新非空字段。对于那些值为`NULL`的字段是不会出现在`sql`语句里的。
+
+- 该策略约定了如何产出注入的sql,涉及`insert`,`update`以及`wrapper`内部的`entity`属性生成的 where 条件
+
+- 在包里找到了这个枚举 `com.baomidou.mybatisplus.enums.FieldStrategy`，后面查找这个枚举的引用就很容易找到用这些配置值的地方了。
+
+  ```java
+  public enum FieldStrategy {
+      IGNORED(0, "忽略判断"),
+      NOT_NULL(1, "非 NULL 判断"),
+      NOT_EMPTY(2, "非空判断");
+  }
+  ```
+
+- FieldStrategy 有三个值：
+
+  - IGNORED：“忽略判断”，所有字段都更新和插入。
+  - NOT_NULL：“非 NULL 判断”，只更新和插入非NULL值。**FieldStrategy  默认值**
+  - NOT_EMPTY：“非空判断”， 只更新和插入非NULL值且非空字符串。
+  - DEFAULT： 默认的，一般只用于注解里。
+
+
+
+在`MP`中，该设置会影响`sql`语句的拼接行为。在`2.x`版本中，没有对这个进行区分，不可单独设置字段策略。
+下面通过具体的配置来解释差异
+
+```yaml
+# 2.x配置
+mybatis-plus:
+  mapper-locations:
+    - classpath*:mapper/**/*Mapper.xml
+  typeAliasesPackage: com.test.assist.dao.domain
+  global-config:
+    id-type: 0
+    field-strategy: 2
+    db-column-underline: true
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+```
+
+
+
+```yaml
+#3.x的配置
+mybatis-plus:
+  typeAliasesPackage: com.test.assist.dao.domain
+  mapper-locations:
+    - classpath*:mapper/**/*Mapper.xml
+  global-config:
+    db-config:
+      select-strategy: not_empty
+      insert-strategy: not_empty
+      update-strategy: not_empty
+      id-type: auto
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+```
+
+
+
+- 通过上面的代码可以总结出：
+
+  + NOT_EMPTY：会对字段值进行 `null` 和 `''` 比较操作
+  + NOT_NULL: 只会进行null检查
+
+  同时在`3.x`版本中，支持对`select`、`update`、`insert`设置不同的字段策略，由此看来大家对这种一刀切的行为还是比较反感的。这一点，我在github也看到`issue`。
+
+
+
+### 如果 非要 插入 null 
+
+### 实际项目解决方法示例一
+
+实际项目中，配置文件中配置全局字段策略为NOT_NULL。
+
+![mybatisPlus 中field-strategy配置失效如何解决](D:\2021java学习文件\Git Repositories\self-learning-java\MD_Files\MD_java\md-imgs\2033.jpg)
+
+需求：实际项目中，apply_teacher字段当它为null时需要把null值更新进去。
+
+困难：因为全局字段策略为NOT_NULL，所以默认不会更新null值进去。
+
+**解决方法**：
+
+利用条件构造器当值为null时set为null。
+
+代码：
+
+```java
+Wrapper<StuApplyInfoEntity> updateWrapper = new UpdateWrapper<>();
+((UpdateWrapper) updateWrapper).set(saveApply.getApplyTeacher() == null, "apply_teacher", null);
+```
+
+### 实际项目解决方法示例二
+
+需求：state字段所有值都更新和插入。
+
+困难：因为全局字段策略为NOT_NULL，所以默认不会更新null值进去。
+
+解决方法：
+
+在entity中设置state设置注解 `@TableField()`，配置 `FieldStrategy` 为 `IGNORED`。意思是"忽略判断"，所有值都更新和插入。
+
+代码：
+
+```java
+@TableField(strategy = FieldStrategy.IGNORED, el = "state, jdbcType=VARCHAR")
+private String state;
+```
+
+或者，可以指定 `select`、`update`、`insert` 的字段策略
+
+比如：
+
+```java
+@TableField(updateStrategy=FieldStrategy.IGNORED)
+private String userInfo;
+```
+
+
+
+## 6.4 @TableField
+
+参考博客：
+
+- 官网：https://baomidou.com/pages/223848/#tablefield
+
+
+
+- 使用方法：见  `FieldStrategy`
+
++ 描述：字段注解（非主键）
+
+```java
+@TableName("sys_user")
+public class User {
+    @TableId
+    private Long id;
+    @TableField("nickname")
+    private String name;
+    private Integer age;
+    private String email;
+}
+```
+
+| 属性             | 类型                         | 必须指定 | 默认值                   | 描述                                                         |
+| :--------------- | :--------------------------- | :------- | :----------------------- | :----------------------------------------------------------- |
+| value            | String                       | 否       | ""                       | 数据库字段名                                                 |
+| exist            | boolean                      | 否       | true                     | 是否为数据库表字段                                           |
+| condition        | String                       | 否       | ""                       | 字段 `where` 实体查询比较条件，有值设置则按设置的值为准，没有则为默认全局的 `%s=#{%s}`，[参考(opens new window)](https://github.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-annotation/src/main/java/com/baomidou/mybatisplus/annotation/SqlCondition.java) |
+| update           | String                       | 否       | ""                       | 字段 `update set` 部分注入，例如：当在version字段上注解`update="%s+1"` 表示更新时会 `set version=version+1` （该属性优先级高于 `el` 属性） |
+| insertStrategy   | Enum                         | 否       | FieldStrategy.DEFAULT    | 举例：NOT_NULL `insert into table_a(<if test="columnProperty != null">column</if>) values (<if test="columnProperty != null">#{columnProperty}</if>)` |
+| updateStrategy   | Enum                         | 否       | FieldStrategy.DEFAULT    | 举例：IGNORED `update table_a set column=#{columnProperty}`  |
+| whereStrategy    | Enum                         | 否       | FieldStrategy.DEFAULT    | 举例：NOT_EMPTY `where <if test="columnProperty != null and columnProperty!=''">column=#{columnProperty}</if>` |
+| fill             | Enum                         | 否       | FieldFill.DEFAULT        | 字段自动填充策略                                             |
+| select           | boolean                      | 否       | true                     | 是否进行 select 查询                                         |
+| keepGlobalFormat | boolean                      | 否       | false                    | 是否保持使用全局的 format 进行处理                           |
+| jdbcType         | JdbcType                     | 否       | JdbcType.UNDEFINED       | JDBC 类型 (该默认值不代表会按照该值生效)                     |
+| typeHandler      | Class<? extends TypeHandler> | 否       | UnknownTypeHandler.class | 类型处理器 (该默认值不代表会按照该值生效)                    |
+| numericScale     | String                       | 否       | ""                       | 指定小数点后保留的位数                                       |
 
 
 
