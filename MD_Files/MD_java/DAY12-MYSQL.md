@@ -2323,6 +2323,84 @@ mysql> SELECT CONCAT_WS(',','Jonathan', 'Minsu',NULL);
 1 row in set
 ```
 
+## 12.6 EXISTS 与 IN
+
+参考博客：
+
+- https://segmentfault.com/a/1190000038464558
+- 作用:EXISTS用于检查子查询是否至少会返回一行数据，该子查询实际上并不返回任何数据，而是返回值True或False。
+- 语法：`SELECT 字段 FROM table WHERE EXISTS (subquery);` 
+  - 例子：`SELECT * FROM A WHERE EXISTS (SELECT 1 FROM B WHERE B.id = A.id);` 
+- 用法：EXISTS 指定一个子查询，检测行的存在。语法：EXISTS subquery。参数 subquery 是一个受限的 SELECT 语句 （不允许有 COMPUTE 子句和 INTO 关键字）。结果类型为 Boolean，如果子查询包含行，则返回 TRUE。
+
+**EXISTS执行顺序：**
+
+1、首先执行一次外部查询，并缓存结果集，如 SELECT * FROM A
+
+2、遍历外部查询结果集的每一行记录R，代入子查询中作为条件进行查询，如 SELECT 1 FROM B WHERE B.id = A.id
+
+3、如果子查询有返回结果，则EXISTS子句返回TRUE，这一行R可作为外部查询的结果行，否则不能作为结果
+
+
+
+### EXISTS 与 IN 使用示例：
+
+```sql
+# 查询体重秤
+select * from activity_main where act_code in (
+select act_code from activity_sku where sku = '翎野君的体脂称'
+)
+
+# 查询体重秤
+select * from activity_main a where exists (
+select 1 from activity_sku b where a.act_code = b.act_code and b.sku = '翎野君的体脂称'
+)
+
+# 模糊查询B-BEKO英国婴儿推车
+select * from activity_main where act_code in (
+select act_code from activity_sku where sku like '%B-BEKO%'
+)
+
+# 模糊查询B-BEKO英国婴儿推车
+select * from activity_main a where exists (
+select 1 from activity_sku b where a.act_code = b.act_code and b.sku like '%B-BEKO%'
+)
+
+# 查询在博客园举办的活动
+select * from activity_main where act_code in (
+select act_code from activity_area where area = '博客园'
+)
+
+# 查询在博客园举办的活动
+select * from activity_main a where exists (
+select 1 from activity_area b where a.act_code = b.act_code and b.area = '博客园'
+)
+
+
+# 在博客园举办活动且活动奖品为华为手机的活动信息
+select * from activity_main where act_code in (
+select act_code from activity_area where area = '博客园' and act_code in (
+select act_code from activity_sku where sku = '华为P30Pro'
+))
+
+
+# 内层的exists语句只在当前where语句中生效，最终是否返回，要根据最外层的exists判断，如果是 true（真）就返回到结果集，为 false（假）丢弃。
+select * from activity_main a where exists (
+select 1 from activity_area b where a.act_code = b.act_code and b.area = '博客园' and exists
+(select 1 from activity_sku c where a.act_code = c.act_code and c.sku = '华为P30Pro')
+)
+```
+
+
+
+
+
+### NOT EXISTS 与 NOT IN 
+
+- 与前者相反
+
+
+
 
 
 # THE END
