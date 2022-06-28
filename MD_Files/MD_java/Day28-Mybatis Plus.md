@@ -248,7 +248,7 @@ mybatis-plus:
 
 
 
-# 3、CRUD 扩展
+# 3、Mappper 的 CRUD 扩展
 
 - 
 
@@ -1871,6 +1871,13 @@ public class User {
 | jdbcType         | JdbcType                     | 否       | JdbcType.UNDEFINED       | JDBC 类型 (该默认值不代表会按照该值生效)                     |
 | typeHandler      | Class<? extends TypeHandler> | 否       | UnknownTypeHandler.class | 类型处理器 (该默认值不代表会按照该值生效)                    |
 | numericScale     | String                       | 否       | ""                       | 指定小数点后保留的位数                                       |
+
+
+
+## 6.5 Service 的 CRUD
+
+- 参考网址：
+  - 官网：https://baomidou.com/pages/49cc81/#service-crud-%E6%8E%A5%E5%8F%A3
 
 
 
