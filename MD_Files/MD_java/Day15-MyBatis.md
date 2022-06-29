@@ -1403,7 +1403,13 @@ CREATE TABLE `blog`(
 
 
 
-## If
+## If 标签
+
+参考博客：
+
+- https://blog.csdn.net/xu1916659422/article/details/78104976
+
+### 基本用法：
 
 ```xml
 <select id="queryBlogIf" parameterType="map" resultType="blog">
@@ -1416,6 +1422,81 @@ CREATE TABLE `blog`(
     </if>
 </select>
 ```
+
+
+
+**if  标签里，逻辑判断符号的对应：**
+
+| 替换符号 | 对应判断                                             |
+| -------- | ---------------------------------------------------- |
+| gt       | >                                                    |
+| gte      | >=                                                   |
+| lt       | < (会报错  相关联的 "test" 属性值不能包含 '<' 字符)  |
+| lte      | <= (会报错  相关联的 "test" 属性值不能包含 '<' 字符) |
+| and      | && (会报错)                                          |
+| or       | \|\| （会报错）                                      |
+| neq      | !=                                                   |
+| eq       | ==                                                   |
+
+
+
+==注意：if 条件判断可以直接调用对象自身的方法进行逻辑判断==
+
+
+
+### 参数为-数字
+
+- 入参为 int, long 等，如果没有特殊要求，只用判断 不为 null 即可。
+
+  ```xml
+  <if test=id != null"></if>
+  ```
+
+- 且 不能与  `''` 比较，只有字符串类型才能与空字符串比较。当 id 类型为 数字类型时。
+
+  ```xml
+  <!-- 这个会报错 -->
+  <if test=id != null and id != ''"></if>
+  ```
+
+- 有特殊判断条件时
+
+  ```xml
+  <if test="id != null and id > 2"></if>
+  ```
+
+
+
+### 参数为-字符串类型
+
+- 一般都是如下判断：
+
+  ```xml
+  <if test="name != null and name != ''"></if>
+  ```
+
+- 也可以使用字符串对应的方法
+
+  ```xml
+  <!-- 是否以什么开头 -->
+  <if test="name != null and name.indexOf('ji') == 0"> </if> 
+  ```
+
+
+
+
+
+### 参数为-list
+
+- 参数为 list 时，判空，可以用 `size > 0` 或 `isEmpty()`
+
+  ```xml
+  <if test="paramList != null and paramList.isEmpty()"></if> 
+  <!-- 或者 -->
+  <if test="paramList != null and paramList.size() > 0"></if>
+  ```
+
+  
 
 
 
