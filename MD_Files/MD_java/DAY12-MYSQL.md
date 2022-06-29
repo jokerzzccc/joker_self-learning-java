@@ -2401,6 +2401,65 @@ select 1 from activity_area b where a.act_code = b.act_code and b.area = '博客
 
 
 
+## 12.7 时间差值
+
+- 参考博客：
+  - https://blog.csdn.net/p1306252/article/details/121975899
+
+### 1、datediff()
+
+- 计算 date 差值 
+
+- 语法：`datediff(end_time,start_time)`，返回`end_time-start_time`的日期差值
+
+- 例子：
+
+  - ```sh
+    select datediff('2020-01-04 22:11:12','2020-01-02 23:11:12') from table_1
+    ```
+
+  - 返回值：2
+
+### 2、timediff()
+
+- 语法：`timediff(end_time,start_time)`,返回`end_time-start_time`的时间(时分秒)差值
+
+- 例子：
+
+  - ```sh
+    select timediff('2020-01-04 22:11:12','2020-01-02 23:22:30')  from table_1
+    ```
+
+  - 返回值：46:48:42
+
+### 3、timestampdiff()
+
+- 语法：`TIMESTAMPDIFF(interval,datetime_expr1,datetime_expr2)`
+
+- 返回：比较是后一个时间减前一个时间，返回日期或日期时间表达式datetime_expr1 和datetime_expr2the 之间的**整数差**
+
+- interval 取值：
+
+  - ```tex
+    SECOND 秒 SECONDS 
+    MINUTE 分钟 MINUTES 
+    HOUR 时间 HOURS 
+    DAY 天 DAYS 
+    MONTH 月 MONTHS 
+    YEAR 年 YEARS
+    ```
+
+- 例子：
+
+  - ```sh
+    #计算两个时间戳的分钟差值
+    select timestampdiff(MINUTE,'2020-01-02 23:34:55','2020-01-04 22:11:12') from dual
+    ```
+
+  - 返回值：2796
+
+
+
 
 
 # THE END
