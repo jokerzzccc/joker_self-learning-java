@@ -773,6 +773,18 @@ User user = new User("john@gmail.com", "1234", Optional.empty());
 
 
 
+## 5.4 Optional 对象 与 stream
+
+Optional 的中间操作：
+
+- map
+- filter
+
+Optional 的 终止操作：
+
+- orElse
+- orElseThrow
+
 
 
 
@@ -1061,6 +1073,134 @@ public class Test3<T> {
 ```
 
 
+
+# 8、java 的浅拷贝与深拷贝
+
+参考博客：
+
+- https://segmentfault.com/a/1190000038523408
+- https://juejin.cn/post/6844903806577164302
+
+## 8.1 介绍
+
+- 浅拷贝和深拷贝都是针对一个已有对象的操作。
+- **浅拷贝**：对基本数据类型进行值传递，对引用数据类型进行引用传递般的拷贝
+- **深拷贝**：对基本数据类型进行值传递，对引用数据类型，创建一个新的对象，并复制其内容
+
+
+
+### 8.1.1 浅拷贝
+
+浅拷贝会创建一个新对象，新对象和原对象本身没有任何关系，**新对象和原对象不等，但是新对象的属性和老对象相同**。具体可以看如下区别：
+
++ 如果属性是**基本数据类型**(int,double,long,boolean,String等)，拷贝的就是基本类型的值；
++ 如果属性是**引用类型**，拷贝的就是内存地址（即复制引用但不复制引用的对象） ，因此如果其中一个对象改变了这个地址，就会影响到另一个对象。
+
+
+
+浅拷贝如下图：
+
+![image-20220705225258322](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220705225258322.png)
+
+
+
+如何**实现浅拷贝**呢？
+
+- 也很简单，**就是在需要拷贝的类上实现Cloneable接口并重写其clone()方法**。
+
+
+
+### 8.1.2 深拷贝
+
+- 深拷贝：**在对引用数据类型进行拷贝的时候，创建了一个新的对象，并且复制其内的成员变量。**
+
+
+
+深拷贝如图：
+
+![image-20220705225508388](https://2021-joker.oss-cn-shanghai.aliyuncs.com/java_img/image-20220705225508388.png)
+
+
+
+实现深拷贝，这里又两个方法：
+
+- 重写clone()方法
+- 序列化法
+
+## 8.2 集合的浅拷贝与深拷贝
+
+- 集合的浅拷贝：**构造函数和 clone()** 默认都是浅拷贝
+- 集合的深拷贝：，如果需要实现集合的深拷贝，那就要**创建一个新的集合**，然后通过深拷贝原先集合中的每个元素，将这些元素加入到新的集合当中。
+
+
+
+### 集合深拷贝工具类：
+
+参考博客：
+
+- https://developer.51cto.com/article/624593.html
+
+
+
+1. **commons-beanutils的介绍**：commons-beanutils是Apache组织下的一个基础的开源库，其主要目的是利用反射机制对JavaBean的属性进行处理。
+
+   ```xml
+   <dependency> 
+       <groupId>commons-beanutils</groupId> 
+       <artifactId>commons-beanutils</artifactId> 
+       <version>1.9.4</version> 
+   </dependency> 
+   ```
+
+   使用：
+
+   
+
+2. spring-beanutils:
+
+   ```xml
+   <dependency> 
+       <groupId>org.springframework</groupId> 
+       <artifactId>spring-beans</artifactId> 
+       <version>5.2.8.RELEASE</version> 
+   </dependency> 
+   ```
+
+3. **Orika** 工具类
+
+   ```xml
+   <dependency> 
+       <groupId>ma.glasnost.orika</groupId> 
+       <artifactId>orika-core</artifactId> 
+       <version>1.5.4</version> 
+   </dependency> 
+   ```
+
+   
+
+
+
+自定义 集合深拷贝工具类：
+
+```java
+/**
+ * list集合深拷贝
+ *
+ * @param oldList
+ * @param <T>
+ * @return
+ */
+public static <T> List<T> deepCopy(List<T> oldList) {
+    List<T> newList = (List<T>) Arrays.asList(new Object[oldList.size()]);
+    Collections.copy(newList, oldList);
+    return newList;
+}
+
+```
+
+
+
+## 8.3 数据的浅拷贝与深拷贝
 
 
 
