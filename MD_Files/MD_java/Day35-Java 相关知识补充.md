@@ -1176,6 +1176,22 @@ public class Test3<T> {
    </dependency> 
    ```
 
+4. hutool 工具类
+
+   ```xml
+   <dependency>
+       <groupId>cn.hutool</groupId>
+       <artifactId>hutool-all</artifactId>
+       <version>5.3.6</version>
+   </dependency>
+   ```
+
+   使用：
+
+   ```java
+   ObjectUtil.cloneByStream 序列化后拷贝流的方式克隆，对象必须实现Serializable接口
+   ```
+
    
 
 
