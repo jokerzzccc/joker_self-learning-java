@@ -1216,7 +1216,27 @@ public static <T> List<T> deepCopy(List<T> oldList) {
 
 
 
-## 8.3 数据的浅拷贝与深拷贝
+## 8.3 数组的浅拷贝与深拷贝
+
+
+
+
+
+# 9、ThreadLocal
+
+参考链接：
+
+- ThreadLocal 官网 API ：https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html
+- https://pdai.tech/md/java/thread/java-thread-x-threadlocal.html
+- https://segmentfault.com/a/1190000018399795
+
+
+
+
+
+
+
+
 
 
 
