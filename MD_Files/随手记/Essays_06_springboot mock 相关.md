@@ -986,6 +986,14 @@ class StaticUtilsTest {
 
 
 
+# 5、TestableMock
+
+- 参考链接：
+  - 使用文档：https://alibaba.github.io/testable-mock/#/
+  - github :https://github.com/alibaba/testable-mock
+
+
+
 
 
 
