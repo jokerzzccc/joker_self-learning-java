@@ -10,6 +10,7 @@
 
 - Nacos 官网手册：https://nacos.io/zh-cn/docs/what-is-nacos.html
 - Nacos GitHub: https://github.com/alibaba/nacos
+- nacos-spring-boot-project：https://github.com/nacos-group/nacos-spring-boot-project
 
 
 
