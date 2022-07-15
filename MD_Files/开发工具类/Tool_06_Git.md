@@ -241,7 +241,24 @@ git rm --f readme1.txt
 
 ## 1、git rebase
 
-- rebase 翻译为**变基**，他的作用和 merge 很相似，用于把一个分支的修改合并到当前分支上。
+- 参考链接：
+
+  - 官方文档：https://git-scm.com/docs/git-rebase
+  - git rebase 注意事项：https://segmentfault.com/a/1190000022802086
+
+- 作用：rebase 翻译为**变基**，他的作用和 merge 很相似，用于把一个分支的修改合并到当前分支上。
+
+- 命令概要：
+
+  ```sh
+  git rebase [-i | --interactive] [<options>] [--exec <cmd>]
+  	[--onto <newbase> | --keep-base] [<upstream> [<branch>]]
+  git rebase [-i | --interactive] [<options>] [--exec <cmd>] [--onto <newbase>]
+  	--root [<branch>]
+  git rebase (--continue | --skip | --abort | --quit | --edit-todo | --show-current-patch)
+  ```
+
+- 注意：直接使用 `git rebase`  等于合并远程分支。
 
 
 
@@ -957,6 +974,99 @@ Cherry pick 支持一次转移多个提交。
 **（3）`--quit`**
 
 发生代码冲突后，退出 Cherry pick，但是不回到操作前的样子。
+
+
+
+
+
+## 10、git reflog
+
+参考链接：
+
+- git reflog 官方文档：https://git-scm.com/docs/git-reflog
+- git reflog 使用博客：https://blog.csdn.net/chaiyu2002/article/details/81773041
+
+
+
+### 10.1 介绍：
+
+- 释义：Reference logs（参考日志），或者叫做"reflogs"，记录了分支的tips（提示信息？）或者其他参考在本地仓库被更新的时间（when）。
+- 作用：git-reflog是用来**恢复本地错误操作**很重要的一个命令
+
+- 语法：`git reflog <subcommand> <options>`
+
+- 具体使用命令：
+
+  ```sh
+  git reflog [show] [<log-options>] [<ref>]
+  git reflog expire [--expire=<time>] [--expire-unreachable=<time>]
+  	[--rewrite] [--updateref] [--stale-fix]
+  	[--dry-run | -n] [--verbose] [--all [--single-worktree] | <refs>…​]
+  git reflog delete [--rewrite] [--updateref]
+  	[--dry-run | -n] [--verbose] <ref>@\{<specifier>\}…​
+  git reflog exists <ref>
+  ```
+
+- git 的版本表示方法：
+  - `HEAD@{2}`表示`HEAD`指针在两次移动之前的情况；
+  - 而 `master@{one.week.ago}`表示`master` 分支在本地仓库一周之前的情况。
+- HEAD{n}引用的是reflog记录中的commit提交，而HEAD~n引用是commit提交历史记录
+
+### 10.2 子命令（subcommand) 以及对应的 options
+
+- **“show”子命令** : 显示所指定的参考的日志。（默认子命令，即只用 git reflog  等于 git reflog show )
+
+  - 具体使用：
+
+    ```sh
+    
+    $ git reflog show
+    20d456d (HEAD -> master, origin/master, origin/HEAD) HEAD@{0}: commit: update: JPA and Spring Data JPA
+    d33ffb2 HEAD@{1}: commit: update: @FeignClient 详解
+    0f51eef HEAD@{2}: rebase (finish): returning to refs/heads/master
+    0f51eef HEAD@{3}: rebase (squash): update:Nacos and Feign
+    d56f8de HEAD@{4}: rebase (start): checkout head~2
+    0b76ac6 HEAD@{5}: commit: update:Feign 补充
+    ...
+    ```
+
+  - 解释：
+
+    （0）最左侧黄色字体列为修改的**commit的前7位**，根据7位可以将代码恢复到对应节点位置。
+
+    （1）{n}表示HEAD更改历史记录，最近的操作在上面。
+
+    （2）通过HEAD{n}语法可以引用存在reflog中的提交。
+
+    （3）与HEAD~n功能类似，但HEAD{n}引用的是reflog记录中的commit提交，而HEAD~n引用是commit提交历史记录。
+
+    （4）rebase 、commit等为git操作与提交节点相关的具体指令。
+
+    （5）最后一个冒号后面的字串为提交信息的摘要信息。
+
+    **回退举例**：我们需要把代码回退到HEAD@{13}处，我们可以执行：`git reset --hard HEAD@{13}`或者：`git reset --hard 87ec395`，其中 87ec395为 HEAD@{13} 对应的7位commit id 
+
+- “expire”子命令会**删除掉更老**的reflog条目。
+
+- “delete”子命令从reflog中删除一个条目。
+
+- “exists”子命令检查一个ref是否有一个reflog。
+
+
+
+### 10.2 git log 与 git reflog
+
+**本质区别：**
+
+- git log : 是显示当前的HEAD和它的祖先的，递归是沿着当前指针的父亲，父亲的父亲，…，这样的原则。
+- git reflog : 根本不遍历HEAD的祖先。它是HEAD所指向的一个顺序的提交列表：它的undo历史。
+  - reflog并不是repo（仓库）的一部分，它单独存储，而且不包含在pushes，fetches或者clones里面，它纯属是本地的。
+  - reflog可以很好地帮助你恢复你误操作的数据，例如你错误地reset了一个旧的提交，或者rebase，…，这个时候你可以使用reflog去查看在误操作之前的信息，并且使用git reset --hard 去恢复之前的状态
+
+**commit 节点的表示方法区别：**
+
+- `HEAD@{n}`引用的是reflog记录中的commit提交。
+- 而`HEAD~n`引用是git log 中 的commit提交历史记录。
 
 
 
