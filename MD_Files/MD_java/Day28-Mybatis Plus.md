@@ -1881,6 +1881,50 @@ public class User {
 
 
 
+# 7、问题
+
+## 7.1 Mybatis插入实体类字段为关键字解决方案
+
+- 参考链接：https://cloud.tencent.com/developer/article/1553264
+
+问题：
+
+可能你插入字段为关键字时报如下错误，且字段名不适合改变
+
+```javascript
+You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near
+```
+
+### 方案一
+
+若自己写的sql，直接在插入语句中字段加上``，比如
+
+```javascript
+insert into (id,`left`) value (1,100)
+```
+
+
+
+### 方案二
+
+网上找到了mybatis plus的解决方案，是加`@TableField`注解，给上别名加上**反单引号**，比如
+
+```javascript
+    @TableField("`function`")
+    private String function;
+```
+
+复制
+
+由此我想到**mybatis应该自己也有这种机制**，如下属于`javax.persistence.Column`，希望帮到有需要的人
+
+```javascript
+    @Column(name = "`left`")
+    private Double left;
+```
+
+
+
 
 
 # THE END
