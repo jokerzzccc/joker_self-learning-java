@@ -12,6 +12,7 @@
 - 教学博客相关：
   - https://juejin.cn/post/6844904008629354504
   - https://heapdump.cn/article/3801373
+  - rocketMQTemplate 发送消息，及对应的消费：https://juejin.cn/post/6850418115382738958#heading-4
 
 
 
