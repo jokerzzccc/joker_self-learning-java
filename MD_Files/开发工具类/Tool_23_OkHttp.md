@@ -8,7 +8,7 @@
 - 参考链接：
   - OkHttp 官网：https://square.github.io/okhttp/
   - OkHttp 详解使用教程：https://www.jianshu.com/p/ca8a982a116b
-  - OkHttp 技术详解博客：
+  - OkHttp 官方文档中文详解博客：
     - https://www.cnblogs.com/xiaxveliang/p/13406804.html
     - https://www.cnblogs.com/xiaxveliang/p/13414320.html
 
